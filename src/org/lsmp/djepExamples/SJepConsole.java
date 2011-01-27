@@ -5,61 +5,55 @@
  */
 package org.lsmp.djepExamples;
 
+import org.lsmp.djep.sjep.PolynomialCreator;
+import org.lsmp.djep.xjep.XJep;
 import org.nfunk.jep.Node;
 import org.nfunk.jep.ParseException;
-import org.lsmp.djep.xjep.XJep;
-import org.lsmp.djep.sjep.PolynomialCreator;
 
 /**
  * @author Rich Morris
- * Created on 22-Mar-2005
+ *         Created on 22-Mar-2005
  */
-public class SJepConsole extends DJepConsole
-{
-	private static final long serialVersionUID = -2796652887843007314L;
-	PolynomialCreator pc = null;
-	
-	public static void main(String[] args)
-	{
-		Console c = new SJepConsole();
-		c.run(args);
-	}
+public class SJepConsole extends DJepConsole {
+    private static final long serialVersionUID = -2796652887843007314L;
+    PolynomialCreator pc = null;
 
-	public String getPrompt()
-	{
-		return "SJep > ";
-	}
+    public static void main(String[] args) {
+        Console c = new SJepConsole();
+        c.run(args);
+    }
 
-	public void initialise()
-	{
-		super.initialise();
-		pc = new PolynomialCreator((XJep) j);
-	}
+    public String getPrompt() {
+        return "SJep > ";
+    }
 
-	public void printIntroText()
-	{
-		println("SJep: advanced simplification/expansion");
-	}
+    public void initialise() {
+        super.initialise();
+        pc = new PolynomialCreator((XJep) j);
+    }
 
-	public void processEquation(Node node) throws ParseException
-	{
-		XJep xj = (XJep) j;
+    public void printIntroText() {
+        println("SJep: advanced simplification/expansion");
+    }
 
-		Node pre = xj.preprocess(node);
-		Node proc = xj.simplify(pre);
-		print("Old simp:\t"); 
-		println(xj.toString(proc));
-		Node simp = pc.simplify(proc);
-		print("New simp:\t"); 
-		println(xj.toString(simp));
+    public void processEquation(Node node) throws ParseException {
+        XJep xj = (XJep) j;
 
-		Node expand = pc.expand(proc);
-		print("Expanded:\t"); 
-		println(xj.toString(expand));
+        Node pre = xj.preprocess(node);
+        Node proc = xj.simplify(pre);
+        print("Old simp:\t");
+        println(xj.toString(proc));
+        Node simp = pc.simplify(proc);
+        print("New simp:\t");
+        println(xj.toString(simp));
 
-		Object val = xj.evaluate(simp);
-		String s = xj.getPrintVisitor().formatValue(val);
-		println("Value:\t\t"+s);
-	}
+        Node expand = pc.expand(proc);
+        print("Expanded:\t");
+        println(xj.toString(expand));
+
+        Object val = xj.evaluate(simp);
+        String s = xj.getPrintVisitor().formatValue(val);
+        println("Value:\t\t" + s);
+    }
 
 }

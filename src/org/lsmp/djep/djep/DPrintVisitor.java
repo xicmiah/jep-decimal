@@ -2,8 +2,11 @@
  * Created on 26-Feb-2004
  */
 package org.lsmp.djep.djep;
-import org.nfunk.jep.*;
+
 import org.lsmp.djep.xjep.PrintVisitor;
+import org.nfunk.jep.ASTVarNode;
+import org.nfunk.jep.ParseException;
+import org.nfunk.jep.Variable;
 
 /**
  * An extension of PrintVisitor which will print the equations of a variable if required.
@@ -14,47 +17,43 @@ import org.lsmp.djep.xjep.PrintVisitor;
  * By default equations for PartialDerivatives are printed
  * but equations for normal derivatives are not.
  * TODO might want to print eqn for y=sin(x) but not x=3
- *  
+ *
  * @author Rich Morris
- * Created on 26-Feb-2004
+ *         Created on 26-Feb-2004
  */
 public class DPrintVisitor extends PrintVisitor {
-	public static final int PRINT_PARTIAL_EQNS = 16;
-	public static final int PRINT_VARIABLE_EQNS = 32;
-	
-	/**
-	 * 
-	 */
-	public DPrintVisitor() {
-		super();
-		setMode(PRINT_PARTIAL_EQNS,true);
-	}
+    public static final int PRINT_PARTIAL_EQNS = 16;
+    public static final int PRINT_VARIABLE_EQNS = 32;
 
-	/** Prints the variable or its equation.
-	 * Depends on the state of the flags and whether the variable has an equation.
-	 */
-	public Object visit(ASTVarNode node, Object data) throws ParseException
-	{
-		Variable var = node.getVar();
-		if(var instanceof PartialDerivative)
-		{
-			PartialDerivative deriv = (PartialDerivative) var;
-			if(((mode & PRINT_PARTIAL_EQNS)!=0) && deriv.hasEquation())
-				deriv.getEquation().jjtAccept(this,null);
-			else
-				sb.append(node.getName());
-		}
-		else if(var instanceof DVariable)
-		{
-			DVariable dvar = (DVariable) var;
-			if(((mode & PRINT_VARIABLE_EQNS)!=0) && dvar.hasEquation())
-				dvar.getEquation().jjtAccept(this,null);
-			else
-				sb.append(node.getName());
-		}
-		else
-			sb.append(node.getName());
+    /**
+     *
+     */
+    public DPrintVisitor() {
+        super();
+        setMode(PRINT_PARTIAL_EQNS, true);
+    }
 
-	  return data;
-	}
+    /**
+     * Prints the variable or its equation.
+     * Depends on the state of the flags and whether the variable has an equation.
+     */
+    public Object visit(ASTVarNode node, Object data) throws ParseException {
+        Variable var = node.getVar();
+        if (var instanceof PartialDerivative) {
+            PartialDerivative deriv = (PartialDerivative) var;
+            if (((mode & PRINT_PARTIAL_EQNS) != 0) && deriv.hasEquation())
+                deriv.getEquation().jjtAccept(this, null);
+            else
+                sb.append(node.getName());
+        } else if (var instanceof DVariable) {
+            DVariable dvar = (DVariable) var;
+            if (((mode & PRINT_VARIABLE_EQNS) != 0) && dvar.hasEquation())
+                dvar.getEquation().jjtAccept(this, null);
+            else
+                sb.append(node.getName());
+        } else
+            sb.append(node.getName());
+
+        return data;
+    }
 }

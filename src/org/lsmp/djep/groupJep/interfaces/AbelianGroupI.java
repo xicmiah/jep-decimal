@@ -3,13 +3,13 @@
  */
 package org.lsmp.djep.groupJep.interfaces;
 
-import org.lsmp.djep.groupJep.*;
+import org.lsmp.djep.groupJep.GroupI;
 
 /**
  * Represents a abelian (commutative) group.
- * 
+ *
  * @author Rich Morris
- * Created on 05-Mar-2004
+ *         Created on 05-Mar-2004
  */
 public interface AbelianGroupI extends GroupI {
 }

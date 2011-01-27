@@ -11,66 +11,52 @@ import java.util.Stack;
  */
 public abstract class AbstractSubtract extends PostfixMathCommand {
 
-    protected AbstractSubtract()
-	{
-		numberOfParameters = 2;
-	}
+    protected AbstractSubtract() {
+        numberOfParameters = 2;
+    }
 
-	public void run(Stack inStack) throws ParseException {
-		checkStack(inStack); // check the stack
+    public void run(Stack inStack) throws ParseException {
+        checkStack(inStack); // check the stack
 
-		Object param2 = inStack.pop();
-		Object param1 = inStack.pop();
+        Object param2 = inStack.pop();
+        Object param1 = inStack.pop();
 
-		inStack.push(sub(param1, param2));
+        inStack.push(sub(param1, param2));
 
-		return;
-	}
+        return;
+    }
 
-	public Object sub(Object param1, Object param2)
-		throws ParseException
-	{
-		if (param1 instanceof Complex)
-		{
-			if (param2 instanceof Complex)
-			{
-				return subComplex((Complex)param1, (Complex)param2);
-			}
-			else if( param2 instanceof Number)
-			{
-				return subComplex((Complex)param1, (Number)param2);
-			}
-		}
-		else if (param1 instanceof Number)
-		{
-			if (param2 instanceof Complex)
-			{
-				return subComplex((Number)param1, (Complex)param2);
-			}
-			else if (param2 instanceof Number)
-			{
-				return subNumber((Number)param1, (Number)param2);
-			}
-		}
-		throw new ParseException("Invalid parameter type");
-	}
+    public Object sub(Object param1, Object param2)
+            throws ParseException {
+        if (param1 instanceof Complex) {
+            if (param2 instanceof Complex) {
+                return subComplex((Complex) param1, (Complex) param2);
+            } else if (param2 instanceof Number) {
+                return subComplex((Complex) param1, (Number) param2);
+            }
+        } else if (param1 instanceof Number) {
+            if (param2 instanceof Complex) {
+                return subComplex((Number) param1, (Complex) param2);
+            } else if (param2 instanceof Number) {
+                return subNumber((Number) param1, (Number) param2);
+            }
+        }
+        throw new ParseException("Invalid parameter type");
+    }
 
 
-	protected abstract Number subNumber(Number d1, Number d2);
+    protected abstract Number subNumber(Number d1, Number d2);
 
-	protected Complex subComplex(Complex c1, Complex c2)
-	{
-		return new Complex(c1.re() - c2.re(), c1.im() - c2.im());
-	}
+    protected Complex subComplex(Complex c1, Complex c2) {
+        return new Complex(c1.re() - c2.re(), c1.im() - c2.im());
+    }
 
-	protected Complex subComplex(Complex c, Number d)
-	{
-		return new Complex(c.re() - d.doubleValue(), c.im());
-	}
+    protected Complex subComplex(Complex c, Number d) {
+        return new Complex(c.re() - d.doubleValue(), c.im());
+    }
 
-	protected Complex subComplex(Number d, Complex c)
-	{
-		return new Complex(d.doubleValue() - c.re(), -c.im());
-	}
+    protected Complex subComplex(Number d, Complex c) {
+        return new Complex(d.doubleValue() - c.re(), -c.im());
+    }
 
 }

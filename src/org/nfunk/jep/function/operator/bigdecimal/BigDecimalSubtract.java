@@ -8,7 +8,7 @@ import java.math.MathContext;
 /**
  * @author DPavlov
  */
-public class BigDecimalSubtract extends AbstractSubtract implements MathContextAware{
+public class BigDecimalSubtract extends AbstractSubtract implements MathContextAware {
 
     private MathContext mathContext;
 
@@ -16,15 +16,15 @@ public class BigDecimalSubtract extends AbstractSubtract implements MathContextA
     protected Number subNumber(Number d1, Number d2) {
         BigDecimal bd1;
         BigDecimal bd2;
-        if (d1 instanceof BigDecimal){
+        if (d1 instanceof BigDecimal) {
             bd1 = (BigDecimal) d1;
-        }else{
+        } else {
             bd1 = new BigDecimal(d1.doubleValue(), mathContext);
         }
 
-        if (d2 instanceof BigDecimal){
+        if (d2 instanceof BigDecimal) {
             bd2 = (BigDecimal) d2;
-        }else{
+        } else {
             bd2 = new BigDecimal(d2.doubleValue(), mathContext);
         }
 

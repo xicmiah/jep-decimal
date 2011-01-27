@@ -8,16 +8,16 @@ import java.math.MathContext;
 /**
  * @author DPavlov
  */
-public class BigDecimalUMinus extends AbstractUMinus implements MathContextAware{
+public class BigDecimalUMinus extends AbstractUMinus implements MathContextAware {
 
     private MathContext mathContext;
 
     @Override
     protected Number negateNumber(Number param) {
         BigDecimal val;
-        if (param instanceof BigDecimal){
+        if (param instanceof BigDecimal) {
             val = (BigDecimal) param;
-        }else{
+        } else {
             val = new BigDecimal(param.doubleValue(), mathContext);
         }
         return val.negate();

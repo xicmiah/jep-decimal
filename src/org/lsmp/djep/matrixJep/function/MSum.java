@@ -14,24 +14,24 @@ import org.nfunk.jep.ParseException;
 
 /**
  * @author Rich Morris
- * Created on 24-Apr-2005
+ *         Created on 24-Apr-2005
  */
 public class MSum extends Sum implements NaryOperatorI {
 
-	/**
-	 * @param j
-	 */
-	public MSum(JEP j) {
-		super(j);
-	}
+    /**
+     * @param j
+     */
+    public MSum(JEP j) {
+        super(j);
+    }
 
-	public Dimensions calcDim(Dimensions[] dims) throws ParseException {
-		return dims[0];
-	}
+    public Dimensions calcDim(Dimensions[] dims) throws ParseException {
+        return dims[0];
+    }
 
-	public MatrixValueI calcValue(MatrixValueI res, MatrixValueI[] inputs)
-			throws ParseException {
-		throw new ParseException("calcValue method for MSum called");
-	}
+    public MatrixValueI calcValue(MatrixValueI res, MatrixValueI[] inputs)
+            throws ParseException {
+        throw new ParseException("calcValue method for MSum called");
+    }
 
 }

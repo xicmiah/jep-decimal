@@ -20,7 +20,7 @@ public class BigDecimalPower extends AbstractPower implements MathContextAware {
             return c.power(d2.doubleValue());
         } else {
 
-            if (powerIsInteger(d2)){
+            if (powerIsInteger(d2)) {
                 //power value is integer, so we can use std big decimal power operation
                 BigDecimal bd1;
 
@@ -30,18 +30,18 @@ public class BigDecimalPower extends AbstractPower implements MathContextAware {
                     bd1 = new BigDecimal(d1.doubleValue(), mathContext);
                 }
 
-                return bd1.pow(d2.intValue(),mathContext);
-            }else{
+                return bd1.pow(d2.intValue(), mathContext);
+            } else {
                 return new BigDecimal(Math.pow(d1.doubleValue(), d2.doubleValue()), mathContext);
             }
         }
     }
 
     private boolean powerIsInteger(Number d2) {
-        if (d2 instanceof BigDecimal){
+        if (d2 instanceof BigDecimal) {
             BigDecimal bd = (BigDecimal) d2;
             return bd.compareTo(bd.setScale(0, mathContext.getRoundingMode())) == 0;
-        }else{
+        } else {
             return d2.doubleValue() == d2.intValue();
         }
     }

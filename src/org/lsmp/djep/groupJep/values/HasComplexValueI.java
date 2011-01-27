@@ -2,14 +2,15 @@
  * Created on 11-Mar-2004
  */
 package org.lsmp.djep.groupJep.values;
-import org.nfunk.jep.type.*;
+
+import org.nfunk.jep.type.Complex;
 
 /**
  * Group elements which have a natural conversion to complex numbers.
- * 
+ *
  * @author Rich Morris
- * Created on 11-Mar-2004
+ *         Created on 11-Mar-2004
  */
 public interface HasComplexValueI {
-	public Complex getComplexValue();
+    public Complex getComplexValue();
 }

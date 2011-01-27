@@ -7,7 +7,7 @@ HTML code for applet:
 
 package org.nfunk.jepexamples;
 
-import java.applet.*;
+import java.applet.Applet;
 import java.awt.*;
 
 /**
@@ -19,66 +19,70 @@ import java.awt.*;
  * in GraphCanvas class.
  */
 public class FunctionPlotter extends Applet {
-	private static final long serialVersionUID = -27867883051236035L;
+    private static final long serialVersionUID = -27867883051236035L;
 
-	/** The expression field */
-	private java.awt.TextField exprField;
-	
-	/** The canvas for plotting the graph */
-	private GraphCanvas graphCanvas;
+    /**
+     * The expression field
+     */
+    private java.awt.TextField exprField;
 
-	/**
-	 * Initializes the applet FunctionPlotter
-	 */
-	public void init () {
-		initComponents();
-	}
+    /**
+     * The canvas for plotting the graph
+     */
+    private GraphCanvas graphCanvas;
 
-	/**
-	 * Sets the layout of the applet window to BorderLayout, creates all
-	 * the components and associates them with event listeners if neccessary.
-	 */
-	private void initComponents () {
-		setLayout(new BorderLayout());
-		setBackground (java.awt.Color.white);
+    /**
+     * Initializes the applet FunctionPlotter
+     */
+    public void init() {
+        initComponents();
+    }
 
-		// get the initial expression from the parameters
-		String expr = getParameter("initialExpression");
-		
-		// write the expression into the text field
-		if (expr!=null)
-			exprField = new java.awt.TextField(expr);
-		else
-			exprField = new java.awt.TextField("");
+    /**
+     * Sets the layout of the applet window to BorderLayout, creates all
+     * the components and associates them with event listeners if neccessary.
+     */
+    private void initComponents() {
+        setLayout(new BorderLayout());
+        setBackground(java.awt.Color.white);
 
-		// adjust various settings for the expression field
-		exprField.setBackground (java.awt.Color.white);
-		exprField.setName ("exprField");
-		exprField.setFont (new java.awt.Font ("Dialog", 0, 11));
-		exprField.setForeground (java.awt.Color.black);
-		exprField.addTextListener (new java.awt.event.TextListener () {
-			public void textValueChanged (java.awt.event.TextEvent evt) {
-				exprFieldTextValueChanged (evt);
-			}
-		}
-		);
+        // get the initial expression from the parameters
+        String expr = getParameter("initialExpression");
 
-		add ("North", exprField);
-		
-		// create the graph canvas and add it
-		graphCanvas = new GraphCanvas(expr, exprField);
-		add ("Center", graphCanvas);
-	}
+        // write the expression into the text field
+        if (expr != null)
+            exprField = new java.awt.TextField(expr);
+        else
+            exprField = new java.awt.TextField("");
+
+        // adjust various settings for the expression field
+        exprField.setBackground(java.awt.Color.white);
+        exprField.setName("exprField");
+        exprField.setFont(new java.awt.Font("Dialog", 0, 11));
+        exprField.setForeground(java.awt.Color.black);
+        exprField.addTextListener(new java.awt.event.TextListener() {
+            public void textValueChanged(java.awt.event.TextEvent evt) {
+                exprFieldTextValueChanged(evt);
+            }
+        }
+        );
+
+        add("North", exprField);
+
+        // create the graph canvas and add it
+        graphCanvas = new GraphCanvas(expr, exprField);
+        add("Center", graphCanvas);
+    }
 
 
-	/**
-	 * Repaints the graphCanvas whenever the text in the expression field
-	 * changes.
-	 */
-	private void exprFieldTextValueChanged(java.awt.event.TextEvent evt) {
-		String newExpressionString = exprField.getText();
-		graphCanvas.setExpressionString(newExpressionString);
-		graphCanvas.repaint();
-	}
+    /**
+     * Repaints the graphCanvas whenever the text in the expression field
+     * changes.
+     */
+    private void exprFieldTextValueChanged(java.awt.event.TextEvent evt) {
+        String newExpressionString = exprField.getText();
+        graphCanvas.setExpressionString(newExpressionString);
+        graphCanvas.repaint();
+    }
 
 }

@@ -20,29 +20,29 @@ public abstract class AbstractAdd extends PostfixMathCommand {
     }
 
     /**
-	 * Calculates the result of applying the "+" operator to the arguments from
-	 * the stack and pushes it back on the stack.
-	 */
-	public void run(Stack stack) throws ParseException {
-		checkStack(stack);// check the stack
+     * Calculates the result of applying the "+" operator to the arguments from
+     * the stack and pushes it back on the stack.
+     */
+    public void run(Stack stack) throws ParseException {
+        checkStack(stack);// check the stack
 
-		Object sum = stack.pop();
-		Object param;
-		int i = 1;
+        Object sum = stack.pop();
+        Object param;
+        int i = 1;
 
-		// repeat summation for each one of the current parameters
-		while (i < curNumberOfParameters) {
-			// get the parameter from the stack
-			param = stack.pop();
+        // repeat summation for each one of the current parameters
+        while (i < curNumberOfParameters) {
+            // get the parameter from the stack
+            param = stack.pop();
 
-			// add it to the sum (order is important for String arguments)
-			sum = add(param, sum);
+            // add it to the sum (order is important for String arguments)
+            sum = add(param, sum);
 
-			i++;
-		}
+            i++;
+        }
 
-		stack.push(sum);
-	}
+        stack.push(sum);
+    }
 
     /**
      * Adds two numbers together. The parameters can be of type Number,
@@ -56,34 +56,30 @@ public abstract class AbstractAdd extends PostfixMathCommand {
      * @throws ParseException
      */
     public Object add(Object param1, Object param2) throws ParseException {
-		if (param1 instanceof Complex)
-		{
-			if (param2 instanceof Complex)
-				return addComplex((Complex)param1, (Complex)param2);
-			else if (param2 instanceof Number)
-				return addComplex((Complex)param1, (Number)param2);
-		}
-		else if (param1 instanceof Number)
-		{
-			if (param2 instanceof Complex)
-				return addComplex((Complex)param2, (Number)param1);
-			else if (param2 instanceof Number)
-				return addNumber((Number)param1, (Number)param2);
-		}
-		else if ((param1 instanceof String) && (param2 instanceof String)) {
-			return (String)param1 + (String)param2;
-		}
+        if (param1 instanceof Complex) {
+            if (param2 instanceof Complex)
+                return addComplex((Complex) param1, (Complex) param2);
+            else if (param2 instanceof Number)
+                return addComplex((Complex) param1, (Number) param2);
+        } else if (param1 instanceof Number) {
+            if (param2 instanceof Complex)
+                return addComplex((Complex) param2, (Number) param1);
+            else if (param2 instanceof Number)
+                return addNumber((Number) param1, (Number) param2);
+        } else if ((param1 instanceof String) && (param2 instanceof String)) {
+            return (String) param1 + (String) param2;
+        }
 
-		throw new ParseException("Invalid parameter type");
-	}
+        throw new ParseException("Invalid parameter type");
+    }
 
     protected Complex addComplex(Complex c1, Complex c2) {
-		return new Complex(c1.re() + c2.re(), c1.im() + c2.im());
-	}
+        return new Complex(c1.re() + c2.re(), c1.im() + c2.im());
+    }
 
-	protected Complex addComplex(Complex c, Number d) {
-		return new Complex(c.re() + d.doubleValue(), c.im());
-	}	
+    protected Complex addComplex(Complex c, Number d) {
+        return new Complex(c.re() + d.doubleValue(), c.im());
+    }
 
     protected abstract Number addNumber(Number v1, Number v2);
 

@@ -2,16 +2,19 @@
  * Created on 01-Feb-2004
  */
 package org.lsmp.djep.matrixJep.nodeTypes;
-import org.nfunk.jep.*;
-import org.lsmp.djep.vectorJep.*;
-import org.lsmp.djep.vectorJep.values.*;
+
+import org.lsmp.djep.vectorJep.Dimensions;
+import org.lsmp.djep.vectorJep.values.MatrixValueI;
+import org.nfunk.jep.Node;
+
 /**
  * @author Rich Morris
- * Created on 01-Feb-2004
+ *         Created on 01-Feb-2004
  */
 public interface MatrixNodeI extends Node {
-	public Dimensions getDim();
+    public Dimensions getDim();
 //	public void setDim(Dimensions dim);
-	public MatrixValueI getMValue();
-	//public void setMValue(VectorMatrixTensorI val); 
+
+    public MatrixValueI getMValue();
+    //public void setMValue(VectorMatrixTensorI val);
 }

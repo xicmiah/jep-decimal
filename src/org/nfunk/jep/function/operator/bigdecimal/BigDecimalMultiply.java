@@ -8,7 +8,7 @@ import java.math.MathContext;
 /**
  * @author DPavlov
  */
-public class BigDecimalMultiply extends AbstractMultiply implements MathContextAware{
+public class BigDecimalMultiply extends AbstractMultiply implements MathContextAware {
 
     private MathContext mathContext;
 
@@ -16,15 +16,15 @@ public class BigDecimalMultiply extends AbstractMultiply implements MathContextA
     protected Number mulNumber(Number d1, Number d2) {
         BigDecimal bd1;
         BigDecimal bd2;
-        if (d1 instanceof BigDecimal){
+        if (d1 instanceof BigDecimal) {
             bd1 = (BigDecimal) d1;
-        }else{
+        } else {
             bd1 = new BigDecimal(d1.doubleValue(), mathContext);
         }
 
-        if (d2 instanceof BigDecimal){
+        if (d2 instanceof BigDecimal) {
             bd2 = (BigDecimal) d2;
-        }else{
+        } else {
             bd2 = new BigDecimal(d2.doubleValue(), mathContext);
         }
 

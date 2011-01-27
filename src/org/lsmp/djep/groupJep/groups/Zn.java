@@ -2,8 +2,13 @@
  * Created on 05-Mar-2004
  */
 package org.lsmp.djep.groupJep.groups;
-import org.lsmp.djep.groupJep.interfaces.*;
-import java.math.*;
+
+import org.lsmp.djep.groupJep.interfaces.FieldI;
+import org.lsmp.djep.groupJep.interfaces.HasModI;
+import org.lsmp.djep.groupJep.interfaces.HasPowerI;
+import org.lsmp.djep.groupJep.interfaces.OrderedSetI;
+
+import java.math.BigInteger;
 
 /**
  * The group of integers mod n.
@@ -25,86 +30,91 @@ import java.math.*;
  * </pre>
  *
  * @author Rich Morris
- * Created on 05-Mar-2004
+ *         Created on 05-Mar-2004
  */
 public class Zn extends Group implements FieldI,
-	OrderedSetI,HasModI,HasPowerI {
-	BigInteger modulus;
-	/**
-	 * Operations on the reals (Implemented as BigInteger).
-	 */
-	private Zn() {}
-	
-	public Zn(BigInteger modulus) {
-		this.modulus = modulus;
-	}
+        OrderedSetI, HasModI, HasPowerI {
+    BigInteger modulus;
 
-	public Number getZERO() {
-		return BigInteger.ZERO;
-	}
+    /**
+     * Operations on the reals (Implemented as BigInteger).
+     */
+    private Zn() {
+    }
 
-	public Number getONE() {
-		return BigInteger.ONE;
-	}
+    public Zn(BigInteger modulus) {
+        this.modulus = modulus;
+    }
 
-	public Number getInverse(Number num) {
-		BigInteger a = (BigInteger) num;
-		return a.negate().mod(modulus);
-	}
+    public Number getZERO() {
+        return BigInteger.ZERO;
+    }
 
-	public Number getMulInverse(Number num) {
-		BigInteger a = (BigInteger) num;
-		return a.modInverse(modulus);
-	}
+    public Number getONE() {
+        return BigInteger.ONE;
+    }
 
-	public Number add(Number num1, Number num2) {
-		BigInteger a = (BigInteger) num1;
-		BigInteger b = (BigInteger) num2;
-		return a.add(b).mod(modulus);
-	}
+    public Number getInverse(Number num) {
+        BigInteger a = (BigInteger) num;
+        return a.negate().mod(modulus);
+    }
 
-	public Number sub(Number num1, Number num2) {
-		BigInteger a = (BigInteger) num1;
-		BigInteger b = (BigInteger) num2;
-		return a.subtract(b).mod(modulus);
-	}
+    public Number getMulInverse(Number num) {
+        BigInteger a = (BigInteger) num;
+        return a.modInverse(modulus);
+    }
 
-	public Number mul(Number num1, Number num2) {
-		BigInteger a = (BigInteger) num1;
-		BigInteger b = (BigInteger) num2;
-		return a.multiply(b).mod(modulus);
-	}
+    public Number add(Number num1, Number num2) {
+        BigInteger a = (BigInteger) num1;
+        BigInteger b = (BigInteger) num2;
+        return a.add(b).mod(modulus);
+    }
 
-	public Number div(Number num1, Number num2) {
-		BigInteger a = (BigInteger) num1;
-		BigInteger b = (BigInteger) num2;
-		return a.multiply(b.modInverse(modulus)).mod(modulus);
-	}
-	
-	public Number mod(Number num1, Number num2) {
-		BigInteger a = (BigInteger) num1;
-		BigInteger b = (BigInteger) num2;
-		return a.mod(b).mod(modulus);
-	}
-	
-	public Number pow(Number num1, Number num2) {
-		BigInteger a = (BigInteger) num1;
-		BigInteger b = (BigInteger) num2;
-		return a.modPow(b,modulus);
-	}
-	public boolean equals(Number a,Number b)	{
-		return ((Integer) a).compareTo((Integer) b) == 0;
-	}
-	
-	public int compare(Number a,Number b)	{
-		return ((Integer) a).compareTo((Integer) b);
-	}
+    public Number sub(Number num1, Number num2) {
+        BigInteger a = (BigInteger) num1;
+        BigInteger b = (BigInteger) num2;
+        return a.subtract(b).mod(modulus);
+    }
+
+    public Number mul(Number num1, Number num2) {
+        BigInteger a = (BigInteger) num1;
+        BigInteger b = (BigInteger) num2;
+        return a.multiply(b).mod(modulus);
+    }
+
+    public Number div(Number num1, Number num2) {
+        BigInteger a = (BigInteger) num1;
+        BigInteger b = (BigInteger) num2;
+        return a.multiply(b.modInverse(modulus)).mod(modulus);
+    }
+
+    public Number mod(Number num1, Number num2) {
+        BigInteger a = (BigInteger) num1;
+        BigInteger b = (BigInteger) num2;
+        return a.mod(b).mod(modulus);
+    }
+
+    public Number pow(Number num1, Number num2) {
+        BigInteger a = (BigInteger) num1;
+        BigInteger b = (BigInteger) num2;
+        return a.modPow(b, modulus);
+    }
+
+    public boolean equals(Number a, Number b) {
+        return ((Integer) a).compareTo((Integer) b) == 0;
+    }
+
+    public int compare(Number a, Number b) {
+        return ((Integer) a).compareTo((Integer) b);
+    }
 
 
-	public Number valueOf(String str) {
-		BigInteger in = new BigInteger(str);
-		return in.mod(modulus);
-	}
-	
-	public String toString() { return "Integers mod "+this.modulus; }
+    public Number valueOf(String str) {
+        BigInteger in = new BigInteger(str);
+        return in.mod(modulus);
+    }
+
+    public String toString() {
+        return "Integers mod " + this.modulus;
+    }
 }

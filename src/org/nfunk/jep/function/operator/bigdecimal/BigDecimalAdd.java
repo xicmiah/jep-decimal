@@ -8,7 +8,7 @@ import java.math.MathContext;
 /**
  * @author DPavlov
  */
-public class BigDecimalAdd extends AbstractAdd implements MathContextAware{
+public class BigDecimalAdd extends AbstractAdd implements MathContextAware {
 
     private MathContext mathContext;
 
@@ -16,15 +16,15 @@ public class BigDecimalAdd extends AbstractAdd implements MathContextAware{
     protected Number addNumber(Number v1, Number v2) {
         BigDecimal bd1;
         BigDecimal bd2;
-        if (v1 instanceof BigDecimal){
+        if (v1 instanceof BigDecimal) {
             bd1 = (BigDecimal) v1;
-        }else{
+        } else {
             bd1 = new BigDecimal(v1.doubleValue(), mathContext);
         }
 
-        if (v2 instanceof BigDecimal){
+        if (v2 instanceof BigDecimal) {
             bd2 = (BigDecimal) v2;
-        }else{
+        } else {
             bd2 = new BigDecimal(v2.doubleValue(), mathContext);
         }
 
