@@ -7,33 +7,45 @@
 
 *****************************************************************************/
 
-package org.nfunk.jep.function;
+package org.nfunk.jep.function.operator;
 
 import java.util.*;
 import org.nfunk.jep.*;
+import org.nfunk.jep.function.PostfixMathCommand;
+import org.nfunk.jep.function.operator.AbstractAdd;
+import org.nfunk.jep.function.operator.AbstractMultiply;
+import org.nfunk.jep.function.operator.doubleval.Add;
+import org.nfunk.jep.function.operator.doubleval.Multiply;
 
 public class Dot extends PostfixMathCommand
 {
-	static Add add = new Add();
-	static Multiply mul = new Multiply();	
+	private AbstractAdd add;
+	private AbstractMultiply mul;
 	public Dot()
 	{
 		numberOfParameters = 2;
+        add = new Add();
+        mul = new Multiply();
 	}
-	
+
+    public Dot(AbstractAdd add, AbstractMultiply multiply){
+        this.add = add;
+        this.mul = multiply;
+    }
+
 	public void run(Stack inStack)
-		throws ParseException 
+		throws ParseException
 	{
 		checkStack(inStack); // check the stack
-		
+
 		Object param2 = inStack.pop();
 		Object param1 = inStack.pop();
-		
+
 		inStack.push(dot(param1, param2));
 
 		return;
 	}
-	
+
 	public Object dot(Object param1, Object param2)
 		throws ParseException
 	{
@@ -43,7 +55,7 @@ public class Dot extends PostfixMathCommand
 		}
 		throw new ParseException("Dot: Invalid parameter type, both arguments must be vectors");
 	}
-	
+
 
 	public Object dot(Vector v1,Vector v2) throws ParseException
 	{
@@ -52,7 +64,7 @@ public class Dot extends PostfixMathCommand
 		int len = v1.size();
 		if(len<1)
 			throw new ParseException("Dot: empty vectors parsed");
-		
+
 		Object res = mul.mul(v1.elementAt(0),v2.elementAt(0));
 		for(int i=1;i<len;++i)
 		{

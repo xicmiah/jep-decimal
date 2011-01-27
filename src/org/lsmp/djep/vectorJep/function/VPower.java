@@ -7,6 +7,8 @@ import org.lsmp.djep.vectorJep.*;
 import org.lsmp.djep.vectorJep.values.*;
 import org.nfunk.jep.ParseException;
 import org.nfunk.jep.function.*;
+import org.nfunk.jep.function.operator.doubleval.Power;
+
 import java.util.*;
 /**
  * An overloaded power function, if both arguments are vectors returns

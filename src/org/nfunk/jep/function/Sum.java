@@ -11,6 +11,8 @@ package org.nfunk.jep.function;
 
 import java.util.*;
 import org.nfunk.jep.*;
+import org.nfunk.jep.function.PostfixMathCommand;
+import org.nfunk.jep.function.operator.doubleval.Add;
 
 /**
  * This class serves mainly as an example of a function that accepts any number

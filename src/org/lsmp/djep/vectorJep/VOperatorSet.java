@@ -5,6 +5,8 @@ package org.lsmp.djep.vectorJep;
 import org.nfunk.jep.*;
 import org.nfunk.jep.function.*;
 import org.lsmp.djep.vectorJep.function.*;
+import org.nfunk.jep.function.operator.doubleval.Divide;
+
 /**
  * @author Rich Morris
  * Created on 07-Mar-2004

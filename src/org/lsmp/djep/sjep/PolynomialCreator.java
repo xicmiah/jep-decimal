@@ -5,8 +5,9 @@ package org.lsmp.djep.sjep;
 
 import org.lsmp.djep.xjep.*;
 import org.nfunk.jep.*;
+import org.nfunk.jep.function.operator.doubleval.*;
 import org.nfunk.jep.type.*;
-import org.nfunk.jep.function.*;
+
 /**
  * Main entry point for simplification routines.
  *

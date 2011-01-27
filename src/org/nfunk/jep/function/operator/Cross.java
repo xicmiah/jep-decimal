@@ -7,21 +7,33 @@
 
 *****************************************************************************/
 
-package org.nfunk.jep.function;
+package org.nfunk.jep.function.operator;
 
 import java.util.*;
 import org.nfunk.jep.*;
+import org.nfunk.jep.function.PostfixMathCommand;
+import org.nfunk.jep.function.operator.AbstractMultiply;
+import org.nfunk.jep.function.operator.AbstractSubtract;
+import org.nfunk.jep.function.operator.doubleval.Multiply;
+import org.nfunk.jep.function.operator.doubleval.Subtract;
 
 public class Cross extends PostfixMathCommand
 {
-	static Subtract sub = new Subtract();
-	static Multiply mul = new Multiply();	
+	private AbstractSubtract sub;
+	private AbstractMultiply mul;	
 	public Cross()
 	{
 		numberOfParameters = 2;
+        sub  = new Subtract();
+        mul  = new Multiply();
 	}
-	
-	public void run(Stack inStack)
+
+    public Cross(AbstractSubtract sub, AbstractMultiply mul) {
+        this.sub = sub;
+        this.mul = mul;
+    }
+
+    public void run(Stack inStack)
 		throws ParseException 
 	{
 		checkStack(inStack); // check the stack

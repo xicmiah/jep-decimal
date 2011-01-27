@@ -6,12 +6,13 @@ package org.lsmp.djep.matrixJep;
 import org.lsmp.djep.djep.*;
 import org.lsmp.djep.djep.diffRules.*;
 import org.nfunk.jep.*;
-import org.nfunk.jep.function.Power;
+import org.nfunk.jep.function.operator.doubleval.Power;
 import org.lsmp.djep.vectorJep.values.*;
 import org.lsmp.djep.vectorJep.function.*;
 import org.lsmp.djep.xjep.*;
 import org.lsmp.djep.matrixJep.function.*;
 import org.lsmp.djep.matrixJep.nodeTypes.*;
+
 /**
  * An extension of JEP which allows advanced vector and matrix handling and differentation.
  *

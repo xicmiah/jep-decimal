@@ -4,7 +4,8 @@
 package org.lsmp.djep.xjep.function;
 
 import org.nfunk.jep.*;
-import org.nfunk.jep.function.*;
+import org.nfunk.jep.function.operator.doubleval.Add;
+import org.nfunk.jep.function.operator.doubleval.Multiply;
 
 /**
  * The trapezium rule for approximation to a definite integral.

@@ -5,7 +5,8 @@ package org.lsmp.djep.vectorJep.function;
 import org.lsmp.djep.vectorJep.*;
 import org.lsmp.djep.vectorJep.values.*;
 import org.nfunk.jep.*;
-import org.nfunk.jep.function.UMinus;
+import org.nfunk.jep.function.operator.doubleval.UMinus;
+
 /**
  * Unitary minus for matrices.
  * @author Rich Morris

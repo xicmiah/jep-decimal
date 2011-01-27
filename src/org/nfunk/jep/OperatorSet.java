@@ -4,7 +4,9 @@
 package org.nfunk.jep;
 
 import org.nfunk.jep.function.*;
-import org.nfunk.jep.Operator;
+import org.nfunk.jep.function.operator.Cross;
+import org.nfunk.jep.function.operator.Dot;
+import org.nfunk.jep.function.operator.doubleval.*;
 
 /**
  * The standard set of operators used in JEP.
@@ -50,8 +52,8 @@ public class OperatorSet {
 	protected Operator OP_POWER  = new Operator("^",new Power());
 
 	protected Operator OP_ASSIGN = new Operator("=",new Assign()); 
-	protected Operator OP_DOT = new Operator(".",new Dot()); 
-	protected Operator OP_CROSS = new Operator("^^",new Cross()); 
+	protected Operator OP_DOT = new Operator(".",new Dot());
+	protected Operator OP_CROSS = new Operator("^^",new Cross());
 	protected Operator OP_LIST = new Operator("LIST",new List()); 
 	protected Operator OP_ELEMENT = new Operator("[]",new Ele());
 //	protected Operator OP_RANGE = new Operator(":",new Range());

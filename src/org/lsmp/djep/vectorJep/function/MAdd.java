@@ -5,7 +5,7 @@ package org.lsmp.djep.vectorJep.function;
 import org.lsmp.djep.vectorJep.*;
 import org.lsmp.djep.vectorJep.values.*;
 import org.nfunk.jep.*;
-import org.nfunk.jep.function.Add;
+import org.nfunk.jep.function.operator.doubleval.Add;
 /**
  * An extension of the Add command to allow it to add MVector's and Matrix's.
  * @author Rich Morris

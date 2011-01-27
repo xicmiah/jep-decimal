@@ -11,6 +11,9 @@ import org.lsmp.djep.vectorJep.Dimensions;
 import org.lsmp.djep.vectorJep.values.*;
 import org.nfunk.jep.ParseException;
 import org.nfunk.jep.function.*;
+import org.nfunk.jep.function.operator.doubleval.Add;
+import org.nfunk.jep.function.operator.doubleval.Multiply;
+import org.nfunk.jep.function.operator.doubleval.Subtract;
 
 /**
  * Calculate the Determinant of a matrix

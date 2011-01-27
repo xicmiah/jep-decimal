@@ -5,7 +5,7 @@ package org.lsmp.djep.vectorJep.function;
 import org.lsmp.djep.vectorJep.*;
 import org.lsmp.djep.vectorJep.values.*;
 import org.nfunk.jep.*;
-import org.nfunk.jep.function.*;
+import org.nfunk.jep.function.operator.doubleval.Divide;
 
 /**
  * Multiplies any number of Vectors or Matrices element by element.

@@ -5,7 +5,10 @@ package org.lsmp.djep.vectorJep.function;
 import org.lsmp.djep.vectorJep.*;
 import org.lsmp.djep.vectorJep.values.*;
 import org.nfunk.jep.*;
-import org.nfunk.jep.function.*;
+import org.nfunk.jep.function.operator.doubleval.Add;
+import org.nfunk.jep.function.operator.doubleval.Multiply;
+import org.nfunk.jep.function.operator.doubleval.Subtract;
+
 import java.util.*;
 
 /**

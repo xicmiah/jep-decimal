@@ -4,7 +4,7 @@
 package org.lsmp.djep.xjep.function;
 
 import org.nfunk.jep.*;
-import org.nfunk.jep.function.*;
+import org.nfunk.jep.function.operator.doubleval.Add;
 
 /**
  * A sum function Sum(x^2,x,1,10) finds the sum of x^2 with x running from 1 to 10.

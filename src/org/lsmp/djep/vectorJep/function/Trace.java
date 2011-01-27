@@ -11,6 +11,8 @@ import org.lsmp.djep.vectorJep.Dimensions;
 import org.lsmp.djep.vectorJep.values.*;
 import org.nfunk.jep.ParseException;
 import org.nfunk.jep.function.*;
+import org.nfunk.jep.function.operator.doubleval.Add;
+import org.nfunk.jep.function.operator.doubleval.Multiply;
 
 /**
  * Calculate the trace of a matrix
