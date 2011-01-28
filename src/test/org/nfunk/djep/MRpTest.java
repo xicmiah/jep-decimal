@@ -1,4 +1,4 @@
-package org.lsmp.djepJUnit;
+package org.nfunk.djep;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
