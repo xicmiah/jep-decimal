@@ -10,6 +10,9 @@
 package org.nfunk.jep;
 
 import org.nfunk.jep.function.*;
+import org.nfunk.jep.function.doubleval.Abs;
+import org.nfunk.jep.function.doubleval.Ceil;
+import org.nfunk.jep.function.doubleval.Floor;
 import org.nfunk.jep.function.doubleval.Round;
 import org.nfunk.jep.function.operator.doubleval.Modulus;
 import org.nfunk.jep.function.operator.doubleval.Power;

@@ -1,9 +1,12 @@
 /* @author rich
  * Created on 18-Nov-2003
  */
-package org.nfunk.jep.function;
+package org.nfunk.jep.function.operator;
 
 import org.nfunk.jep.*;
+import org.nfunk.jep.function.CallbackEvaluationI;
+import org.nfunk.jep.function.LValueI;
+import org.nfunk.jep.function.PostfixMathCommand;
 
 /**
  * An assignment operator so we can do

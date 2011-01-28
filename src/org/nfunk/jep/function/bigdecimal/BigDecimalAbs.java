@@ -1,5 +1,6 @@
 package org.nfunk.jep.function.bigdecimal;
 
+import org.nfunk.jep.ParseException;
 import org.nfunk.jep.function.AbstractAbs;
 import org.nfunk.jep.function.MathContextAware;
 import org.nfunk.jep.function.NumberFactoryAware;
@@ -17,13 +18,13 @@ public class BigDecimalAbs extends AbstractAbs implements MathContextAware, Numb
     private NumberFactory<BigDecimal> factory;
 
     @Override
-    protected Number getNumber(double doubleVal) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    protected Number getNumber(double doubleVal) throws ParseException {
+        return factory.createNumber(doubleVal);
     }
 
     @Override
-    protected Number absNumber(Number number) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    protected Number absNumber(Number number) throws ParseException {
+        return factory.createNumber(number).abs(mathContext);
     }
 
     public MathContext getMathContext() {

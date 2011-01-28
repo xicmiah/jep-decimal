@@ -3,8 +3,8 @@
  */
 package org.nfunk.jep;
 
-import org.nfunk.jep.function.Assign;
-import org.nfunk.jep.function.Ele;
+import org.nfunk.jep.function.operator.Assign;
+import org.nfunk.jep.function.operator.Ele;
 import org.nfunk.jep.function.List;
 import org.nfunk.jep.function.operator.*;
 import org.nfunk.jep.function.operator.doubleval.*;

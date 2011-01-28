@@ -116,7 +116,7 @@ public class JEPTest extends TestCase {
      * in it and compares the expressions with the results.
      */
     public void testWithFile(String fileName) {
-        BufferedReader reader;
+        BufferedReader reader = null;
         Object v1, v2;
         boolean hasError = false;
 
@@ -124,9 +124,8 @@ public class JEPTest extends TestCase {
         try {
             reader = new BufferedReader(new FileReader(fileName));
         } catch (Exception e) {
-            Assert.assertTrue(false);
             println("File \"" + fileName + "\" not found");
-            return;
+            Assert.assertTrue(false);
         }
 
         // reset the line count

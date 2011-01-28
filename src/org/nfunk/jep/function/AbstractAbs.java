@@ -34,8 +34,8 @@ public abstract class AbstractAbs extends PostfixMathCommand{
         throw new ParseException("Invalid parameter type");
     }
 
-    protected abstract Number getNumber(double doubleVal);
+    protected abstract Number getNumber(double doubleVal) throws ParseException;
 
-    protected abstract Number absNumber(Number number);
+    protected abstract Number absNumber(Number number) throws ParseException;
 
 }

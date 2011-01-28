@@ -10,7 +10,7 @@ import org.nfunk.jep.ASTFunNode;
 import org.nfunk.jep.ASTVarNode;
 import org.nfunk.jep.Node;
 import org.nfunk.jep.ParseException;
-import org.nfunk.jep.function.Assign;
+import org.nfunk.jep.function.operator.Assign;
 import org.nfunk.jep.function.LValueI;
 
 import java.util.Stack;

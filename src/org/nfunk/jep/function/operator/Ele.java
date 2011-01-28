@@ -1,9 +1,11 @@
 /*
 Created 26-May-2006 - Richard Morris
 */
-package org.nfunk.jep.function;
+package org.nfunk.jep.function.operator;
 
 import org.nfunk.jep.*;
+import org.nfunk.jep.function.LValueI;
+import org.nfunk.jep.function.PostfixMathCommand;
 
 import java.util.Stack;
 import java.util.Vector;
