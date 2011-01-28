@@ -10,6 +10,7 @@
 package org.nfunk.jep;
 
 import org.nfunk.jep.function.*;
+import org.nfunk.jep.function.doubleval.Round;
 import org.nfunk.jep.function.operator.doubleval.Modulus;
 import org.nfunk.jep.function.operator.doubleval.Power;
 import org.nfunk.jep.type.Complex;

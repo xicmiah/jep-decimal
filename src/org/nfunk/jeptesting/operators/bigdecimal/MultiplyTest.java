@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.nfunk.jep.ParseException;
 import org.nfunk.jep.function.operator.bigdecimal.BigDecimalMultiply;
+import org.nfunk.jep.type.BigDecimalNumberFactory;
 
 import java.math.BigDecimal;
 import java.util.Stack;
@@ -24,6 +25,7 @@ public class MultiplyTest extends BigDecimalTestSupport{
         mult = new BigDecimalMultiply();
         mult.setMathContext(mc);
         mult.setCurNumberOfParameters(2);
+        mult.setNumberFactory(new BigDecimalNumberFactory(mc));
         stack = new Stack();
     }
 

@@ -6,6 +6,7 @@ import org.nfunk.jep.ParseException;
 import org.nfunk.jep.function.operator.bigdecimal.BigDecimalMultiply;
 import org.nfunk.jep.function.operator.bigdecimal.BigDecimalPower;
 import org.nfunk.jep.function.operator.doubleval.Modulus;
+import org.nfunk.jep.type.BigDecimalNumberFactory;
 
 import java.math.BigDecimal;
 import java.util.Stack;
@@ -26,6 +27,7 @@ public class PowerTest extends BigDecimalTestSupport{
     public void setUp(){
         pow = new BigDecimalPower();
         pow.setMathContext(mc);
+        pow.setNumberFactory(new BigDecimalNumberFactory(mc));
         stack = new Stack();
     }
 

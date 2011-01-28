@@ -6,6 +6,7 @@ import org.nfunk.jep.ParseException;
 import org.nfunk.jep.function.operator.AbstractAdd;
 import org.nfunk.jep.function.operator.bigdecimal.BigDecimalAdd;
 import org.nfunk.jep.function.operator.doubleval.Add;
+import org.nfunk.jep.type.BigDecimalNumberFactory;
 
 import java.math.BigDecimal;
 import java.util.Stack;
@@ -24,6 +25,7 @@ public class AdditionTest extends BigDecimalTestSupport{
     public void setUp(){
         add = new BigDecimalAdd();
         add.setMathContext(mc);
+        add.setNumberFactory(new BigDecimalNumberFactory(mc));
         add.setCurNumberOfParameters(2);
         stack = new Stack();
     }

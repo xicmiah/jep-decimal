@@ -16,7 +16,7 @@ import org.nfunk.jep.ParseException;
  * other NumberFactory implementations if other number types are required. This
  * can be done using the
  */
-public class DoubleNumberFactory implements NumberFactory {
+public class DoubleNumberFactory implements NumberFactory<Double> {
     public static Double ZERO = new Double(0.0);
     public static Double ONE = new Double(1.0);
     public static Double TWO = new Double(2.0);
@@ -27,51 +27,52 @@ public class DoubleNumberFactory implements NumberFactory {
      *
      * @param value The initialization value for the returned object.
      */
-    public Object createNumber(String value) {
+    public Double createNumber(String value) {
         return new Double(value);
     }
 
-    public Object createNumber(double value) {
+    public Double createNumber(double value) {
         return new Double(value);
     }
 
-    public Object createNumber(Number value) {
-        return value;
+    public Double createNumber(Number value) {
+        if (value instanceof Double) return (Double) value;
+        return value.doubleValue();
     }
 
-    public Object createNumber(boolean value) {
+    public Double createNumber(boolean value) {
         return (value ? ONE : ZERO);
     }
 
-    public Object createNumber(float value) {
+    public Double createNumber(float value) {
         return new Double(value);
     }
 
-    public Object createNumber(int value) {
+    public Double createNumber(int value) {
         return new Double(value);
     }
 
-    public Object createNumber(short value) {
+    public Double createNumber(short value) {
         return new Double(value);
     }
 
-    public Object createNumber(Complex value) throws ParseException {
+    public Double createNumber(Complex value) throws ParseException {
         throw new ParseException("Cannot create a number from a Complex value");
     }
 
-    public Object getMinusOne() {
+    public Double getMinusOne() {
         return MINUSONE;
     }
 
-    public Object getOne() {
+    public Double getOne() {
         return ONE;
     }
 
-    public Object getTwo() {
+    public Double getTwo() {
         return TWO;
     }
 
-    public Object getZero() {
+    public Double getZero() {
         return ZERO;
     }
 }

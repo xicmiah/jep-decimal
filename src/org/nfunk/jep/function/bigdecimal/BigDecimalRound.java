@@ -1,28 +1,36 @@
-package org.nfunk.jep.function.operator.bigdecimal;
+package org.nfunk.jep.function.bigdecimal;
 
 import org.nfunk.jep.ParseException;
+import org.nfunk.jep.function.AbstractRound;
 import org.nfunk.jep.function.MathContextAware;
 import org.nfunk.jep.function.NumberFactoryAware;
-import org.nfunk.jep.function.operator.AbstractSubtract;
 import org.nfunk.jep.type.NumberFactory;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
 
 /**
+ * Round operation impl for big decimal numbers.
+ *
  * @author DPavlov
  */
-public class BigDecimalSubtract extends AbstractSubtract implements MathContextAware, NumberFactoryAware<BigDecimal> {
+public class BigDecimalRound extends AbstractRound implements MathContextAware, NumberFactoryAware<BigDecimal> {
 
     private MathContext mathContext;
     private NumberFactory<BigDecimal> numberFactory;
 
     @Override
-    protected Number subNumber(Number d1, Number d2) throws ParseException {
-        BigDecimal bd1 = numberFactory.createNumber(d1);
-        BigDecimal bd2 = numberFactory.createNumber(d2);
+    protected Object roundNumber(Number l, Number r) throws ParseException {
+        int scale = r.intValue();
 
-        return bd1.subtract(bd2, mathContext);
+        return numberFactory.createNumber(l).setScale(scale, mathContext.getRoundingMode());
+    }
+
+    @Override
+    protected Object roundNumber(Number param) throws ParseException {
+        BigDecimal bd = numberFactory.createNumber(param);
+
+        return bd.setScale(0, mathContext.getRoundingMode());
     }
 
     public MathContext getMathContext() {

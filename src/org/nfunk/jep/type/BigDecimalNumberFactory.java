@@ -10,7 +10,7 @@ import java.math.MathContext;
  *
  * @author Zelgadis <pavlov.dmitry.n@gmail.com>
  */
-public class BigDecimalNumberFactory implements NumberFactory {
+public class BigDecimalNumberFactory implements NumberFactory<BigDecimal> {
 
     private static final BigDecimal MINUS_ONE = BigDecimal.ONE.negate();
     private static final BigDecimal TWO = BigDecimal.valueOf(2L);
@@ -29,51 +29,58 @@ public class BigDecimalNumberFactory implements NumberFactory {
         this.mathContext = mathContext;
     }
 
-    public Object createNumber(String value) {
+    public BigDecimal createNumber(String value) {
         return new BigDecimal(value);
     }
 
-    public Object createNumber(double value) {
+    public BigDecimal createNumber(double value) {
         return new BigDecimal(value);
     }
 
-    public Object createNumber(Number value) {
-        return value;
+    public BigDecimal createNumber(Number value) {
+        if (value instanceof BigDecimal) return (BigDecimal) value;
+
+        if (value instanceof Integer || value instanceof Long) {
+            return new BigDecimal(value.longValue(), mathContext);
+        }
+
+        //todo think about NaN and infinity values
+        return new BigDecimal(value.doubleValue(), mathContext);
     }
 
-    public Object createNumber(boolean value) {
+    public BigDecimal createNumber(boolean value) {
         return (value ? BigDecimal.ONE : BigDecimal.ZERO);
     }
 
-    public Object createNumber(float value) {
+    public BigDecimal createNumber(float value) {
         return new BigDecimal(value);
     }
 
-    public Object createNumber(int value) {
+    public BigDecimal createNumber(int value) {
         return new BigDecimal(value);
     }
 
-    public Object createNumber(short value) {
+    public BigDecimal createNumber(short value) {
         return new BigDecimal(value);
     }
 
-    public Object createNumber(Complex value) throws ParseException {
+    public BigDecimal createNumber(Complex value) throws ParseException {
         throw new ParseException("Cannot create a number from a Complex value");
     }
 
-    public Object getMinusOne() {
+    public BigDecimal getMinusOne() {
         return MINUS_ONE;
     }
 
-    public Object getOne() {
+    public BigDecimal getOne() {
         return BigDecimal.ONE;
     }
 
-    public Object getTwo() {
+    public BigDecimal getTwo() {
         return TWO;
     }
 
-    public Object getZero() {
+    public BigDecimal getZero() {
         return BigDecimal.ZERO;
     }
 }

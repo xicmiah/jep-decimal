@@ -1,11 +1,3 @@
-/*****************************************************************************
-
- JEP 2.4.1, Extensions 1.1.1
- April 30 2007
- (c) Copyright 2007, Nathan Funk and Richard Morris
- See LICENSE-*.txt for license information.
-
- *****************************************************************************/
 package org.nfunk.jep.function;
 
 import org.nfunk.jep.ParseException;
@@ -13,14 +5,11 @@ import org.nfunk.jep.ParseException;
 import java.util.Stack;
 
 /**
- * A PostfixMathCommandI which rounds a number
- * round(pi) finds the closest integer to the argument
- * round(pi,3) rounds the argument to 3 decimal places
- *
- * @author Richard Morris
+ * @author DPavlov
  */
-public class Round extends PostfixMathCommand {
-    public Round() {
+public abstract class AbstractRound extends PostfixMathCommand{
+
+    public AbstractRound() {
         numberOfParameters = -1;
     }
 
@@ -42,18 +31,19 @@ public class Round extends PostfixMathCommand {
 
     private Object round(Object l, Object r) throws ParseException {
         if (l instanceof Number && r instanceof Number) {
-            int dp = ((Number) r).intValue();
-            double val = ((Number) l).doubleValue();
-            double mul = Math.pow(10, dp);
-            return new Double(Math.rint(val * mul) / mul);
+            return roundNumber((Number) l, (Number) r);
         }
         throw new ParseException("Invalid parameter type");
     }
 
+    protected abstract Object roundNumber(Number l, Number r) throws ParseException;
+
+    protected abstract Object roundNumber(Number param) throws ParseException;
+
     public Object round(Object param)
             throws ParseException {
         if (param instanceof Number) {
-            return new Double(Math.rint(((Number) param).doubleValue()));
+            return roundNumber((Number) param);
         }
 
         throw new ParseException("Invalid parameter type");

@@ -1,6 +1,10 @@
 package org.nfunk.jep.function.operator.bigdecimal;
 
+import org.nfunk.jep.ParseException;
+import org.nfunk.jep.function.MathContextAware;
+import org.nfunk.jep.function.NumberFactoryAware;
 import org.nfunk.jep.function.operator.AbstractModulus;
+import org.nfunk.jep.type.NumberFactory;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -8,25 +12,15 @@ import java.math.MathContext;
 /**
  * @author DPavlov
  */
-public class BigDecimalModulus extends AbstractModulus implements MathContextAware {
+public class BigDecimalModulus extends AbstractModulus implements MathContextAware, NumberFactoryAware<BigDecimal> {
 
     private MathContext mathContext;
+    private NumberFactory<BigDecimal> numberFactory;
 
     @Override
-    protected Number modulus(Number d1, Number d2) {
-        BigDecimal bd1;
-        BigDecimal bd2;
-        if (d1 instanceof BigDecimal) {
-            bd1 = (BigDecimal) d1;
-        } else {
-            bd1 = new BigDecimal(d1.doubleValue(), mathContext);
-        }
-
-        if (d2 instanceof BigDecimal) {
-            bd2 = (BigDecimal) d2;
-        } else {
-            bd2 = new BigDecimal(d2.doubleValue(), mathContext);
-        }
+    protected Number modulus(Number d1, Number d2) throws ParseException {
+        BigDecimal bd1 = numberFactory.createNumber(d1);
+        BigDecimal bd2 = numberFactory.createNumber(d2);
 
         return bd1.remainder(bd2, mathContext);
     }
@@ -37,5 +31,9 @@ public class BigDecimalModulus extends AbstractModulus implements MathContextAwa
 
     public void setMathContext(MathContext mathContext) {
         this.mathContext = mathContext;
+    }
+
+    public void setNumberFactory(NumberFactory<BigDecimal> numberFactory) {
+        this.numberFactory = numberFactory;
     }
 }

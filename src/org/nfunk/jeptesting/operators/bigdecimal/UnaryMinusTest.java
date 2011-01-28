@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.nfunk.jep.ParseException;
 import org.nfunk.jep.function.operator.bigdecimal.BigDecimalUMinus;
 import org.nfunk.jep.function.operator.doubleval.Subtract;
+import org.nfunk.jep.type.BigDecimalNumberFactory;
 
 import java.math.BigDecimal;
 import java.util.Stack;
@@ -25,6 +26,7 @@ public class UnaryMinusTest extends BigDecimalTestSupport{
     public void setUp(){
         minus = new BigDecimalUMinus();
         minus.setMathContext(mc);
+        minus.setNumberFactory(new BigDecimalNumberFactory(mc));
         stack = new Stack();
     }
 

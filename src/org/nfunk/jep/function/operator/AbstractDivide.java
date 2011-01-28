@@ -52,7 +52,7 @@ public abstract class AbstractDivide extends PostfixMathCommand {
     }
 
 
-    protected abstract Number divNumber(Number d1, Number d2);
+    protected abstract Number divNumber(Number d1, Number d2) throws ParseException;
 
     protected Complex div(Complex c1, Complex c2) {
         return c1.div(c2);
@@ -68,7 +68,7 @@ public abstract class AbstractDivide extends PostfixMathCommand {
         return new Complex(c.re() / d.doubleValue(), c.im() / d.doubleValue());
     }
 
-    protected Vector div(Vector v, Number d) {
+    protected Vector div(Vector v, Number d) throws ParseException {
         Vector result = new Vector();
 
         for (int i = 0; i < v.size(); i++)
@@ -77,7 +77,7 @@ public abstract class AbstractDivide extends PostfixMathCommand {
         return result;
     }
 
-    protected Vector div(Number d, Vector v) {
+    protected Vector div(Number d, Vector v) throws ParseException {
         Vector result = new Vector();
 
         for (int i = 0; i < v.size(); i++)

@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.nfunk.jep.ParseException;
 import org.nfunk.jep.function.operator.bigdecimal.BigDecimalSubtract;
 import org.nfunk.jep.function.operator.doubleval.Subtract;
+import org.nfunk.jep.type.BigDecimalNumberFactory;
 
 import java.math.BigDecimal;
 import java.util.Stack;
@@ -23,6 +24,7 @@ public class SubtractionTest extends BigDecimalTestSupport{
     public void setUp(){
         subtract = new BigDecimalSubtract();
         subtract.setMathContext(mc);
+        subtract.setNumberFactory(new BigDecimalNumberFactory(mc));
         stack = new Stack();
     }
 

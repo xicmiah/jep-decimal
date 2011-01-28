@@ -64,7 +64,7 @@ public abstract class AbstractMultiply extends PostfixMathCommand {
         throw new ParseException("Invalid parameter type");
     }
 
-    protected abstract Number mulNumber(Number d1, Number d2);
+    protected abstract Number mulNumber(Number d1, Number d2) throws ParseException;
 
 
     protected Complex mul(Complex c1, Complex c2) {
@@ -75,7 +75,7 @@ public abstract class AbstractMultiply extends PostfixMathCommand {
         return c.mul(d.doubleValue());
     }
 
-    protected Vector mul(Vector v, Number d) {
+    protected Vector mul(Vector v, Number d) throws ParseException {
         Vector result = new Vector();
 
         for (int i = 0; i < v.size(); i++)

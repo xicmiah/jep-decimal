@@ -32,6 +32,6 @@ public abstract class AbstractUMinus extends PostfixMathCommand {
         throw new ParseException("Invalid parameter type");
     }
 
-    protected abstract Number negateNumber(Number param);
+    protected abstract Number negateNumber(Number param) throws ParseException;
 
 }

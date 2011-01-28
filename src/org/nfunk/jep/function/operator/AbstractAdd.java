@@ -81,6 +81,6 @@ public abstract class AbstractAdd extends PostfixMathCommand {
         return new Complex(c.re() + d.doubleValue(), c.im());
     }
 
-    protected abstract Number addNumber(Number v1, Number v2);
+    protected abstract Number addNumber(Number v1, Number v2) throws ParseException;
 
 }

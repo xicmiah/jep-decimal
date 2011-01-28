@@ -1,7 +1,11 @@
 package org.nfunk.jep.function.operator.bigdecimal;
 
+import org.nfunk.jep.ParseException;
+import org.nfunk.jep.function.MathContextAware;
+import org.nfunk.jep.function.NumberFactoryAware;
 import org.nfunk.jep.function.operator.AbstractPower;
 import org.nfunk.jep.type.Complex;
+import org.nfunk.jep.type.NumberFactory;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -9,12 +13,13 @@ import java.math.MathContext;
 /**
  * @author DPavlov
  */
-public class BigDecimalPower extends AbstractPower implements MathContextAware {
+public class BigDecimalPower extends AbstractPower implements MathContextAware, NumberFactoryAware<BigDecimal> {
 
     private MathContext mathContext;
+    private NumberFactory<BigDecimal> numberFactory;
 
     @Override
-    protected Object powerNumber(Number d1, Number d2) {
+    protected Object powerNumber(Number d1, Number d2) throws ParseException {
         if (d1.doubleValue() < 0 && d2.doubleValue() != d2.intValue()) {
             Complex c = new Complex(d1.doubleValue(), 0.0);
             return c.power(d2.doubleValue());
@@ -22,13 +27,7 @@ public class BigDecimalPower extends AbstractPower implements MathContextAware {
 
             if (powerIsInteger(d2)) {
                 //power value is integer, so we can use std big decimal power operation
-                BigDecimal bd1;
-
-                if (d1 instanceof BigDecimal) {
-                    bd1 = (BigDecimal) d1;
-                } else {
-                    bd1 = new BigDecimal(d1.doubleValue(), mathContext);
-                }
+                BigDecimal bd1 = numberFactory.createNumber(d1);                
 
                 return bd1.pow(d2.intValue(), mathContext);
             } else {
@@ -52,5 +51,9 @@ public class BigDecimalPower extends AbstractPower implements MathContextAware {
 
     public MathContext getMathContext() {
         return mathContext;
+    }
+
+    public void setNumberFactory(NumberFactory<BigDecimal> numberFactory) {
+        this.numberFactory = numberFactory;
     }
 }

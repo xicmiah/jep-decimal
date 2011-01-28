@@ -45,7 +45,7 @@ public abstract class AbstractSubtract extends PostfixMathCommand {
     }
 
 
-    protected abstract Number subNumber(Number d1, Number d2);
+    protected abstract Number subNumber(Number d1, Number d2) throws ParseException;
 
     protected Complex subComplex(Complex c1, Complex c2) {
         return new Complex(c1.re() - c2.re(), c1.im() - c2.im());

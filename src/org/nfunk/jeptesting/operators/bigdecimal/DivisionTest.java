@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.nfunk.jep.ParseException;
 import org.nfunk.jep.function.operator.bigdecimal.BigDecimalDivide;
+import org.nfunk.jep.type.BigDecimalNumberFactory;
 
 import java.math.BigDecimal;
 import java.util.Stack;
@@ -23,6 +24,7 @@ public class DivisionTest extends BigDecimalTestSupport{
     public void setUp(){
         div = new BigDecimalDivide();
         div.setMathContext(mc);
+        div.setNumberFactory(new BigDecimalNumberFactory(mc));
         stack = new Stack();
     }
 

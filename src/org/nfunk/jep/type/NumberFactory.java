@@ -17,68 +17,67 @@ import org.nfunk.jep.ParseException;
  * the JEP class, the constants in an expression will be created with that
  * class.
  */
-public interface NumberFactory {
+public interface NumberFactory<T> {
 
     /**
      * Creates a number object and initializes its value.
      *
      * @param value The initial value of the number as a string.
      */
-    public Object createNumber(String value) throws ParseException;
+    public T createNumber(String value) throws ParseException;
 
     /**
      * Creates a number object with given double value.
      */
-    public Object createNumber(double value) throws ParseException;
+    public T createNumber(double value) throws ParseException;
 
     /**
      * Create a number object with given int value
      */
-    public Object createNumber(int value) throws ParseException;
+    public T createNumber(int value) throws ParseException;
 
     /**
      * Create a number object with given short value
      */
-    public Object createNumber(short value) throws ParseException;
+    public T createNumber(short value) throws ParseException;
 
     /**
      * Create a number object with given float value
      */
-    public Object createNumber(float value) throws ParseException;
+    public T createNumber(float value) throws ParseException;
 
     /**
      * Create a number object with given boolean value
      */
-    public Object createNumber(boolean value) throws ParseException;
+    public T createNumber(boolean value) throws ParseException;
 
     /**
      * Creates a number object from a class implementing Number,
-     * May actually just return the class.
      */
-    public Object createNumber(Number value) throws ParseException;
+    public T createNumber(Number value) throws ParseException;
 
     /**
      * Create a number object with given Complex value
      */
-    public Object createNumber(Complex value) throws ParseException;
+    public T createNumber(Complex value) throws ParseException;
 
     /**
      * Return an object representing ZERO the additive identity.
      */
-    public Object getZero();
+    public T getZero();
 
     /**
      * Return an object representing ONE the multiplicative identity.
      */
-    public Object getOne();
+    public T getOne();
 
     /**
      * Return an object representing ZERO-ONE.
      */
-    public Object getMinusOne();
+    public T getMinusOne();
 
     /**
      * Return an object representing ONE+ONE.
      */
-    public Object getTwo();
+    public T getTwo();
 }

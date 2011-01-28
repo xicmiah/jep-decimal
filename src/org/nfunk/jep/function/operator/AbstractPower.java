@@ -43,7 +43,7 @@ public abstract class AbstractPower extends PostfixMathCommand {
     }
 
 
-    protected abstract Object powerNumber(Number d1, Number d2);
+    protected abstract Object powerNumber(Number d1, Number d2) throws ParseException;
 
     protected Object power(Complex c1, Complex c2) {
         Complex temp = c1.power(c2);

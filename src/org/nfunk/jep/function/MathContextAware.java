@@ -1,4 +1,4 @@
-package org.nfunk.jep.function.operator.bigdecimal;
+package org.nfunk.jep.function;
 
 import java.math.MathContext;
 

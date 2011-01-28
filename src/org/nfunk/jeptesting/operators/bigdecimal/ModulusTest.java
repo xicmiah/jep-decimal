@@ -6,6 +6,7 @@ import org.nfunk.jep.ParseException;
 import org.nfunk.jep.function.operator.bigdecimal.BigDecimalModulus;
 import org.nfunk.jep.function.operator.bigdecimal.BigDecimalMultiply;
 import org.nfunk.jep.function.operator.doubleval.Modulus;
+import org.nfunk.jep.type.BigDecimalNumberFactory;
 
 import java.math.BigDecimal;
 import java.util.Stack;
@@ -24,6 +25,7 @@ public class ModulusTest extends BigDecimalTestSupport{
     public void setUp(){
         mod = new BigDecimalModulus();
         mod.setMathContext(mc);
+        mod.setNumberFactory(new BigDecimalNumberFactory(mc));
         stack = new Stack();
     }
 

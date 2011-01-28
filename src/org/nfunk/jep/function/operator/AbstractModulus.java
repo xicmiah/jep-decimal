@@ -28,6 +28,6 @@ public abstract class AbstractModulus extends PostfixMathCommand {
         return;
     }
 
-    protected abstract Number modulus(Number d1, Number d2);
+    protected abstract Number modulus(Number d1, Number d2) throws ParseException;
 
 }
