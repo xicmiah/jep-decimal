@@ -1,4 +1,4 @@
-package org.nfunk.jeptesting.operators;
+package org.nfunk.jep.function.operators;
 
 import org.junit.Assert;
 import org.junit.Before;

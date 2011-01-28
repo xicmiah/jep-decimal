@@ -10,6 +10,7 @@
 package org.nfunk.jep.function;
 
 import org.nfunk.jep.ParseException;
+import org.nfunk.jep.function.operator.AbstractAdd;
 import org.nfunk.jep.function.operator.doubleval.Add;
 
 import java.util.Stack;
@@ -19,14 +20,20 @@ import java.util.Stack;
  * of parameters. Note that the numberOfParameters is initialized to -1.
  */
 public class Sum extends PostfixMathCommand {
-    private Add addFun = new Add();
+    private AbstractAdd addFun ;
 
     /**
      * Constructor.
      */
     public Sum() {
         // Use a variable number of arguments
+        this(new Add());
+    }
+
+    public Sum(AbstractAdd addFunction){
         numberOfParameters = -1;
+
+        addFun = addFunction;
     }
 
     /**

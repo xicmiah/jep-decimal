@@ -7,11 +7,10 @@
 
  *****************************************************************************/
 
-package org.nfunk.jeptesting;
+package org.nfunk.jep;
 
 import junit.framework.Assert;
 import junit.framework.TestCase;
-import org.nfunk.jep.JEP;
 import org.nfunk.jep.type.Complex;
 
 import java.io.BufferedReader;

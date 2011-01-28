@@ -1,4 +1,4 @@
-package org.nfunk.jeptesting.operators.bigdecimal;
+package org.nfunk.jep.function.operators.bigdecimal;
 
 import org.junit.Before;
 import org.junit.Test;

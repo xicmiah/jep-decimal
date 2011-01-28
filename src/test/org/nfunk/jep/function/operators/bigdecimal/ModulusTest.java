@@ -1,10 +1,9 @@
-package org.nfunk.jeptesting.operators.bigdecimal;
+package org.nfunk.jep.function.operators.bigdecimal;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.nfunk.jep.ParseException;
 import org.nfunk.jep.function.operator.bigdecimal.BigDecimalModulus;
-import org.nfunk.jep.function.operator.bigdecimal.BigDecimalMultiply;
 import org.nfunk.jep.function.operator.doubleval.Modulus;
 import org.nfunk.jep.type.BigDecimalNumberFactory;
 

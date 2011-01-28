@@ -230,7 +230,7 @@
 	<target name="runtests">
         <java fork="yes" classname="junit.textui.TestRunner" 
             taskname="junit" failonerror="true" dir="bin">
-            <arg value="org.nfunk.jeptesting.AllTests"/>
+            <arg value="org.nfunk.jep.AllTests"/>
             <classpath>
                 <pathelement location="lib/junit.jar" />
                 <pathelement location="build/" />

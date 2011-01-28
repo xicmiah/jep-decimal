@@ -1,11 +1,11 @@
-package org.nfunk.jeptesting.operators;
+package org.nfunk.jep.function.operators;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.nfunk.jep.ParseException;
 import org.nfunk.jep.function.operator.Logical;
-import org.nfunk.jeptesting.operators.bigdecimal.BigDecimalTestSupport;
+import org.nfunk.jep.function.operators.bigdecimal.BigDecimalTestSupport;
 
 import java.math.BigDecimal;
 import java.util.Stack;

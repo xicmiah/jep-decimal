@@ -7,7 +7,7 @@
 
  *****************************************************************************/
 
-package org.nfunk.jeptesting;
+package org.nfunk.jep;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

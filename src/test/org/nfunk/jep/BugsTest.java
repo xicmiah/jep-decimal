@@ -1,4 +1,4 @@
-package org.nfunk.jeptesting;
+package org.nfunk.jep;
 
 import junit.framework.Assert;
 import junit.framework.TestCase;
