@@ -9,7 +9,6 @@ import org.nfunk.jep.Node;
 import org.nfunk.jep.SymbolTable;
 import org.nfunk.jep.Variable;
 
-import java.util.Enumeration;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -38,8 +37,7 @@ public class ObserverConsole extends DJepConsole implements Observer {
         st.addObserver(this);
         st.addObserverToExistingVariables(this);
 
-        for (Enumeration en = st.elements(); en.hasMoreElements();) {
-            Variable var = (Variable) en.nextElement();
+        for (Variable var : st.getVariables()) {
             println("Existing variable " + var);
             //var.addObserver(this);
         }

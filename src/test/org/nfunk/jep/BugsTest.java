@@ -2,13 +2,8 @@ package org.nfunk.jep;
 
 import junit.framework.Assert;
 import junit.framework.TestCase;
-import org.nfunk.jep.JEP;
-import org.nfunk.jep.ParseException;
-import org.nfunk.jep.SymbolTable;
-import org.nfunk.jep.Variable;
 import org.nfunk.jep.function.PostfixMathCommand;
 
-import java.util.Enumeration;
 import java.util.Stack;
 
 /**
@@ -127,8 +122,7 @@ public class BugsTest extends TestCase {
 
         int i = 0;
         // should only contain a single variable x
-        for (Enumeration e = st.elements(); e.hasMoreElements();) {
-            Variable var = (Variable) e.nextElement();
+        for (Variable var : st.getVariables()) {
             Assert.assertTrue(var.getName().equals("x"));
             i++;
         }

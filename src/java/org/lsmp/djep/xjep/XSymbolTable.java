@@ -12,8 +12,6 @@ import org.nfunk.jep.SymbolTable;
 import org.nfunk.jep.Variable;
 import org.nfunk.jep.VariableFactory;
 
-import java.util.Enumeration;
-
 /**
  * An extension of the symbol table with a few new features.
  *
@@ -44,8 +42,8 @@ public class XSymbolTable extends SymbolTable {
      * Prints the contents of the symbol table displaying its equations and value.
      */
     public void print(PrintVisitor pv) {
-        for (Enumeration e = this.elements(); e.hasMoreElements();) {
-            XVariable var = (XVariable) e.nextElement();
+        for (Variable variable : this.getVariables()) {
+            XVariable var = (XVariable) variable;
             pv.append(var.toString(pv) + "\n");
             // TODO watch out for possible conflict with overriding pv's string buffer
         }
@@ -55,8 +53,7 @@ public class XSymbolTable extends SymbolTable {
      * Copy the values of all constants into this from the supplied symbol table.
      */
     public void copyConstants(SymbolTable symTab) {
-        for (Enumeration e = symTab.elements(); e.hasMoreElements();) {
-            Variable var = (Variable) e.nextElement();
+        for (Variable var : symTab.getVariables()) {
             if (var.isConstant())
                 this.addConstant(var.getName(), var.getValue());
         }

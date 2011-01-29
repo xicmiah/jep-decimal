@@ -9,7 +9,6 @@ import org.nfunk.jep.Node;
 import org.nfunk.jep.ParseException;
 import org.nfunk.jep.function.PostfixMathCommand;
 
-import java.util.Enumeration;
 import java.util.Stack;
 import java.util.Vector;
 
@@ -38,8 +37,7 @@ public class Eval extends PostfixMathCommand implements CommandVisitorI {
         XSymbolTable localSymTab = (XSymbolTable) ((XSymbolTable) xjep.getSymbolTable()).newInstance();
         XJep localJep = xjep.newInstance(localSymTab);
 
-        for (Enumeration en = xjep.getSymbolTable().keys(); en.hasMoreElements();) {
-            String key = (String) en.nextElement();
+        for (String key : xjep.getSymbolTable().getVarNames()) {
             Object val = xjep.getSymbolTable().getValue(key);
             localSymTab.addVariable(key, val);
         }

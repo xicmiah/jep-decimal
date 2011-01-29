@@ -16,7 +16,6 @@ import org.nfunk.jep.ParseException;
 import org.nfunk.jep.SymbolTable;
 
 import java.text.NumberFormat;
-import java.util.Enumeration;
 
 /**
  * @author Rich Morris
@@ -157,8 +156,7 @@ public class XJepConsole extends Console {
         pv.setMode(DPrintVisitor.PRINT_PARTIAL_EQNS, !verbose);
 
         println("Variables:");
-        for (Enumeration loop = st.keys(); loop.hasMoreElements();) {
-            String s = (String) loop.nextElement();
+        for (String s : st.getVarNames()) {
             XVariable var = (XVariable) st.getVar(s);
             println("\t" + var.toString(pv));
         }

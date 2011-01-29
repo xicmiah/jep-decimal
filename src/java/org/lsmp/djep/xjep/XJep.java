@@ -11,7 +11,6 @@ import org.nfunk.jep.function.PostfixMathCommandI;
 
 import java.io.PrintStream;
 import java.io.Reader;
-import java.util.Enumeration;
 import java.util.Vector;
 
 /**
@@ -161,8 +160,7 @@ public class XJep extends JEP {
     public void addStandardConstants() {
         if (ingrediant != null) {
             ingrediant.addStandardConstants();
-            for (Enumeration en = ingrediant.getSymbolTable().elements(); en.hasMoreElements();) {
-                Variable var = (Variable) en.nextElement();
+            for (Variable var : ingrediant.getSymbolTable().getVariables()) {
                 if (var.isConstant())
                     this.symTab.addConstant(var.getName(), var.getValue());
                 //else

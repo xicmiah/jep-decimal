@@ -7,7 +7,7 @@
 
  *****************************************************************************/
 
-package org.nfunk.djep;
+package org.lsmp.djep;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

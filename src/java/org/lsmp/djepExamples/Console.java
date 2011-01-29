@@ -34,7 +34,6 @@ import java.awt.event.KeyListener;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Enumeration;
 import java.util.StringTokenizer;
 
 /**
@@ -288,8 +287,7 @@ public class Console extends Applet implements KeyListener {
     public void printFuns() {
         FunctionTable ft = j.getFunctionTable();
         println("Known functions:");
-        for (Enumeration loop = ft.keys(); loop.hasMoreElements();) {
-            String s = (String) loop.nextElement();
+        for (String s : ft.functionNames()) {
             println("\t" + s);
         }
     }
@@ -311,8 +309,7 @@ public class Console extends Applet implements KeyListener {
     public void printVars() {
         SymbolTable st = j.getSymbolTable();
         println("Variables:");
-        for (Enumeration loop = st.keys(); loop.hasMoreElements();) {
-            String s = (String) loop.nextElement();
+        for (String s : st.getVarNames()) {
             Object val = st.getValue(s);
             println("\t" + s + "\t" + val);
         }

@@ -1,4 +1,4 @@
-package org.nfunk.djep;
+package org.lsmp.djep;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -18,7 +18,7 @@ import org.nfunk.jep.type.Complex;
  *         Created on 19-Nov-2003
  */
 public class JepTest extends TestCase {
-    JEP j;
+    protected JEP j;
     public static final boolean SHOW_BAD = false;
 
     public JepTest(String name) {

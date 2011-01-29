@@ -142,6 +142,7 @@ public class JEP {
      * @param implicitMul_in     The implicit multiplication option.
      * @param numberFactory_in   The number factory to be used.
      */
+    @Deprecated
     public JEP(boolean traverse_in,
                boolean allowUndeclared_in,
                boolean implicitMul_in,
@@ -786,30 +787,6 @@ public class JEP {
     public Parser getParser() {
         return parser;
     }
-//------------------------------------------------------------------------
-// Old code
 
-
-/*
-	/**
-	* Returns the position (vertical) at which the last error occurred.
-	/
-	public int getErrorColumn() {
-		if (hasError && parseException != null)
-			return parseException.getColumn();
-		else
-			return 0;
-	}
-
-	/**
-	* Returns the line in which the last error occurred.
-	/
-	public int getErrorLine() {
-		if (hasError && parseException != null)
-			return parseException.getLine();
-		else
-			return 0;
-	}
-*/
 }
 

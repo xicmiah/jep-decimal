@@ -1118,7 +1118,7 @@ public class Parser/*@bgen(jjtree)*/ implements ParserTreeConstants, ParserConst
                 if (jj_2_7(2147483647)) {
                     ArrayAccess();
                 } else if ((getToken(1).kind == INDENTIFIER1 || getToken(1).kind == INDENTIFIER2) &&
-                        jep.funTab.containsKey(getToken(1).image)) {
+                        jep.funTab.contains(getToken(1).image)) {
                     Function();
                 } else {
                     switch ((jj_ntk == -1) ? jj_ntk() : jj_ntk) {
@@ -1246,7 +1246,7 @@ void RangeExpression()  #FunNode:
             identString = Identifier();
             jjtree.closeNodeScope(jjtn001, true);
             jjtc001 = false;
-            if (symTab.containsKey(identString)) {
+            if (symTab.hasVariable(identString)) {
                 jjtn001.setVar(symTab.getVar(identString));
             } else {
                 if (jep.allowUndeclared) {
@@ -1290,7 +1290,7 @@ void RangeExpression()  #FunNode:
         jjtree.openNodeScope(jjtn001);
         try {
             identString = Identifier();
-            if (jep.funTab.containsKey(identString)) {
+            if (jep.funTab.contains(identString)) {
                 //Set number of required arguments
                 reqArguments =
                         ((PostfixMathCommandI) jep.funTab.get(identString)).getNumberOfParameters();
@@ -2042,7 +2042,7 @@ Vector Array() :
                 jj_scanpos = xsp;
                 lookingAhead = true;
                 jj_semLA = (getToken(1).kind == INDENTIFIER1 || getToken(1).kind == INDENTIFIER2) &&
-                        jep.funTab.containsKey(getToken(1).image);
+                        jep.funTab.contains(getToken(1).image);
                 lookingAhead = false;
                 if (!jj_semLA || jj_3R_30()) {
                     jj_scanpos = xsp;

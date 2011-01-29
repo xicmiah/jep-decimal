@@ -5,9 +5,8 @@ package org.lsmp.djep.djep;
 
 import org.lsmp.djep.xjep.XSymbolTable;
 import org.nfunk.jep.SymbolTable;
+import org.nfunk.jep.Variable;
 import org.nfunk.jep.VariableFactory;
-
-import java.util.Enumeration;
 
 /**
  * A SymbolTable which works with partial derivatives of variables.
@@ -39,8 +38,8 @@ public class DSymbolTable extends XSymbolTable {
 
 
     public void clearValues() {
-        for (Enumeration e = this.elements(); e.hasMoreElements();) {
-            DVariable var = (DVariable) e.nextElement();
+        for (Variable variable : this.getVariables()) {
+            DVariable var = (DVariable) variable;
             var.invalidateAll();
         }
     }
