@@ -91,7 +91,6 @@ public class Evaluator extends Applet {
 
         // Set up the parser (more initialization in parseExpression())
         myParser = new JEP();
-        myParser.initFunTab(); // clear the contents of the function table
         myParser.addStandardFunctions();
         myParser.setTraverse(true);
 
@@ -231,7 +230,7 @@ public class Evaluator extends Applet {
      * variables from expressions to the symbol table.
      */
     private void parseExpression() {
-        myParser.initSymTab(); // clear the contents of the symbol table
+        myParser.clearAllSymTab(); // clear the contents of the symbol table
         myParser.addStandardConstants();
         myParser.addComplex(); // among other things adds i to the symbol table
         myParser.addVariable("x", xValue);

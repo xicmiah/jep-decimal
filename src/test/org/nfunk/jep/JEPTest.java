@@ -11,6 +11,10 @@ package org.nfunk.jep;
 
 import junit.framework.Assert;
 import junit.framework.TestCase;
+import org.nfunk.jep.config.ComplexConfig;
+import org.nfunk.jep.config.ConfigurationBuilder;
+import org.nfunk.jep.config.DoubleConfig;
+import org.nfunk.jep.config.JepConfiguration;
 import org.nfunk.jep.type.Complex;
 
 import java.io.BufferedReader;
@@ -39,20 +43,6 @@ public class JEPTest extends TestCase {
     int lineCount;
 
     /**
-     * Constructor
-     *
-     public JEPTester() {
-     // Set up the parser
-     myParser = new JEP();
-     myParser.setImplicitMul(true);
-     myParser.addStandardFunctions();
-     myParser.addStandardConstants();
-     myParser.addComplex();
-     myParser.setTraverse(false);
-     lineCount = 0;
-     }*/
-
-    /**
      * Creates a new JEPTest instance
      */
     public JEPTest(String name) {
@@ -63,13 +53,14 @@ public class JEPTest extends TestCase {
      * Sets up the parser.
      */
     public void setUp() {
+        JepConfiguration conf = new ConfigurationBuilder()
+                .setSymbolTable(new SymbolTable(new VariableFactory()))
+                .initWith(new DoubleConfig())
+                .addFunctionsAndConstants(new ComplexConfig())
+                .setUseImplicitMultiplication(true)
+                .createConfig();
         // Set up the parser
-        myParser = new JEP();
-        myParser.setImplicitMul(true);
-        myParser.addStandardFunctions();
-        myParser.addStandardConstants();
-        myParser.addComplex();
-        myParser.setTraverse(false);
+        myParser = new JEP(conf);
         lineCount = 0;
     }
 

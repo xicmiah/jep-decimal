@@ -9,6 +9,9 @@
 
 package org.nfunk.jep;
 
+import org.nfunk.jep.config.ConfigurationBuilder;
+import org.nfunk.jep.config.DoubleConfig;
+import org.nfunk.jep.config.JepConfiguration;
 import org.nfunk.jep.function.*;
 import org.nfunk.jep.function.doubleval.Abs;
 import org.nfunk.jep.function.doubleval.Ceil;
@@ -17,7 +20,6 @@ import org.nfunk.jep.function.doubleval.Round;
 import org.nfunk.jep.function.operator.doubleval.Modulus;
 import org.nfunk.jep.function.operator.doubleval.Power;
 import org.nfunk.jep.type.Complex;
-import org.nfunk.jep.type.DoubleNumberFactory;
 import org.nfunk.jep.type.NumberFactory;
 
 import java.io.Reader;
@@ -65,6 +67,8 @@ public class JEP {
      * Implicit multiplication option
      */
     protected boolean implicitMul;
+
+    private SymbolTable initialSymbols;
 
     /**
      * Symbol Table
@@ -114,58 +118,44 @@ public class JEP {
      * Implicit multiplication = false<br>
      * Number Factory = DoubleNumberFactory
      */
+    @Deprecated
     public JEP() {
-        topNode = null;
-        traverse = false;
-        allowUndeclared = false;
-        allowAssignment = false;
-        implicitMul = false;
-        numberFactory = new DoubleNumberFactory();
-        opSet = new OperatorSet();
-        initSymTab();
-        initFunTab();
+        JepConfiguration config = new ConfigurationBuilder()
+                .setSymbolTable(new SymbolTable(new VariableFactory()))
+                .initWith(new DoubleConfig())
+                .createConfig();
+        
+        init(config);
+
         errorList = new Vector();
         ev = new EvaluatorVisitor();
         parser = new Parser(new StringReader(""));
-
-        //Ensure errors are reported for the initial expression
-        //e.g. No expression entered
-        //parseExpression("");
     }
 
-    /**
-     * Creates a new JEP instance with custom settings. If the
-     * numberFactory_in is null, the default number factory is used.
-     *
-     * @param traverse_in        The traverse option.
-     * @param allowUndeclared_in The "allow undeclared variables" option.
-     * @param implicitMul_in     The implicit multiplication option.
-     * @param numberFactory_in   The number factory to be used.
-     */
-    @Deprecated
-    public JEP(boolean traverse_in,
-               boolean allowUndeclared_in,
-               boolean implicitMul_in,
-               NumberFactory numberFactory_in) {
-        topNode = null;
-        traverse = traverse_in;
-        allowUndeclared = allowUndeclared_in;
-        implicitMul = implicitMul_in;
-        if (numberFactory_in == null) {
-            numberFactory = new DoubleNumberFactory();
-        } else {
-            numberFactory = numberFactory_in;
-        }
-        opSet = new OperatorSet();
-        initSymTab();
-        initFunTab();
+    public JEP(JepConfiguration config) {
+//        initializing all functions, operators, and symbols
+        init(config);
+
         errorList = new Vector();
         ev = new EvaluatorVisitor();
         parser = new Parser(new StringReader(""));
 
-        //Ensure errors are reported for the initial expression
-        //e.g. No expression entered
-        parseExpression("");
+    }
+
+    private void init(JepConfiguration config) {
+        this.opSet = config.getOperators();
+        this.funTab = config.getFunctions();
+        this.symTab = config.getInitialConstants().copyInstance();
+
+        //safe initial table for future reuse
+        this.initialSymbols = config.getInitialConstants();
+
+        this.numberFactory = config.getNumberFactory();
+
+        this.traverse = config.isTraverse();
+        this.allowUndeclared = config.isAllowUndeclaredVariables();
+        this.allowAssignment = config.isAllowAssignment();
+        this.implicitMul = config.isUseImplicitMultiplication();
     }
 
     /**
@@ -194,17 +184,15 @@ public class JEP {
     /**
      * Creates a new SymbolTable object as symTab.
      */
-    public void initSymTab() {
-        //Init SymbolTable
-        symTab = new SymbolTable(new VariableFactory());
+    public void clearAllSymTab() {
+        symTab = initialSymbols.newInstance();
     }
 
     /**
-     * Creates a new FunctionTable object as funTab.
+     * Creates new symbol table, and initializes it with initial values that was passed in config
      */
-    public void initFunTab() {
-        //Init FunctionTable
-        funTab = new FunctionTable();
+    public void resetSymbolTable(){
+        symTab = initialSymbols.copyInstance();
     }
 
     /**
@@ -216,6 +204,7 @@ public class JEP {
      *
      * @since 2.3.0 beta 1 added str function
      */
+    @Deprecated
     public void addStandardFunctions() {
         //add functions to Function Table
         funTab.put("sin", new Sine());
@@ -263,10 +252,8 @@ public class JEP {
      * this method should be called immediately after the JEP object is
      * created.
      */
+    @Deprecated
     public void addStandardConstants() {
-        //add constants to Symbol Table
-        symTab.addConstant("pi", new Double(Math.PI));
-        symTab.addConstant("e", new Double(Math.E));
     }
 
     /**
@@ -278,6 +265,7 @@ public class JEP {
      *
      * @since Feb 05 added complex conjugate conj.
      */
+    @Deprecated
     public void addComplex() {
         //add constants to Symbol Table
         symTab.addConstant("i", new Complex(0, 1));

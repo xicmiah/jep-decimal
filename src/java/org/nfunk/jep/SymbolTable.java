@@ -77,6 +77,22 @@ public class SymbolTable {
         vf = varFac;
     }
 
+    public SymbolTable(SymbolTable table){
+        vf = table.getVariableFactory();
+        variables.putAll(table.variables);
+    }
+
+    public SymbolTable newInstance(){
+        return new SymbolTable(this.getVariableFactory());
+    }
+
+    public SymbolTable copyInstance(){
+        SymbolTable table = newInstance();
+        //not a good choice, think about better way
+        table.variables.putAll(variables);
+        return table;
+    }
+
     /**
      * Finds the value of the variable with the given name.
      * Returns null if variable does not exist.

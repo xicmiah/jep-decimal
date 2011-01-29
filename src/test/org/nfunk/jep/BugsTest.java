@@ -2,6 +2,10 @@ package org.nfunk.jep;
 
 import junit.framework.Assert;
 import junit.framework.TestCase;
+import org.nfunk.jep.config.ComplexConfig;
+import org.nfunk.jep.config.ConfigurationBuilder;
+import org.nfunk.jep.config.DoubleConfig;
+import org.nfunk.jep.config.JepConfiguration;
 import org.nfunk.jep.function.PostfixMathCommand;
 
 import java.util.Stack;
@@ -23,19 +27,22 @@ public class BugsTest extends TestCase {
 
     public void setUp() {
         // Set up the parser
-        jep = new JEP();
-        jep.setImplicitMul(true);
-        jep.addStandardFunctions();
-        jep.addStandardConstants();
-        jep.addComplex();
-        jep.setTraverse(false);
+        JepConfiguration conf = new ConfigurationBuilder()
+                .setUseImplicitMultiplication(true)
+                .setTraverse(false)
+                .setSymbolTable(new SymbolTable(new VariableFactory()))
+                .initWith(new DoubleConfig())
+                .addFunctionsAndConstants(new ComplexConfig())
+                .createConfig();
+
+        jep = new JEP(conf);        
     }
 
     /**
      * Tests the uninitialized OperatorSet bug 1061200
      */
     public void testOpSetBug() {
-        JEP j = new JEP(false, true, true, null);
+        JEP j = new JEP();
         Assert.assertNotNull(j.getOperatorSet());
     }
 
@@ -115,7 +122,7 @@ public class BugsTest extends TestCase {
      * variable x is in the symboltable (no more no less)
      */
     public void testSetAllowUndeclared() {
-        jep.initSymTab();                // clear the Symbol Table
+        jep.clearAllSymTab();                // clear the Symbol Table
         jep.setAllowUndeclared(true);
         jep.parseExpression("x");
         SymbolTable st = jep.getSymbolTable();
@@ -152,7 +159,7 @@ public class BugsTest extends TestCase {
      * fail because there is an error in the list.
      */
     public void testBug1563324() {
-        jep.initSymTab();
+        jep.clearAllSymTab();
         jep.setAllowUndeclared(true);
         // parse a valid expression
         jep.parseExpression("abs(x)");

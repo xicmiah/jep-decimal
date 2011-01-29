@@ -4,9 +4,11 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestResult;
 import junit.framework.TestSuite;
-import org.nfunk.jep.JEP;
-import org.nfunk.jep.Node;
-import org.nfunk.jep.ParseException;
+import org.nfunk.jep.*;
+import org.nfunk.jep.config.ComplexConfig;
+import org.nfunk.jep.config.ConfigurationBuilder;
+import org.nfunk.jep.config.DoubleConfig;
+import org.nfunk.jep.config.JepConfiguration;
 import org.nfunk.jep.type.Complex;
 
 /* @author rich
@@ -50,14 +52,16 @@ public class JepTest extends TestCase {
      * Run before each test.
      */
     protected void setUp() {
-        j = new JEP();
-        j.addStandardConstants();
-        j.addStandardFunctions();
-        j.addComplex();
-        //j.setTraverse(true);
-        j.setAllowAssignment(true);
-        j.setAllowUndeclared(true);
-        j.setImplicitMul(true);
+        JepConfiguration conf = new ConfigurationBuilder()
+                .setSymbolTable(new SymbolTable(new VariableFactory()))
+                .setAllowAssignment(true)
+                .setAllowUndeclaredVariables(true)
+                .setUseImplicitMultiplication(true)
+                .initWith(new DoubleConfig())
+                .addFunctionsAndConstants(new ComplexConfig())
+                .createConfig();
+
+        j = new JEP(conf);        
     }
 
     /**
