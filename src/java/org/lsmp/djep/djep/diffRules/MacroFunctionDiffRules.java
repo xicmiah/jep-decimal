@@ -5,9 +5,9 @@ package org.lsmp.djep.djep.diffRules;
 
 import org.lsmp.djep.djep.DJep;
 import org.lsmp.djep.xjep.MacroFunction;
-import org.lsmp.djep.xjep.XSymbolTable;
 import org.nfunk.jep.Node;
 import org.nfunk.jep.ParseException;
+import org.nfunk.jep.SymbolTable;
 
 /**
  * If your really lazy, you don't even need to workout the derivatives
@@ -22,7 +22,7 @@ public class MacroFunctionDiffRules extends ChainRuleDiffRules {
         name = fun.getName();
         pfmc = fun;
 
-        XSymbolTable localSymTab = (XSymbolTable) ((XSymbolTable) djep.getSymbolTable()).newInstance(); //new SymbolTable();
+        SymbolTable localSymTab = djep.getSymbolTable().newInstance();
         localSymTab.copyConstants(djep.getSymbolTable());
         DJep localJep = (DJep) djep.newInstance(localSymTab);
 

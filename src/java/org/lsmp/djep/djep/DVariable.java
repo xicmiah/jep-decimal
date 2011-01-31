@@ -57,8 +57,7 @@ public class DVariable extends XVariable {
      * makes value and values of all derivatives invalid. *
      */
     public void invalidateAll() {
-        if (isConstant()) return;
-        setValidValue(false);
+        super.invalidateAll();
         for (Enumeration e = derivatives.elements(); e.hasMoreElements();) {
             PartialDerivative deriv = (PartialDerivative) e.nextElement();
             deriv.setValidValue(false);
@@ -113,12 +112,12 @@ public class DVariable extends XVariable {
         derivatives.put(makeDerivString(name, derivnames), eqn);
     }
 
-    PartialDerivative getDerivative(String derivnames[]) {
+    public PartialDerivative getDerivative(String derivnames[]) {
         String newnames[] = sortedNames(derivnames);
         return (PartialDerivative) derivatives.get(makeDerivString(name, newnames));
     }
 
-    PartialDerivative getDerivativeSorted(String derivnames[]) {
+    public PartialDerivative getDerivativeSorted(String derivnames[]) {
         return (PartialDerivative) derivatives.get(makeDerivString(name, derivnames));
     }
 

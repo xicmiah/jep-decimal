@@ -3,10 +3,7 @@
  */
 package org.lsmp.djep.xjep;
 
-import org.nfunk.jep.EvaluatorVisitor;
-import org.nfunk.jep.Node;
-import org.nfunk.jep.ParseException;
-import org.nfunk.jep.Variable;
+import org.nfunk.jep.*;
 import org.nfunk.jep.function.PostfixMathCommand;
 
 import java.util.Stack;
@@ -35,7 +32,7 @@ public class MacroFunction extends PostfixMathCommand {
     private Node topNode;
     private EvaluatorVisitor ev = new EvaluatorVisitor();
 //	private XJep localJep;
-    private XSymbolTable mySymTab;
+    private SymbolTable mySymTab;
     private Variable vars[];
 
     public String getName() {
@@ -60,8 +57,8 @@ public class MacroFunction extends PostfixMathCommand {
         super();
         name = inName;
 
-        XSymbolTable jepSymTab = (XSymbolTable) jep.getSymbolTable();
-        mySymTab = (XSymbolTable) jepSymTab.newInstance();
+        SymbolTable jepSymTab = jep.getSymbolTable();
+        mySymTab = jepSymTab.newInstance();
         mySymTab.copyConstants(jepSymTab);
         XJep localJep = jep.newInstance(mySymTab);
         numberOfParameters = nargs;

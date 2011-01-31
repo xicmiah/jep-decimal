@@ -41,7 +41,7 @@ public class XJep extends JEP {
      * Create a new XJep will all the function of JEP plus printing and other features.
      */
     public XJep() {
-        this.symTab = new XSymbolTable(vf);
+        this.symTab = new SymbolTable(vf);
 
         /* Creates new nodes */
         nf = new NodeFactory(this);
@@ -92,7 +92,7 @@ public class XJep extends JEP {
         ingrediant = j;
         /* Creates new nodes */
         nf = new NodeFactory(this);
-        this.symTab = new XSymbolTable(vf);
+        this.symTab = new SymbolTable(vf);
         this.funTab = j.getFunctionTable();
         /* Collects operators **/
         opSet = new XOperatorSet(j.getOperatorSet());

@@ -3,7 +3,6 @@
  */
 package org.lsmp.djep.matrixJep;
 
-import org.lsmp.djep.djep.DSymbolTable;
 import org.lsmp.djep.matrixJep.nodeTypes.ASTMFunNode;
 import org.lsmp.djep.matrixJep.nodeTypes.MatrixNodeI;
 import org.lsmp.djep.vectorJep.Dimensions;
@@ -34,7 +33,7 @@ import org.nfunk.jep.function.PostfixMathCommandI;
 public class MatrixPreprocessor implements ParserVisitor {
     private MatrixJep mjep;
     private MatrixNodeFactory nf;
-    private DSymbolTable vt;
+    private SymbolTable vt;
 
     public MatrixPreprocessor() {
     }
@@ -50,7 +49,7 @@ public class MatrixPreprocessor implements ParserVisitor {
     public MatrixNodeI preprocess(Node node, MatrixJep mdjep) throws ParseException {
         this.mjep = mdjep;
         this.nf = (MatrixNodeFactory) mdjep.getNodeFactory();
-        this.vt = (DSymbolTable) mdjep.getSymbolTable();
+        this.vt = mdjep.getSymbolTable();
         return (MatrixNodeI) node.jjtAccept(this, null);
     }
 

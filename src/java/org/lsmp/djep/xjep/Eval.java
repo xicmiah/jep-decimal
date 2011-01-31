@@ -3,10 +3,7 @@
  */
 package org.lsmp.djep.xjep;
 
-import org.nfunk.jep.ASTConstant;
-import org.nfunk.jep.ASTVarNode;
-import org.nfunk.jep.Node;
-import org.nfunk.jep.ParseException;
+import org.nfunk.jep.*;
 import org.nfunk.jep.function.PostfixMathCommand;
 
 import java.util.Stack;
@@ -34,7 +31,7 @@ public class Eval extends PostfixMathCommand implements CommandVisitorI {
         int nchild = children.length;
         if (nchild % 2 == 0)
             throw new ParseException("Number of parameters must be odd");
-        XSymbolTable localSymTab = (XSymbolTable) ((XSymbolTable) xjep.getSymbolTable()).newInstance();
+        SymbolTable localSymTab = xjep.getSymbolTable().newInstance();
         XJep localJep = xjep.newInstance(localSymTab);
 
         for (String key : xjep.getSymbolTable().getVarNames()) {

@@ -11,6 +11,7 @@
  */
 package org.nfunk.jep;
 
+import java.util.Enumeration;
 import java.util.Observable;
 
 /**
@@ -86,6 +87,10 @@ public class Variable extends Observable {
     public void setValidValue(boolean val) {
         if (isConstant()) return;
         validValue = val;
+    }
+
+    public void invalidateAll() {
+       setValidValue(false);
     }
 
     /**

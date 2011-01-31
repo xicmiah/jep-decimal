@@ -8,12 +8,12 @@
  *****************************************************************************/
 package org.nfunk.jep;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
- * A Hashtable which holds a list of all variables.
- * Heavily changed from Jep-2.24 which was just a Hashtable which stored
- * the values of each variable. Here the Hashtable contains
+ * A table which holds a list of all variables.
+ * Here the table contains
  * elements of type {@link Variable Variable} which contain
  * information about that variable.
  * {@link #getValue getValue(String)}, {@link #getVar getVar(String)}
@@ -64,14 +64,17 @@ import java.util.*;
  * @author Rich Morris
  *         Created on 28-Feb-2004
  */
-public class SymbolTable {
+public class SymbolTable implements Serializable {
+
     private static final long serialVersionUID = 1127787896437151144L;
+
     private VariableFactory vf;
 
     private Map<String, Variable> variables = new HashMap<String, Variable>();
 
     /**
      * SymbolTable should always be constructed an associated variable factory.
+     * @param varFac factory for variables creation
      */
     public SymbolTable(VariableFactory varFac) {
         vf = varFac;
@@ -96,9 +99,11 @@ public class SymbolTable {
     /**
      * Finds the value of the variable with the given name.
      * Returns null if variable does not exist.
+     * @param name variable name
+     * @return variable value
      */
-    public Object getValue(String key) {
-        Variable var = variables.get(key);
+    public Object getValue(String name) {
+        Variable var = variables.get(name);
         if (var == null) return null;
         return var.getValue();
     }
@@ -106,6 +111,8 @@ public class SymbolTable {
     /**
      * Finds the variable with given name.
      * Returns null if variable does not exist.
+     * @param name variable name
+     * @return variable with given name or null if variable is not found
      */
     public Variable getVar(String name) {
         return variables.get(name);
@@ -114,6 +121,8 @@ public class SymbolTable {
     /**
      * Sets the value of variable with the given name.
      *
+     * @param name variable name
+     * @param val new variable value
      * @throws NullPointerException if the variable has not been previously created
      *                              with {@link #addVariable(String,Object)} first.
      */
@@ -130,8 +139,8 @@ public class SymbolTable {
      * Returns a new variable fro the variable factory. Notifies observers
      * when a new variable is created. If a subclass need to create a new variable it should call this method.
      *
-     * @param name
-     * @param val
+     * @param name variable name
+     * @param val variable value
      * @return an new Variable object.
      */
     protected Variable createVariable(String name, Object val) {
@@ -169,6 +178,9 @@ public class SymbolTable {
     /**
      * Create a constant variable with the given name and value.
      * Returns null if variable already exists.
+     * @param name constant variable name
+     * @param val constant value
+     * @return created constant
      */
     public Variable addConstant(String name, Object val) {
         Variable var = addVariable(name, val);
@@ -180,7 +192,11 @@ public class SymbolTable {
      * Create a variable with the given name and value.
      * It silently does nothing if the value cannot be set.
      *
+     * @param name variable name
+     * @param val variable value
      * @return the Variable.
+     *
+     * @throws IllegalStateException if variable with the same name exists and it is a constant
      */
     public Variable makeVarIfNeeded(String name, Object val) {
         Variable var = variables.get(name);
@@ -198,7 +214,8 @@ public class SymbolTable {
     /**
      * If necessary create a variable with the given name.
      * If the variable exists its value will not be changed.
-     *
+     * @param name variable name
+     * 
      * @return the Variable.
      */
     public Variable makeVarIfNeeded(String name) {
@@ -229,7 +246,18 @@ public class SymbolTable {
      */
     public void clearValues() {
         for (Variable var : variables.values()) {
-            var.setValidValue(false);
+            var.invalidateAll();
+        }
+    }
+
+    /**
+     * Copy the values of all constants into this from the supplied symbol table.
+     * @param symTab symbol table, the source of constants to be copied
+     */
+    public void copyConstants(SymbolTable symTab) {
+        for (Variable var : symTab.getVariables()) {
+            if (var.isConstant())
+                this.addConstant(var.getName(), var.getValue());
         }
     }
 
@@ -251,19 +279,34 @@ public class SymbolTable {
 
     /**
      * Returns the variable factory of this instance.
+     * @return current variable factory
      */
     public VariableFactory getVariableFactory() {
         return vf;
     }
 
+    /**
+     * Remove all non constant elements
+     */
+    public void clearNonConstants() {
+        List<Variable> tmp = new LinkedList<Variable>();
+        for (Variable var : variables.values()) {
+            if (var.isConstant()) tmp.add(var);
+        }
+        variables.clear();
+        for (Variable var : tmp) {
+            variables.put(var.getName(), var);
+        }
+    }
     public class StObservable extends Observable {
+
         protected synchronized void stSetChanged() {
             this.setChanged();
         }
-
         public SymbolTable getSymbolTable() {
             return SymbolTable.this;
         }
+
     }
 
     protected StObservable obeservable = new StObservable();
@@ -309,20 +352,6 @@ public class SymbolTable {
     public synchronized void addObserverToExistingVariables(Observer arg) {
         for (Variable var : variables.values()) {
             var.addObserver(arg);
-        }
-    }
-
-    /**
-     * Remove all non constant elements
-     */
-    public void clearNonConstants() {
-        List<Variable> tmp = new LinkedList<Variable>();
-        for (Variable var : variables.values()) {
-            if (var.isConstant()) tmp.add(var);
-        }
-        variables.clear();
-        for (Variable var : tmp) {
-            variables.put(var.getName(), var);
         }
     }
 }

@@ -5,9 +5,9 @@ package org.lsmp.djep.djep.diffRules;
 
 import org.lsmp.djep.djep.DJep;
 import org.lsmp.djep.xjep.XJep;
-import org.lsmp.djep.xjep.XSymbolTable;
 import org.nfunk.jep.Node;
 import org.nfunk.jep.ParseException;
+import org.nfunk.jep.SymbolTable;
 import org.nfunk.jep.function.PostfixMathCommandI;
 
 
@@ -71,7 +71,7 @@ public class MacroDiffRules extends ChainRuleDiffRules {
             if (nParam != 1)
                 throw new ParseException("Number of rules must match number of parameters for " + inName + " which is " + nParam);
         }
-        XSymbolTable localSymTab = (XSymbolTable) ((XSymbolTable) djep.getSymbolTable()).newInstance(); //new SymbolTable();
+        SymbolTable localSymTab = djep.getSymbolTable().newInstance();
         localSymTab.copyConstants(djep.getSymbolTable());
         XJep localJep = djep.newInstance(localSymTab);
         Node node = localJep.parse(rule);
@@ -99,7 +99,7 @@ public class MacroDiffRules extends ChainRuleDiffRules {
             if (nParam != 2)
                 throw new ParseException("Number of rules must match number of parameters for " + inName + " which is " + nParam);
         }
-        XSymbolTable localSymTab = (XSymbolTable) ((XSymbolTable) djep.getSymbolTable()).newInstance(); //new SymbolTable();
+        SymbolTable localSymTab = djep.getSymbolTable().newInstance();
         localSymTab.copyConstants(djep.getSymbolTable());
         XJep localJep = djep.newInstance(localSymTab);
         Node node1 = localJep.parse(rule1);
@@ -180,7 +180,7 @@ public class MacroDiffRules extends ChainRuleDiffRules {
                 throw new ParseException("Number of rules must match number of parameters for " + inName + " which is " + nParam);
         }
 
-        XSymbolTable localSymTab = (XSymbolTable) ((XSymbolTable) djep.getSymbolTable()).newInstance(); //new SymbolTable();
+        SymbolTable localSymTab = djep.getSymbolTable().newInstance();
         localSymTab.copyConstants(djep.getSymbolTable());
         XJep localJep = djep.newInstance(localSymTab);
 

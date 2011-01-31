@@ -40,7 +40,7 @@ public class DJep extends XJep {
     public DJep() {
         this.pv = new DPrintVisitor();
 //		this.vf = ;
-        this.symTab = new DSymbolTable(new DVariableFactory());
+        this.symTab = new SymbolTable(new DVariableFactory());
 
         addFunction("diff", new Diff());
 

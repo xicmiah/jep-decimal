@@ -4,7 +4,6 @@
 package org.lsmp.djep.matrixJep;
 
 import org.lsmp.djep.djep.DJep;
-import org.lsmp.djep.djep.DSymbolTable;
 import org.lsmp.djep.djep.diffRules.MultiplyDiffRule;
 import org.lsmp.djep.djep.diffRules.PassThroughDiffRule;
 import org.lsmp.djep.matrixJep.function.MDiff;
@@ -15,10 +14,7 @@ import org.lsmp.djep.matrixJep.nodeTypes.MatrixNodeI;
 import org.lsmp.djep.vectorJep.function.*;
 import org.lsmp.djep.vectorJep.values.Scaler;
 import org.lsmp.djep.xjep.PrintVisitor;
-import org.nfunk.jep.Node;
-import org.nfunk.jep.Operator;
-import org.nfunk.jep.ParseException;
-import org.nfunk.jep.ParserConstants;
+import org.nfunk.jep.*;
 import org.nfunk.jep.function.operator.doubleval.Power;
 
 /**
@@ -36,7 +32,7 @@ public class MatrixJep extends DJep {
     public MatrixJep() {
         super();
         nf = new MatrixNodeFactory(this);
-        symTab = new DSymbolTable(mvf);
+        symTab = new SymbolTable(mvf);
         opSet = new MatrixOperatorSet();
         this.parser.setInitialTokenManagerState(ParserConstants.NO_DOT_IN_IDENTIFIERS);
 

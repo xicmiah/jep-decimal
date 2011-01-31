@@ -9,9 +9,11 @@ import junit.framework.Test;
 import junit.framework.TestResult;
 import junit.framework.TestSuite;
 import org.lsmp.djep.djep.DJep;
-import org.lsmp.djep.djep.DSymbolTable;
+import org.lsmp.djep.djep.DVariable;
+import org.lsmp.djep.djep.PartialDerivative;
 import org.nfunk.jep.Node;
 import org.nfunk.jep.ParseException;
+import org.nfunk.jep.SymbolTable;
 
 /**
  * @author Rich Morris
@@ -123,10 +125,10 @@ public class DJepTest extends XJepTest {
         System.out.println("\nTesting assignment and diff");
         simplifyTestString("y=x^5", "y=x^5.0");
         simplifyTestString("z=diff(y,x)", "z=5.0*x^4.0");
-        Node n1 = ((DSymbolTable) j.getSymbolTable()).getPartialDeriv("y", new String[]{"x"}).getEquation();
+        Node n1 = getPartialDerivatives(j.getSymbolTable(), "y", new String[]{"x"}).getEquation();
         myAssertEquals("dy/dx", ((DJep) j).toString(n1), "5.0*x^4.0");
         simplifyTestString("w=diff(z,x)", "w=20.0*x^3.0");
-        Node n2 = ((DSymbolTable) j.getSymbolTable()).getPartialDeriv("y", new String[]{"x", "x"}).getEquation();
+        Node n2 = getPartialDerivatives(j.getSymbolTable(), "y", new String[]{"x", "x"}).getEquation();
         myAssertEquals("d^2y/dxdx", ((DJep) j).toString(n2), "20.0*x^3.0");
         valueTest("x=2", 2);
         valueTest("y", 32); // x^5
@@ -134,6 +136,11 @@ public class DJepTest extends XJepTest {
         valueTest("w", 160); // 20 x^3
         simplifyTestString("diff(ln(y),x)", "(1.0/y)*5.0*x^4.0");
 
+    }
+
+    public PartialDerivative getPartialDerivatives(SymbolTable table, String varName, String[] derivativeNames){
+        DVariable var = (DVariable) table.getVar(varName);
+        return var.getDerivative(derivativeNames);
     }
 
     public void testChainedVaraibles() throws Exception {
