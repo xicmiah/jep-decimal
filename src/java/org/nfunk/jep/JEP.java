@@ -121,7 +121,7 @@ public class JEP {
     @Deprecated
     public JEP() {
         JepConfiguration config = new ConfigurationBuilder()
-                .setSymbolTable(new SymbolTable(new VariableFactory()))
+                .setVariableFactory(new VariableFactory())
                 .initWith(new DoubleConfig())
                 .createConfig();
         

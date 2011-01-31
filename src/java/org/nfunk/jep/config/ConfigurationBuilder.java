@@ -16,7 +16,9 @@ public class ConfigurationBuilder {
 
     private Map<String, PostfixMathCommandI> functions = new HashMap<String, PostfixMathCommandI>();
 
-    private SymbolTable symbolTable;
+    private Map<String, Object> constants = new HashMap<String, Object>();
+
+    private VariableFactory variableFactory;
 
     private OperatorSet operatorSet;
 
@@ -37,10 +39,20 @@ public class ConfigurationBuilder {
         config.setNumberFactory(numberFactory);
 
         config.setFunctions(copyFunctions());
-        config.setSymbolTable(symbolTable.copyInstance());
+        SymbolTable symbolTable = createSymbolTable();
+        config.setSymbolTable(symbolTable);
+
         config.setOperatorSet(operatorSet);
 
         return config;
+    }
+
+    private SymbolTable createSymbolTable() {
+        SymbolTable symbolTable = new SymbolTable(variableFactory);
+        for (Map.Entry<String,Object> entry : constants.entrySet()){
+            symbolTable.addConstant(entry.getKey(), entry.getValue());
+        }
+        return symbolTable;
     }
 
     private FunctionTable copyFunctions() {
@@ -54,26 +66,24 @@ public class ConfigurationBuilder {
     public ConfigurationBuilder initWith(ExtendedConfig config){
         numberFactory = config.getNumberFactory();
         operatorSet = config.getOperatorSet();
-        addFunctionsAndConstants(config);
+        add(config);
 
         return this;
     }
 
-    public ConfigurationBuilder addFunctionsAndConstants(FunctionConstantConfig config){
+    public ConfigurationBuilder add(FunctionConstantConfig config){
         FunctionTable funTab = config.getFunctions();
         for (String name : funTab.functionNames()){
             functions.put(name, funTab.get(name));
         }
-        for (Map.Entry<String, Object> constants : config.getConstants().entrySet()){
-            symbolTable.addConstant(constants.getKey(), constants.getValue());
-        }
+        this.constants.putAll(config.getConstants());
 
         return this;
     }
 
 
-    public ConfigurationBuilder setSymbolTable(SymbolTable symbolTable) {
-        this.symbolTable = symbolTable;
+    public ConfigurationBuilder setVariableFactory(VariableFactory variableFactory) {
+        this.variableFactory = variableFactory;
         return this;
     }
 

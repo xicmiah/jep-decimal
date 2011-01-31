@@ -30,9 +30,9 @@ public class BugsTest extends TestCase {
         JepConfiguration conf = new ConfigurationBuilder()
                 .setUseImplicitMultiplication(true)
                 .setTraverse(false)
-                .setSymbolTable(new SymbolTable(new VariableFactory()))
+                .setVariableFactory(new VariableFactory())
                 .initWith(new DoubleConfig())
-                .addFunctionsAndConstants(new ComplexConfig())
+                .add(new ComplexConfig())
                 .createConfig();
 
         jep = new JEP(conf);        

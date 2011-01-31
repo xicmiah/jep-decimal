@@ -22,7 +22,7 @@ public class DecimalJepTest {
     public void setUp(){
         context = MathContext.DECIMAL64;
         JepConfiguration conf = new ConfigurationBuilder()
-                .setSymbolTable(new SymbolTable(new VariableFactory()))
+                .setVariableFactory(new VariableFactory())
                 .initWith(new BigDecimalConfig(context))
                 .createConfig();
         j = new JEP(conf);

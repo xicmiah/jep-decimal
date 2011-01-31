@@ -53,12 +53,12 @@ public class JepTest extends TestCase {
      */
     protected void setUp() {
         JepConfiguration conf = new ConfigurationBuilder()
-                .setSymbolTable(new SymbolTable(new VariableFactory()))
+                .setVariableFactory(new VariableFactory())
                 .setAllowAssignment(true)
                 .setAllowUndeclaredVariables(true)
                 .setUseImplicitMultiplication(true)
                 .initWith(new DoubleConfig())
-                .addFunctionsAndConstants(new ComplexConfig())
+                .add(new ComplexConfig())
                 .createConfig();
 
         j = new JEP(conf);        

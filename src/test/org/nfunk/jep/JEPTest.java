@@ -54,9 +54,9 @@ public class JEPTest extends TestCase {
      */
     public void setUp() {
         JepConfiguration conf = new ConfigurationBuilder()
-                .setSymbolTable(new SymbolTable(new VariableFactory()))
+                .setVariableFactory(new VariableFactory())
                 .initWith(new DoubleConfig())
-                .addFunctionsAndConstants(new ComplexConfig())
+                .add(new ComplexConfig())
                 .setUseImplicitMultiplication(true)
                 .createConfig();
         // Set up the parser
