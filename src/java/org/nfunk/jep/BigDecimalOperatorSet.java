@@ -23,6 +23,10 @@ public class BigDecimalOperatorSet extends OperatorSet{
     }
 
     public BigDecimalOperatorSet(NumberFactory<BigDecimal> numberFactory, MathContext mathContext){
+        initOperators(numberFactory, mathContext);
+    }
+
+    protected void initOperators(NumberFactory<BigDecimal> numberFactory, MathContext mathContext) {
         this.OP_ADD.setPFMC(initOp(new BigDecimalAdd(), numberFactory, mathContext));
         this.OP_SUBTRACT.setPFMC(initOp(new BigDecimalSubtract(), numberFactory, mathContext));
         this.OP_UMINUS.setPFMC(initOp(new BigDecimalUMinus(), numberFactory, mathContext));
@@ -40,7 +44,7 @@ public class BigDecimalOperatorSet extends OperatorSet{
         ));
     }
 
-    private PostfixMathCommand initOp(PostfixMathCommand op, NumberFactory<BigDecimal> numberFactory, MathContext mathContext){
+    protected PostfixMathCommand initOp(PostfixMathCommand op, NumberFactory<BigDecimal> numberFactory, MathContext mathContext){
         ((NumberFactoryAware<BigDecimal>)op).setNumberFactory(numberFactory);
         ((MathContextAware)op).setMathContext(mathContext);
         return op;

@@ -1,33 +1,27 @@
 package org.nfunk.jep.config;
 
-import org.nfunk.jep.BigDecimalOperatorSet;
+import org.nfunk.jep.BDOperatorSetNonstrict;
 import org.nfunk.jep.FunctionTable;
-import org.nfunk.jep.OperatorSet;
 import org.nfunk.jep.function.*;
-import org.nfunk.jep.function.bigdecimal.BigDecimalAbs;
-import org.nfunk.jep.function.bigdecimal.BigDecimalCeil;
-import org.nfunk.jep.function.bigdecimal.BigDecimalFloor;
-import org.nfunk.jep.function.bigdecimal.BigDecimalRound;
+import org.nfunk.jep.function.bdnonstrict.BDAbsNonstrict;
+import org.nfunk.jep.function.bdnonstrict.BDCeilNonstrict;
+import org.nfunk.jep.function.bdnonstrict.BDFloorNonstrict;
+import org.nfunk.jep.function.bdnonstrict.BDRoundNonstrict;
 import org.nfunk.jep.function.operator.AbstractAdd;
-import org.nfunk.jep.function.operator.bigdecimal.BigDecimalAdd;
-import org.nfunk.jep.function.operator.bigdecimal.BigDecimalModulus;
-import org.nfunk.jep.function.operator.bigdecimal.BigDecimalPower;
-import org.nfunk.jep.type.BigDecimalNumberFactory;
-import org.nfunk.jep.type.NumberFactory;
+import org.nfunk.jep.function.operator.bdnonstrict.BDAddNonstrict;
+import org.nfunk.jep.function.operator.bdnonstrict.BDModulusNonstrict;
+import org.nfunk.jep.function.operator.bdnonstrict.BDPowerNonstrict;
 
-import java.math.BigDecimal;
 import java.math.MathContext;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author DPavlov
  */
-public class BigDecimalConfig extends AbstractBigDecimalConfig {
+public class BigDecimalNonstrictConfig extends AbstractBigDecimalConfig {
 
-    public BigDecimalConfig(MathContext context) {
+    public BigDecimalNonstrictConfig(MathContext context) {
         super(context);
-        this.operatorSet = new BigDecimalOperatorSet(numberFactory);
+        operatorSet = new BDOperatorSetNonstrict(numberFactory);
         addStandardFunctions();
     }
 
@@ -53,12 +47,12 @@ public class BigDecimalConfig extends AbstractBigDecimalConfig {
         funTab.put("log", new Logarithm());
         funTab.put("ln", new NaturalLogarithm());
         funTab.put("exp", new Exp());
-        funTab.put("pow", initFunction(new BigDecimalPower()));
+        funTab.put("pow", initFunction(new BDPowerNonstrict()));
 
         funTab.put("sqrt", new SquareRoot());
-        funTab.put("abs", initFunction(new BigDecimalAbs()));
-        funTab.put("mod", initFunction(new BigDecimalModulus()));
-        funTab.put("sum", new Sum((AbstractAdd) initFunction(new BigDecimalAdd())));
+        funTab.put("abs", initFunction(new BDAbsNonstrict()));
+        funTab.put("mod", initFunction(new BDModulusNonstrict()));
+        funTab.put("sum", new Sum((AbstractAdd) initFunction(new BDAddNonstrict())));
 
         funTab.put("rand", new org.nfunk.jep.function.Random());
 
@@ -67,9 +61,8 @@ public class BigDecimalConfig extends AbstractBigDecimalConfig {
 
         funTab.put("binom", new Binomial());
 
-        funTab.put("round", initFunction(new BigDecimalRound()));
-        funTab.put("floor", initFunction(new BigDecimalFloor()));
-        funTab.put("ceil", initFunction(new BigDecimalCeil()));
+        funTab.put("round", initFunction(new BDRoundNonstrict()));
+        funTab.put("floor", initFunction(new BDFloorNonstrict()));
+        funTab.put("ceil", initFunction(new BDCeilNonstrict()));
     }
-
 }
