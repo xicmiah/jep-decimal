@@ -595,7 +595,7 @@ void UnaryExpressionNotPlusMinus() :
 	ArrayAccess()
 	|
 	LOOKAHEAD({ (getToken(1).kind == INDENTIFIER1 || getToken(1).kind == INDENTIFIER2) &&
-				  jep.funTab.containsKey(getToken(1).image) })
+				  jep.funTab.contains(getToken(1).image) })
 	Function()
 	|
 	Variable()
@@ -652,7 +652,7 @@ void Variable() :
 {
 	(identString = Identifier()
 	{
-		if (symTab.containsKey(identString)) {
+		if (symTab.hasVariable(identString)) {
 			jjtThis.setVar(symTab.getVar(identString));
 		} else {
 			if (jep.allowUndeclared) {
@@ -675,7 +675,7 @@ void Function() :
 {
 	( identString = Identifier()
 		{
-			if (jep.funTab.containsKey(identString)) {
+			if (jep.funTab.contains(identString)) {
 				//Set number of required arguments
 				reqArguments =
 					((PostfixMathCommandI)jep.funTab.get(identString)).getNumberOfParameters();

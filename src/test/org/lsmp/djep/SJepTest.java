@@ -14,6 +14,7 @@ import org.nfunk.jep.OperatorSet;
 import org.nfunk.jep.ParseException;
 import org.nfunk.jep.type.Complex;
 
+import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 /* @author rich
  * Created on 19-Nov-2003
@@ -540,12 +541,14 @@ public class SJepTest extends TestCase {
         format.setMaximumFractionDigits(3);
         format.setMinimumFractionDigits(0);
 
+        char localSeparator = DecimalFormatSymbols.getInstance().getDecimalSeparator();
+
         String s1 = "[10,0,0.1,0.11,0.111,0.1111]";
         String r1 = j.toString(j.parse(s1));
         String s2 = "[0.9,0.99,0.999,0.9999]";
         String r2 = j.toString(j.parse(s2));
-        this.myAssertEquals(s1, r1, "[10,0,0.1,0.11,0.111,0.111]");
-        this.myAssertEquals(s2, r2, "[0.9,0.99,0.999,1]");
+        this.myAssertEquals(s1, r1, "[10,0,0.1,0.11,0.111,0.111]".replace('.', localSeparator));
+        this.myAssertEquals(s2, r2, "[0.9,0.99,0.999,1]".replace('.', localSeparator));
 
         //j.addComplex();
         j.println(j.parse("[0,1,i,1+i]"));

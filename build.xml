@@ -15,277 +15,237 @@
     
   - Set the JAVACCHOME environment variable to the location of the
     library directory of JavaCC (e.g. C:\apps\javacc\bin\lib)
-  
-  - Optional: This build file can ensure API compatibility with Java 1.2 by 
-    using the bootclasspath option for cross-compilation when compiling. For 
-    this a Java 1.2 JRE needs to be available on the system. The location 
-    of the JRE is set in the JRE1_2HOME environment variable 
-    (e.g. C:\jre1.2.2). The file {JRE1_2HOME}/lib/rt.jar must exist.
 
 =============================================================================
 -->
 
 <project name="JEP-2.4.1" default="compile" basedir=".">
-	
-	<property name="jep-ver" value="2.4.1"/>
-	<property name="ext-ver" value="1.1.1"/>
-	<!-- library locations -->
-	<property environment="env"/>
-	<property name="javacchome" value="${env.JAVACCHOME}"/>
-	<property name="oldjrehome" value="${env.JRE1_2HOME}"/>
-	<!-- set global properties for this build -->
-	<property name="src"		value="src"/>
-	<property name="bin"		value="bin"/>
-	<property name="build"		value="build"/>
-	<property name="dist"		value="dist"/>
-	<property name="doc"		value="doc"/>
-	<property name="lib"		value="lib"/>
-	<property name="disttemp"	value="disttemp"/>
-	
-	<property name="jep-jar"	value="jep-${jep-ver}.jar"/>
-	<property name="ext-jar"	value="ext-${ext-ver}.jar"/>
-	
-	<property name="jep-com-bin" value="jep-${jep-ver}-commercial-bin"/>
-	<property name="jep-com-src" value="jep-${jep-ver}-commercial-src"/>
-	<property name="jep-ext-com-bin" value="jep-${jep-ver}-ext-${ext-ver}-commercial-bin"/>
-	<property name="jep-ext-com-src" value="jep-${jep-ver}-ext-${ext-ver}-commercial-src"/>
-	<property name="jep-ext-gpl"	  value="jep-${jep-ver}-ext-${ext-ver}-gpl"/>
-	
-	<property name="classpath"     value="${lib}/junit.jar;${lib}/Jama-1.0.2.jar"/>
-	<property name="bootclasspath" value="${oldjrehome}/lib/rt.jar"/>
-	<!-- <property name="website" value="website"/> -->
 
-	<taskdef name="jjtree"
-	classname="org.apache.tools.ant.taskdefs.optional.javacc.JJTree" />
+    <property name="jep-ver" value="2.4.1"/>
+    <property name="ext-ver" value="1.1.1"/>
+    <!-- library locations -->
+    <property environment="env"/>
+    <property name="javacchome" value="${env.JAVACCHOME}"/>
+    <!-- set global properties for this build -->
+    <property name="src" value="src/java"/>
+    <property name="bin" value="bin"/>
+    <property name="build.base" value="build"/>
+    <property name="build" value="${build.base}/out"/>
+    <property name="dist" value="dist"/>
+    <property name="doc" value="doc"/>
+    <property name="lib" value="lib"/>
+    <property name="dist.temp" value="disttemp"/>
+    
+    <property name="test.src" value="src/test"/>
+    <property name="test.build" value="${build.base}/test"/>
+    <property name="test.report" value="${build.base}/test-report"/>
 
-	<taskdef name="javacc"
-	classname="org.apache.tools.ant.taskdefs.optional.javacc.JavaCC" />
+    <property name="jep-jar" value="jep-${jep-ver}.jar"/>
+    <property name="ext-jar" value="ext-${ext-ver}.jar"/>
 
-<!--======================================================================-->
-<!-- INIT -->
-	<target name="init">
-		<!-- Create the time stamp -->
-		<tstamp/>
-		<!-- Echo environment variables -->
-		<echo message="JAVACCHOME = ${javacchome}"/>
-		<echo message="JRE1_2HOME = ${oldjrehome}"/>
-		<echo message="bootclasspath = ${bootclasspath}"/>
+    <property name="jep-ext-gpl" value="jep-${jep-ver}-ext-${ext-ver}-gpl"/>
 
-		<!-- Ensure JavaCC is present -->
-		<!-- TODO get this working -->
-		<!--			classpath="${javacchome}/JavaCC.zip"
-		<available property="javacc.2.present"
-				classname="COM.sun.labs.javacc.Main">
-  <classpath>
-    <pathelement location="${javacchome}/JavaCC.zip"/>
-  </classpath>
-  </available>
+    <path id="classpath">
+        <pathelement location="${lib}/Jama-1.0.2.jar"/>
+    </path>
+    <path id="test-classpath">
+        <path refid="classpath"/>
+        <pathelement location="${lib}/junit-4.6.jar"/>
+        <pathelement location="${build}"/>
+    </path>
+    <taskdef name="jjtree"
+             classname="org.apache.tools.ant.taskdefs.optional.javacc.JJTree"/>
 
-		<available property="javacc.3.present"
-			classname="org.javacc.parser.Main"
-			classpath="${javacchome}/javacc.jar" />
-		<condition property="javacc.present">
-				<or>
-						<istrue value="javacc.2.present"/>
-						<istrue value="javacc.3.present"/>
-				</or>
-		</condition>
-		<condition property="javacc.not.present">
-				<not>
-						<istrue value="javacc.present"/>
-				</not>
-		</condition>
-		<antcall target="print.javacc.not.present"/>-->
-</target>
-<!--
-	<target name="print.javacc.not.present" if="javacc.not.present">
-			<echo message="JavaCC 2 or 3 is not present. Parser.jjt will not be processed!"/>
-	</target>
-	-->
+    <taskdef name="javacc"
+             classname="org.apache.tools.ant.taskdefs.optional.javacc.JavaCC"/>
 
-<!--======================================================================-->
-<!-- JJTREE -->
-<target name="jjtree" depends="init"><!-- if="javacc.present">
-		<echo message="javacc.present is true"/>-->
-		<jjtree
-			target="${src}/org/nfunk/jep/Parser.jjt"
-			outputdirectory="${src}/org/nfunk/jep/"
-			javacchome="${javacchome}"
-		/>
-	</target>
+    <!--======================================================================-->
+    <!-- INIT -->
+    <target name="init">
+        <!-- Create the time stamp -->
+        <tstamp/>
+        <!-- Echo environment variables -->
+        <echo message="JAVACCHOME = ${javacchome}"/>
+    </target>
 
-<!--======================================================================-->
-<!-- JAVACC -->
-<target name="javacc" depends="jjtree"><!--if="javacc.present">
-		<echo message="javacc.present is true"/>-->
-		<javacc
-			target="${src}/org/nfunk/jep/Parser.jj"
-			outputdirectory="${src}/org/nfunk/jep/"
-			javacchome="${javacchome}"
-		/>
-	</target>
+    <!--======================================================================-->
+    <!-- JJTREE -->
+    <target name="jjtree" depends="init">
+        <jjtree
+                target="${src}/org/nfunk/jep/Parser.jjt"
+                outputdirectory="${src}/org/nfunk/jep/"
+                javacchome="${javacchome}"
+                />
+    </target>
 
-<!--======================================================================-->
-<!-- JJDOC -->
-	<target name="jjdoc" depends="javacc">
-		<mkdir dir="${doc}/grammar"/>
-		<jjdoc
-			target="${src}/org/nfunk/jep/Parser.jj"
-			outputfile="${doc}/grammar/grammar.html"
-			javacchome="${javacchome}"
-		/>
-		<jjdoc
-			target="${src}/org/nfunk/jep/Parser.jj"
-			outputfile="${doc}/grammar/grammar.txt"
-			text="true"
-			javacchome="${javacchome}"
-		/>
-	</target>
+    <!--======================================================================-->
+    <!-- JAVACC -->
+    <target name="javacc" depends="jjtree">
+        <delete>
+            <fileset dir="${src}/org/nfunk/jep">
+                <filename name="TokenMgrError.java"/>
+                <filename name="ParseException.java"/>
+                <filename name="Token.java"/>
+                <filename name="JavaCharStream.java"/>
+            </fileset>
+        </delete>
+        <javacc
+                target="${src}/org/nfunk/jep/Parser.jj"
+                outputdirectory="${src}/org/nfunk/jep/"
+                javacchome="${javacchome}"
+                />
+    </target>
 
-      
-<!--======================================================================-->
-<!-- COMPILE -->
-	
-	<!-- Compiles with or without compatibility ensurance-->
-	<target name="compile" depends="compile-with-ce, compile-without-ce">
-	</target>
-	
-	<!-- Compiles without ensuring compatibility if JRE1_2HOME is not set -->
-	<target name="compile-without-ce" depends="javacc" unless="env.JRE1_2HOME">
-		<echo message="Compiling without ensuring compatibility"/>
-		<!-- Create the build directory -->
-		<mkdir dir="${build}"/>
-
-		<!-- Compile the java code from ${src} into ${build} -->
-		<javac srcdir="${src}"
-		       destdir="${build}"
-		       classpath="${classpath}"
-			   deprecation="on"
-		       source="1.2"
-			   target="1.2"/>
-	</target>
-	
-	<!-- Compiles with ensuring compatibility if JRE1_2HOME is set -->
-	<target name="compile-with-ce" depends="javacc" if="env.JRE1_2HOME">
-		
-		<!-- Create the build directory -->
-		<mkdir dir="${build}"/>
-
-		<!-- Compile the java code from ${src} into ${build} -->
-		<javac srcdir="${src}"
-		       destdir="${build}"
-		       classpath="${classpath}"
-			   deprecation="on"
-		       source="1.2"
-			   target="1.2"
-		       bootclasspath="${bootclasspath}"/>
-	</target>
-	
+    <!--======================================================================-->
+    <!-- JJDOC -->
+    <target name="jjdoc" depends="javacc">
+        <mkdir dir="${doc}/grammar"/>
+        <jjdoc
+                target="${src}/org/nfunk/jep/Parser.jj"
+                outputfile="${doc}/grammar/grammar.html"
+                javacchome="${javacchome}"
+                />
+        <jjdoc
+                target="${src}/org/nfunk/jep/Parser.jj"
+                outputfile="${doc}/grammar/grammar.txt"
+                text="true"
+                javacchome="${javacchome}"
+                />
+    </target>
 
 
-<!--======================================================================-->
-<!-- JAVADOC -->
-	<target name="javadoc" depends="init">
-		<delete dir="doc/javadoc"/>
-		<mkdir dir="doc/javadoc"/>
-		<javadoc packagenames="org.nfunk.jep.*,org.lsmp.*"
-				classpath="${classpath}"
-				sourcepath="src"
-				destdir="doc/javadoc"
-				windowtitle="JEP API"
-				breakiterator="yes"
-				source="1.4">
-			<bottom><![CDATA[<A HREF="http://www.singularsys.com/jep" TARGET="_blank">http://www.singularsys.com/jep</A> Copyright &#169; 2007 Singular Systems]]></bottom>
-		</javadoc>
-	</target>
+    <!--======================================================================-->
+    <!-- COMPILE -->
 
-	
-<!--======================================================================-->
-<!-- JAR -->
-	<target name="jar" depends="compile">
-		<!-- Create the distribution directory -->
-		<mkdir dir="${dist}"/>
+    <!-- Compiles with or without compatibility ensurance-->
+    <target name="compile" depends="javacc">
 
-		<!-- JEP jar without examples or testing classes-->
-		<jar jarfile="${dist}/${jep-jar}"
-		     basedir="${build}"
-		     includes="org/nfunk/jep/**"/>
-		
-		<!-- Extensions jar without examples or testing classes -->
-		<jar jarfile="${dist}/${ext-jar}"
-		     basedir="${build}"
-		     includes="org/lsmp/djep/**"/>
-		
-		<!-- JEP Examples jar for web site -->
-		<!-- TODO: DJEP examples as well? -->
-		<jar jarfile="${dist}/jep-${jep-ver}-withexamples.jar"
-		     basedir="${build}"
-		     includes="org/nfunk/jep/**,org/nfunk/jepexamples/**"/>
-	</target>
+        <!-- Create the build directory -->
+        <mkdir dir="${build}"/>
+
+        <!-- Compile the java code from ${src} into ${build} -->
+        <javac srcdir="${src}"
+               destdir="${build}"
+               classpathref="classpath"
+               deprecation="on"
+               source="1.5"
+               target="1.5"/>
+    </target>
+
+    <!-- Compiles with or without compatibility ensurance-->
+    <target name="compile-tests" depends="compile">
+
+        <!-- Create the build directory -->
+        <mkdir dir="${build}"/>
+
+        <!-- Compile the java code from ${src} into ${build} -->
+        <javac srcdir="${src}"
+               destdir="${build}"
+               classpathref="test-classpath"
+               deprecation="on"
+               source="1.5"
+               target="1.5"/>
+    </target>
 
 
-<!--======================================================================-->
-<!-- RUN TESTS -->
+    <!--======================================================================-->
+    <!-- JAVADOC -->
+    <target name="javadoc" depends="init">
+        <delete dir="${doc}/javadoc"/>
+        <mkdir dir="${doc}/javadoc"/>
+        <javadoc packagenames="org.nfunk.jep.*,org.lsmp.*"
+                 classpathref="classpath"
+                 sourcepath="${src}"
+                 destdir="${doc}/javadoc"
+                 windowtitle="JEP API"
+                 breakiterator="yes"
+                 source="1.5">
+            <bottom>
+                <![CDATA[<A HREF="http://www.singularsys.com/jep" TARGET="_blank">http://www.singularsys.com/jep</A> Copyright &#169; 2007 Singular Systems]]></bottom>
+        </javadoc>
+    </target>
 
-	<target name="runtests">
-        <java fork="yes" classname="junit.textui.TestRunner" 
-            taskname="junit" failonerror="true" dir="bin">
-            <arg value="org.nfunk.jep.AllTests"/>
+
+    <!--======================================================================-->
+    <!-- JAR -->
+    <target name="jar" depends="compile">
+        <!-- Create the distribution directory -->
+        <mkdir dir="${dist}"/>
+
+        <!-- JEP jar without examples or testing classes-->
+        <jar jarfile="${dist}/${jep-jar}"
+             basedir="${build}"
+             includes="org/nfunk/jep/**"/>
+
+        <!-- Extensions jar without examples or testing classes -->
+        <jar jarfile="${dist}/${ext-jar}"
+             basedir="${build}"
+             includes="org/lsmp/djep/**"/>
+
+        <!-- JEP Examples jar for web site -->
+        <!-- TODO: DJEP examples as well? -->
+        <jar jarfile="${dist}/jep-${jep-ver}-withexamples.jar"
+             basedir="${build}"
+             includes="org/nfunk/jep/**,org/nfunk/jepexamples/**"/>
+    </target>
+
+
+    <!--======================================================================-->
+    <!-- RUN TESTS -->
+
+    <target name="runtests">
+
+        <junit printsummary="yes" haltonfailure="yes">
             <classpath>
-                <pathelement location="lib/junit.jar" />
-                <pathelement location="build/" />
+                <path refid="test-classpath"/>
             </classpath>
-        </java>
-        <java fork="yes" classname="junit.textui.TestRunner" 
-            taskname="junit" failonerror="true">
-            <arg value="org.lsmp.djepAllTests"/>
-            <classpath>
-                <pathelement location="lib/junit.jar" />
-                <pathelement location="build/" />
-            </classpath>
-        </java>
-	</target>
-	
-<!--======================================================================-->
-<!-- CLEAN -->
-	<target name="clean">
-		<!-- Delete the ${build} and ${dist} directory trees -->
-		<delete dir="${build}"/>
-		<delete dir="${dist}"/>
-		<delete dir="${doc}/grammar"/>
-	</target>
 
-<!--======================================================================-->
-<!-- DIST -->
-<!-- Creates five temporary directories to which files are copied.
-     Then zip files are made from these directories -->
-	<target name="dist" depends="jar,javadoc">
-		<!-- Create a temp dir for contents of packages-->
-		<delete dir="${disttemp}" />
-		<mkdir dir="${disttemp}/${jep-com-src}"/>
-		<mkdir dir="${disttemp}/${jep-com-bin}"/>
-		<mkdir dir="${disttemp}/${jep-ext-com-src}"/>
-		<mkdir dir="${disttemp}/${jep-ext-com-bin}"/>
-		<mkdir dir="${disttemp}/${jep-ext-gpl}"/>
+            <batchtest fork="yes" todir="${test.report}">
+                <formatter type="html"/>
+                <fileset dir="${test.build}">
+                    <include name="**/*Test*.java"/>
+                    <exclude name="**/AllTests.java"/>
+                </fileset>
+            </batchtest>
+        </junit>
+    </target>
 
-		<!-- Copy src files -->
-		<!-- define filterset -->
-		<filterset id="sourcefilters">
-			<filter token="header"    value=" JEP ${jep-ver}, Extensions ${ext-ver}"/>
-			<filter token="date"      value="      ${TODAY}"/>
-			<filter token="copyright" value="      (c) Copyright 2007, Nathan Funk and Richard Morris"/>
-			<filter token="license"   value="      See LICENSE-*.txt for license information."/>
-		</filterset>
-		<!-- copy source files with filter to disttemp -->
-		<copy todir="${disttemp}">
-			<fileset dir="."
-					includes="${src}/**"/>
-			<filterset refid="sourcefilters"/>
-		</copy>
-		<!-- copy common files -->
-		<copy todir="${disttemp}" enablemultiplemappings="true">
-			<fileset dir="."
-					includes="
+    <!--======================================================================-->
+    <!-- CLEAN -->
+    <target name="clean">
+        <!-- Delete the ${build} and ${dist} directory trees -->
+        <delete dir="${build.base}"/>
+        <delete dir="${dist}"/>
+        <delete dir="${doc}/grammar"/>
+    </target>
+
+    <!--======================================================================-->
+    <!-- DIST -->
+    <!-- Creates temporary directories to which files are copied.
+Then zip files are made from these directories -->
+    <target name="dist" depends="jar,javadoc">
+        <!-- Create a temp dir for contents of packages-->
+        <delete dir="${dist.temp}"/>
+        <mkdir dir="${dist.temp}/${jep-ext-gpl}"/>
+
+        <!-- Copy src files -->
+        <!-- define filterset -->
+        <filterset id="sourcefilters">
+            <filter token="header" value=" JEP ${jep-ver}, Extensions ${ext-ver}"/>
+            <filter token="date" value="      ${TODAY}"/>
+            <filter token="copyright" value="      (c) Copyright 2007, Nathan Funk and Richard Morris"/>
+            <filter token="license" value="      See LICENSE-*.txt for license information."/>
+        </filterset>
+        <!-- copy source files with filter to disttemp -->
+        <copy todir="${dist.temp}">
+            <fileset dir="."
+                     includes="${src}/**"/>
+            <filterset refid="sourcefilters"/>
+        </copy>
+        <!-- copy common files -->
+        <copy todir="${dist.temp}" enablemultiplemappings="true">
+            <fileset dir="."
+                     includes="
 					 ${doc}/**,
 					 ${bin}/**,
 					 ${lib}/**,
@@ -294,62 +254,25 @@
 					 CHANGES.txt,
 					 COPYRIGHT.txt,
 					 README.html"/>
-			<compositemapper>
-				<globmapper from="*" to="${jep-com-src}/*"/>
-				<globmapper from="*" to="${jep-com-bin}/*"/>
-				<globmapper from="*" to="${jep-ext-com-src}/*"/>
-				<globmapper from="*" to="${jep-ext-com-bin}/*"/>
-				<globmapper from="*" to="${jep-ext-gpl}/*"/>
-			</compositemapper>
-		</copy>
-		
-		<!-- JEP Commercial Binary ================================== -->
-		<copy todir="${disttemp}/${jep-com-bin}">
-			<fileset dir="."
-					includes="${build}/org/nfunk/**, LICENSE-com-binary.txt"/>
-		</copy>
-		<!-- JEP Commercial Source ================================== -->
-		<copy todir="${disttemp}/${jep-com-src}">
-		    <fileset dir="${disttemp}"
-		    	includes="${src}/org/nfunk/**"/>
-		</copy>
-		<copy todir="${disttemp}/${jep-com-src}">
-			<fileset dir="."
-					includes="${build}/org/nfunk/**, LICENSE-com-source.txt"/>
-		</copy>
-		<!-- JEP+EXT Commercial Binary ================================== -->
-		<copy todir="${disttemp}/${jep-ext-com-bin}">
-			<fileset dir="."
-					includes="${build}/**, ${dist}/${ext-jar}, LICENSE-com-binary.txt"/>
-		</copy>
-		<!-- JEP+EXT Commercial Source ================================== -->
-		<copy todir="${disttemp}/${jep-ext-com-src}">
-		    <fileset dir="${disttemp}"
-		    	includes="${src}/**"/>
-		</copy>
-		<copy todir="${disttemp}/${jep-ext-com-src}">
-			<fileset dir="."
-					includes="${build}/**, ${dist}/${ext-jar}, LICENSE-com-source.txt"/>
-		</copy>
-		<!-- JEP+EXT GPL ================================================ -->
-		<copy todir="${disttemp}/${jep-ext-gpl}">
-		    <fileset dir="${disttemp}"
-		    	includes="${src}/**"/>
-		</copy>
-		<copy todir="${disttemp}/${jep-ext-gpl}">
-			<fileset dir="."
-					includes="${build}/**, ${dist}/${ext-jar}, LICENSE-gpl.txt"/>
-		</copy>
+            <compositemapper>
+                <globmapper from="*" to="${jep-ext-gpl}/*"/>
+            </compositemapper>
+        </copy>
 
-		<!-- zip files -->
-		<zip zipfile="${dist}/${jep-com-bin}.zip"		basedir="${disttemp}" includes="${jep-com-bin}/**" />
-		<zip zipfile="${dist}/${jep-com-src}.zip"		basedir="${disttemp}" includes="${jep-com-src}/**" />
-		<zip zipfile="${dist}/${jep-ext-com-bin}.zip"	basedir="${disttemp}" includes="${jep-ext-com-bin}/**" />
-		<zip zipfile="${dist}/${jep-ext-com-src}.zip"	basedir="${disttemp}" includes="${jep-ext-com-src}/**" />
-		<zip zipfile="${dist}/${jep-ext-gpl}.zip"		basedir="${disttemp}" includes="${jep-ext-gpl}/**" />
+        <!-- JEP+EXT GPL ================================================ -->
+        <copy todir="${dist.temp}/${jep-ext-gpl}">
+            <fileset dir="${dist.temp}"
+                     includes="${src}/**"/>
+        </copy>
+        <copy todir="${dist.temp}/${jep-ext-gpl}">
+            <fileset dir="."
+                     includes="${build}/**, ${dist}/${ext-jar}, LICENSE-gpl.txt"/>
+        </copy>
 
-		<!-- clean up temporary files 
-		<delete dir="${disttemp}" />-->
-	</target>
+        <zip zipfile="${dist}/${jep-ext-gpl}.zip" basedir="${dist.temp}" includes="${jep-ext-gpl}/**"/>
+
+        <!-- clean up temporary files
+          <delete dir="${disttemp}" />-->
+    </target>
 </project>
 
