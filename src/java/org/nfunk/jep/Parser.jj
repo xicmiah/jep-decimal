@@ -225,16 +225,6 @@ TOKENS
 |
 	< #DECIMAL_LITERAL: ["0"-"9"] (["0"-"9"])* >
 |
-	< FLOATING_POINT_LITERAL:
-		(["0"-"9"])+ <DECIMAL_SEPARATOR> (["0"-"9"])* (<EXPONENT>)?
-		| <DECIMAL_SEPARATOR> (["0"-"9"])+ (<EXPONENT>)?
-		| (["0"-"9"])+ <EXPONENT>
-	>
-|
-	< #EXPONENT: ["e","E"] (["+","-"])? (["0"-"9"])+ >
-|
-	< #DECIMAL_SEPARATOR: <DOT> >
-|
 	< STRING_LITERAL:
 		"\""
 		( (~["\"","\\","\n","\r"])
@@ -242,8 +232,40 @@ TOKENS
 		)*
 		"\""
 	>
+}
+
+
+/*
+ * The "separator polymorphism" attempt
+ */
+<DEFAULT,NO_DOT_IN_IDENTIFIERS> TOKEN:
+{
+	< DEFAULT_FP_LITERAL:
+		(["0"-"9"])+ <DEFAULT_DEC_SEPARATOR> (["0"-"9"])* (<DEF_EXPONENT>)?
+		| <DEFAULT_DEC_SEPARATOR> (["0"-"9"])+ (<DEF_EXPONENT>)?
+		| (["0"-"9"])+ <DEF_EXPONENT>
+	>
 |
-	< ARG_SEPARATOR: <COMMA> >
+	< #DEF_EXPONENT: ["e","E"] (["+","-"])? (["0"-"9"])+ >
+|
+	< #DEFAULT_DEC_SEPARATOR: <DOT> >
+|
+	< DEFAULT_ARG_SEPARATOR: <COMMA> >
+}
+
+<ALT_SEPARATORS> TOKEN:
+{
+	< ALT_FP_LITERAL:
+		(["0"-"9"])+ <ALT_DEC_SEPARATOR> (["0"-"9"])* (<ALT_EXPONENT>)?
+		| <ALT_DEC_SEPARATOR> (["0"-"9"])+ (<ALT_EXPONENT>)?
+		| (["0"-"9"])+ <ALT_EXPONENT>
+	>
+|
+	< #ALT_EXPONENT: ["e","E"] (["+","-"])? (["0"-"9"])+ >
+|
+	< #ALT_DEC_SEPARATOR: <COMMA> >
+|
+	< ALT_ARG_SEPARATOR: <SEMI> >
 }
 
 /* IDENTIFIERS 
@@ -283,7 +305,7 @@ TOKENS
 	< #DIGIT1: ["0"-"9"] >
 }
 
-<NO_DOT_IN_IDENTIFIERS> TOKEN:
+<NO_DOT_IN_IDENTIFIERS,ALT_SEPARATORS> TOKEN:
 {
 	<INDENTIFIER2: <LETTER2>(<LETTER2>|<DIGIT2>)*>
 	|
@@ -1298,7 +1320,7 @@ void ListExpression()         :
 {/*@bgen(jjtree) FunNode */
         try {
 /*@egen*/
-	<LSQ> Expression() ( <ARG_SEPARATOR> Expression() )* <RSQ>/*@bgen(jjtree)*/
+	<LSQ> Expression() ( ArgumentSeparator() Expression() )* <RSQ>/*@bgen(jjtree)*/
         } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
@@ -1482,7 +1504,7 @@ void ArgumentList(int reqArguments, String functionName) :
 	[
 	Expression() { count++; }
 	(
-		<ARG_SEPARATOR>
+		ArgumentSeparator()
 		Expression() { count++; }
 	)*
 	]
@@ -1503,6 +1525,13 @@ void ArgumentList(int reqArguments, String functionName) :
     }
 }
 
+String ArgumentSeparator() :
+{
+  Token t;
+}
+{
+	( t = <DEFAULT_ARG_SEPARATOR> |	t = <ALT_ARG_SEPARATOR> ) { return t.image; }
+}
 
 
 String Identifier() :
@@ -1610,7 +1639,7 @@ Object RealConstant() :
   Object value;
 }
 {
-	(t=<INTEGER_LITERAL>	|	t=<FLOATING_POINT_LITERAL>)
+	(t=<INTEGER_LITERAL> | t=<DEFAULT_FP_LITERAL> | t=<ALT_FP_LITERAL>)
 	{
 		try {
 			value = jep.getNumberFactory().createNumber(t.image);

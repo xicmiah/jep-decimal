@@ -6,45 +6,50 @@ public interface ParserConstants {
   int EOF = 0;
   int INTEGER_LITERAL = 7;
   int DECIMAL_LITERAL = 8;
-  int FLOATING_POINT_LITERAL = 9;
-  int EXPONENT = 10;
-  int DECIMAL_SEPARATOR = 11;
-  int STRING_LITERAL = 12;
-  int ARG_SEPARATOR = 13;
-  int INDENTIFIER1 = 14;
-  int LETTER1 = 15;
-  int DIGIT1 = 16;
-  int INDENTIFIER2 = 17;
-  int LETTER2 = 18;
-  int DIGIT2 = 19;
-  int ASSIGN = 20;
-  int SEMI = 21;
-  int COMMA = 22;
-  int GT = 23;
-  int LT = 24;
-  int EQ = 25;
-  int LE = 26;
-  int GE = 27;
-  int NE = 28;
-  int AND = 29;
-  int OR = 30;
-  int PLUS = 31;
-  int MINUS = 32;
-  int MUL = 33;
-  int DOT = 34;
-  int DIV = 35;
-  int MOD = 36;
-  int NOT = 37;
-  int POWER = 38;
-  int CROSS = 39;
-  int LSQ = 40;
-  int RSQ = 41;
-  int LRND = 42;
-  int RRND = 43;
-  int COLON = 44;
+  int STRING_LITERAL = 9;
+  int DEFAULT_FP_LITERAL = 10;
+  int DEF_EXPONENT = 11;
+  int DEFAULT_DEC_SEPARATOR = 12;
+  int DEFAULT_ARG_SEPARATOR = 13;
+  int ALT_FP_LITERAL = 14;
+  int ALT_EXPONENT = 15;
+  int ALT_DEC_SEPARATOR = 16;
+  int ALT_ARG_SEPARATOR = 17;
+  int INDENTIFIER1 = 18;
+  int LETTER1 = 19;
+  int DIGIT1 = 20;
+  int INDENTIFIER2 = 21;
+  int LETTER2 = 22;
+  int DIGIT2 = 23;
+  int ASSIGN = 24;
+  int SEMI = 25;
+  int COMMA = 26;
+  int GT = 27;
+  int LT = 28;
+  int EQ = 29;
+  int LE = 30;
+  int GE = 31;
+  int NE = 32;
+  int AND = 33;
+  int OR = 34;
+  int PLUS = 35;
+  int MINUS = 36;
+  int MUL = 37;
+  int DOT = 38;
+  int DIV = 39;
+  int MOD = 40;
+  int NOT = 41;
+  int POWER = 42;
+  int CROSS = 43;
+  int LSQ = 44;
+  int RSQ = 45;
+  int LRND = 46;
+  int RRND = 47;
+  int COLON = 48;
 
-  int NO_DOT_IN_IDENTIFIERS = 0;
-  int DEFAULT = 1;
+  int ALT_SEPARATORS = 0;
+  int NO_DOT_IN_IDENTIFIERS = 1;
+  int DEFAULT = 2;
 
   String[] tokenImage = {
     "<EOF>",
@@ -56,11 +61,15 @@ public interface ParserConstants {
     "<token of kind 6>",
     "<INTEGER_LITERAL>",
     "<DECIMAL_LITERAL>",
-    "<FLOATING_POINT_LITERAL>",
-    "<EXPONENT>",
-    "<DECIMAL_SEPARATOR>",
     "<STRING_LITERAL>",
-    "<ARG_SEPARATOR>",
+    "<DEFAULT_FP_LITERAL>",
+    "<DEF_EXPONENT>",
+    "<DEFAULT_DEC_SEPARATOR>",
+    "<DEFAULT_ARG_SEPARATOR>",
+    "<ALT_FP_LITERAL>",
+    "<ALT_EXPONENT>",
+    "<ALT_DEC_SEPARATOR>",
+    "<ALT_ARG_SEPARATOR>",
     "<INDENTIFIER1>",
     "<LETTER1>",
     "<DIGIT1>",
