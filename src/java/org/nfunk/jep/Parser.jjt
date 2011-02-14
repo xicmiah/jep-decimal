@@ -226,12 +226,14 @@ TOKENS
 	< #DECIMAL_LITERAL: ["0"-"9"] (["0"-"9"])* >
 |
 	< FLOATING_POINT_LITERAL:
-		(["0"-"9"])+ "." (["0"-"9"])* (<EXPONENT>)?
-		| "." (["0"-"9"])+ (<EXPONENT>)?
+		(["0"-"9"])+ <DECIMAL_SEPARATOR> (["0"-"9"])* (<EXPONENT>)?
+		| <DECIMAL_SEPARATOR> (["0"-"9"])+ (<EXPONENT>)?
 		| (["0"-"9"])+ <EXPONENT>
 	>
 |
 	< #EXPONENT: ["e","E"] (["+","-"])? (["0"-"9"])+ >
+|
+	< #DECIMAL_SEPARATOR: <DOT> >
 |
 	< STRING_LITERAL:
 		"\""
@@ -240,6 +242,8 @@ TOKENS
 		)*
 		"\""
 	>
+|
+	< ARG_SEPARATOR: <COMMA> >
 }
 
 /* IDENTIFIERS 
@@ -613,7 +617,7 @@ void ListExpression() #FunNode:
 	jjtThis.setOperator(opSet.getList());
 }
 {
-	<LSQ> Expression() ( <COMMA> Expression() )* <RSQ> 
+	<LSQ> Expression() ( <ARG_SEPARATOR> Expression() )* <RSQ> 
 }
 
 /*
@@ -700,7 +704,7 @@ void ArgumentList(int reqArguments, String functionName) :
 	[
 	Expression() { count++; }
 	(
-		<COMMA>
+		<ARG_SEPARATOR>
 		Expression() { count++; }
 	)*
 	]
