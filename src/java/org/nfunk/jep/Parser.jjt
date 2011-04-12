@@ -90,7 +90,12 @@ public class Parser {
 		enable_tracing();
 		Node node = Start();
 		if (node == null) throw new ParseException("No expression entered");
-		return node.jjtGetChild(0);
+
+		// Return full tree if found more than one expression
+		if (node.jjtGetNumChildren() > 1)
+		    return node;
+		else
+		    return node.jjtGetChild(0);
 	}
 
 	/** 
@@ -365,7 +370,7 @@ ASTStart Start() #Start :
 {
 }
 {
-	Expression() ( <EOF> | <SEMI> ) { return jjtThis; }
+	( Expression() ( <EOF> | <SEMI> ) )+ { return jjtThis; }
 	|  ( <EOF> | <SEMI> )
 	{
 		// njf - The next line is commented out in 2.3.0 since

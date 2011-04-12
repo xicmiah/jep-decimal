@@ -304,7 +304,8 @@ public class XJepTest extends JepTest {
         myAssertEquals("eval z eqn", "56.0", j.evaluate(node15).toString());
     }
 
-    public void testReentrant() throws ParseException, Exception {
+    public void donttestReentrant() throws ParseException, Exception {
+	    // TODO: Replaced by multi-expression parsing, remove or rewrite
         XJep xj = (XJep) j;
 
         xj.restartParser("x=1; // semi-colon; in comment\n y=2; z=x+y;");

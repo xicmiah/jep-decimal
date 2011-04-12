@@ -90,7 +90,12 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants/*@egen*/ {/*@
 		enable_tracing();
 		Node node = Start();
 		if (node == null) throw new ParseException("No expression entered");
-		return node.jjtGetChild(0);
+
+		// Return full tree if found more than one expression
+		if (node.jjtGetNumChildren() > 1)
+		    return node;
+		else
+		    return node.jjtGetChild(0);
 	}
 
 	/** 
@@ -371,11 +376,11 @@ ASTStart Start()        :
 {/*@bgen(jjtree) Start */
         try {
 /*@egen*/
-	Expression() ( <EOF> | <SEMI> )/*@bgen(jjtree)*/
-                                        {
-                                          jjtree.closeNodeScope(jjtn000, true);
-                                          jjtc000 = false;
-                                        }
+	( Expression() ( <EOF> | <SEMI> ) )+/*@bgen(jjtree)*/
+                                             {
+                                               jjtree.closeNodeScope(jjtn000, true);
+                                               jjtc000 = false;
+                                             }
 /*@egen*/ { return jjtn000; }
 	|  ( <EOF> | <SEMI> )/*@bgen(jjtree)*/
         {

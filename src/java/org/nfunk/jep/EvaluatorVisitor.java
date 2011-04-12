@@ -207,11 +207,16 @@ public class EvaluatorVisitor implements ParserVisitor, EvaluatorI {
     }
 
     /**
-     * This method should never be called when evaluating a normal
-     * expression.
+     * Visit start node. Evaluates all children, leaves last result in stack.
      */
     public Object visit(ASTStart node, Object data) throws ParseException {
-        throw new ParseException("Start node encountered during evaluation");
+//        throw new ParseException("Start node encountered during evaluation");
+	    Object lastValue = null;
+	    for (Node child : node.children) {
+		    child.jjtAccept(this, data);
+		    lastValue = stack.pop();
+	    }
+	    return stack.push(lastValue);
     }
 
     /**
