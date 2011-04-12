@@ -10,42 +10,40 @@ public interface ParserConstants {
   int DEFAULT_FP_LITERAL = 10;
   int DEF_EXPONENT = 11;
   int DEFAULT_DEC_SEPARATOR = 12;
-  int DEFAULT_ARG_SEPARATOR = 13;
-  int ALT_FP_LITERAL = 14;
-  int ALT_EXPONENT = 15;
-  int ALT_DEC_SEPARATOR = 16;
-  int ALT_ARG_SEPARATOR = 17;
-  int INDENTIFIER1 = 18;
-  int LETTER1 = 19;
-  int DIGIT1 = 20;
-  int INDENTIFIER2 = 21;
-  int LETTER2 = 22;
-  int DIGIT2 = 23;
-  int ASSIGN = 24;
-  int SEMI = 25;
-  int COMMA = 26;
-  int GT = 27;
-  int LT = 28;
-  int EQ = 29;
-  int LE = 30;
-  int GE = 31;
-  int NE = 32;
-  int AND = 33;
-  int OR = 34;
-  int PLUS = 35;
-  int MINUS = 36;
-  int MUL = 37;
-  int DOT = 38;
-  int DIV = 39;
-  int MOD = 40;
-  int NOT = 41;
-  int POWER = 42;
-  int CROSS = 43;
-  int LSQ = 44;
-  int RSQ = 45;
-  int LRND = 46;
-  int RRND = 47;
-  int COLON = 48;
+  int ALT_FP_LITERAL = 13;
+  int ALT_EXPONENT = 14;
+  int ALT_DEC_SEPARATOR = 15;
+  int INDENTIFIER1 = 16;
+  int LETTER1 = 17;
+  int DIGIT1 = 18;
+  int INDENTIFIER2 = 19;
+  int LETTER2 = 20;
+  int DIGIT2 = 21;
+  int ASSIGN = 22;
+  int SEMI = 23;
+  int COMMA = 24;
+  int GT = 25;
+  int LT = 26;
+  int EQ = 27;
+  int LE = 28;
+  int GE = 29;
+  int NE = 30;
+  int AND = 31;
+  int OR = 32;
+  int PLUS = 33;
+  int MINUS = 34;
+  int MUL = 35;
+  int DOT = 36;
+  int DIV = 37;
+  int MOD = 38;
+  int NOT = 39;
+  int POWER = 40;
+  int CROSS = 41;
+  int LSQ = 42;
+  int RSQ = 43;
+  int LRND = 44;
+  int RRND = 45;
+  int COLON = 46;
 
   int ALT_SEPARATORS = 0;
   int NO_DOT_IN_IDENTIFIERS = 1;
@@ -65,11 +63,9 @@ public interface ParserConstants {
     "<DEFAULT_FP_LITERAL>",
     "<DEF_EXPONENT>",
     "<DEFAULT_DEC_SEPARATOR>",
-    "<DEFAULT_ARG_SEPARATOR>",
     "<ALT_FP_LITERAL>",
     "<ALT_EXPONENT>",
     "<ALT_DEC_SEPARATOR>",
-    "<ALT_ARG_SEPARATOR>",
     "<INDENTIFIER1>",
     "<LETTER1>",
     "<DIGIT1>",
