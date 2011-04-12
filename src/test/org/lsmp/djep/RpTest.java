@@ -46,9 +46,6 @@ public class RpTest extends TestCase {
 
     protected void setUp() {
         j = new JEP();
-        j.addStandardConstants();
-        j.addStandardFunctions();
-        j.addComplex();
         //j.setTraverse(true);
         j.setAllowAssignment(true);
         j.setAllowUndeclared(true);

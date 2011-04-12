@@ -294,8 +294,6 @@ public class GroupJepTest extends TestCase {
         FreeGroup fg = new FreeGroup(ring, "x");
 
         JEP j2 = new JEP();
-        j2.addStandardConstants();
-        j2.addStandardFunctions();
         j2.setAllowUndeclared(true);
 
         Node n = j2.parse("(x+7.6)*(x+5.8832)*(x-55.12)");

@@ -48,7 +48,6 @@ public class VectorJepTest extends JepTest {
 
     protected void setUp() {
         j = new VectorJep();
-        j.addStandardConstants();
         j.addStandardFunctions();
         j.addComplex();
         //j.setTraverse(true);

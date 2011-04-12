@@ -254,6 +254,8 @@ public class JEP {
      */
     @Deprecated
     public void addStandardConstants() {
+	    symTab.addConstant("e", Math.E);
+	    symTab.addConstant("pi", Math.PI);
     }
 
     /**
@@ -776,5 +778,5 @@ public class JEP {
         return parser;
     }
 
-}
+	}
 
