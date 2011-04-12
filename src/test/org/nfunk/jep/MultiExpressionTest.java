@@ -34,6 +34,10 @@ public class MultiExpressionTest {
 		j.getParser().setInitialTokenManagerState(ParserConstants.ALT_SEPARATORS);
 	}
 
+	/**
+	 * Test that last evaluated expression is returned
+	 * @throws Exception
+	 */
 	@Test
 	public void testRubyStyleReturnValues() throws Exception {
 		Node node = j.parse("5;4");
@@ -42,6 +46,10 @@ public class MultiExpressionTest {
 		assertEquals(BigDecimal.valueOf(4), result);
 	}
 
+	/**
+	 * Test that expression separator isn't confused with argument list separator
+	 * @throws Exception
+	 */
 	@Test
 	public void testFunctionParameters() throws Exception {
 		Node node = j.parse("sum(1;2);sum(3;4)");
@@ -50,6 +58,10 @@ public class MultiExpressionTest {
 		assertEquals(BigDecimal.valueOf(7), result);
 	}
 
+	/**
+	 * Test that assignment returns last evaluated expression
+	 * @throws Exception
+	 */
 	@Test
 	public void testAssignment() throws Exception {
 		Node node = j.parse("a = 3; b = a + 4");
@@ -58,6 +70,10 @@ public class MultiExpressionTest {
 		assertEquals(BigDecimal.valueOf(7), result);
 	}
 
+	/**
+	 * Test that mixed separators are parsed correctly
+	 * @throws Exception
+	 */
 	@Test
 	public void testConfusion() throws Exception {
 		Node node = j.parse("a = 3,5; b = 2a; sum(a;31,5;b)");
