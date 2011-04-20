@@ -25,6 +25,8 @@ public class ConditionalsTest {
 				.setVariableFactory(new VariableFactory())
 				.setUseImplicitMultiplication(true)
 				.setNumberFactory(numberFactory)
+				.setAllowAssignment(true)
+				.setAllowUndeclaredVariables(true)
 				.createConfig();
 		jep = new JEP(configuration);
 		jep.setTraverse(true);
@@ -35,17 +37,52 @@ public class ConditionalsTest {
 		return jep.evaluate(node);
 	}
 
+	/**
+	 * Test conditional with one operator in branches
+	 * @throws Exception
+	 */
 	@Test
 	public void testIfThenElse() throws Exception {
 		Object result = eval(jep, "if (2*2 == 4) then { 1 } else { 2 }");
-
 		assertEquals(BigDecimal.valueOf(1), result);
+
+		result = eval(jep, "if (2*2 == 5) then { 1 } else { 2 }");
+		assertEquals(BigDecimal.valueOf(2), result);
 	}
 
+	/**
+	 * Test conditional with multiple operators in branches
+	 * @throws Exception
+	 */
 	@Test
 	public void testLongBodies() throws Exception {
 		Object result = eval(jep, "if (1) then { 2; 3; } else { 4; 5 }");
-
 		assertEquals(BigDecimal.valueOf(3), result);
+
+		result = eval(jep, "if (1>2) then { 2; 3; } else { 4; 5 }");
+		assertEquals(BigDecimal.valueOf(5), result);
+	}
+
+	/**
+	 * Test conditional without "else" clause
+	 * @throws Exception
+	 */
+	@Test
+	public void testNoElse() throws Exception {
+		Object result = eval(jep, "if (1) then { 2 }");
+		assertEquals(BigDecimal.valueOf(2), result);
+
+		result = eval(jep, "42; if (2*2 == 5) then {3}");
+		assertEquals(BigDecimal.valueOf(42), result);
+	}
+
+	/**
+	 * Test that conditional is assignable
+	 * @throws Exception
+	 */
+	@Test
+	public void testExtendedConditional() throws Exception {
+		Object result = eval(jep, "a = if (2*2 == -1) then {5} else {7}; a*2");
+		assertEquals(BigDecimal.valueOf(14), result);
 	}
 }

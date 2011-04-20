@@ -1,4 +1,5 @@
 /***************************************************************
+vim: sw=8 sts=8
 
  JEP 2.4.1, Extensions 1.1.1
       April 30 2007
@@ -269,6 +270,14 @@ TOKENS
 	< #ALT_DEC_SEPARATOR: <COMMA> >
 }
 
+/* Keywords */
+<*> TOKEN:
+{
+	< IF: "if" >
+|	< THEN: "then" >
+|	< ELSE: "else" >
+}
+
 /* IDENTIFIERS 
 	
 	Letters before version 2.22
@@ -370,7 +379,7 @@ ASTStart Start() #Start :
 {
 }
 {
-	( Expression() ( <EOF> | <SEMI> ) )+ { return jjtThis; }
+	ExpressionList() <EOF> { return jjtThis; }
 	|  ( <EOF> | <SEMI> )
 	{
 		// njf - The next line is commented out in 2.3.0 since
@@ -388,12 +397,19 @@ ASTStart Start() #Start :
 // x=3
 // x=y=3 parsed as x=(y=3)
 
+void ExpressionList() : {}
+{
+	( Expression() (<SEMI> [Expression()])* ) #Start(>1)
+}
+
 void Expression() : {}
 {
 	LOOKAHEAD(LValue() <ASSIGN>)		// need to prevent javacc warning with left recusion
 	AssignExpression() // rjm changes from OrExpresion
 	|
 	RightExpression()
+	|
+	Conditional()
 }
 
 void AssignExpression() : {} // rjm addition
@@ -415,6 +431,22 @@ void RightExpression() :
 }
 {
 	OrExpression()
+}
+
+void Conditional() :
+{
+}
+{
+	(
+	 <IF> <LRND> RightExpression() <RRND>
+	 <THEN> "{" ExpressionList() "}"
+	 [ <ELSE> "{" ExpressionList()  "}" ]
+
+	 {
+	 jjtThis.setOperator(opSet.getCond());
+	 }
+	)
+	#FunNode
 }
 
 void OrExpression() :

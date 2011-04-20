@@ -3,6 +3,7 @@
  */
 package org.nfunk.jep;
 
+import org.nfunk.jep.function.If;
 import org.nfunk.jep.function.operator.Assign;
 import org.nfunk.jep.function.operator.Ele;
 import org.nfunk.jep.function.List;
@@ -64,6 +65,8 @@ public class OperatorSet {
     protected Operator OP_ELEMENT = new Operator("[]", new Ele());
 //	protected Operator OP_RANGE = new Operator(":",new Range());
 
+	protected Operator OP_COND = new Operator("If", "if", new If());
+
     public OperatorSet() {
     }
 
@@ -75,7 +78,7 @@ public class OperatorSet {
                 OP_GT, OP_LT, OP_GE, OP_LE, OP_EQ, OP_NE, OP_AND, OP_OR, OP_NOT,
                 OP_ADD, OP_SUBTRACT, OP_UMINUS, OP_MULTIPLY,
                 OP_DIVIDE, OP_MOD, OP_POWER,
-                OP_ASSIGN, OP_DOT, OP_CROSS, OP_LIST, OP_ELEMENT /*,OP_RANGE */};
+                OP_ASSIGN, OP_DOT, OP_CROSS, OP_LIST, OP_ELEMENT, OP_COND /*,OP_RANGE */};
         return ops;
     }
 
@@ -169,5 +172,9 @@ public class OperatorSet {
         return OP_ELEMENT;
     }
     //public Operator getRange() {return OP_RANGE;	}
+
+	public Operator getCond() {
+		return OP_COND;
+	}
 
 }
