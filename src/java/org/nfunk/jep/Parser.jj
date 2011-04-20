@@ -367,6 +367,8 @@ TOKENS
 |	< RSQ:	"]"	 >	// rjm
 |	< LRND:	"("  >	// rjm
 |	< RRND:	")"	 >	// rjm
+|	< LCRV:	"{">
+|	< RCRV:	"}">
 |	< COLON: ":" >	// rjm
 }
 
@@ -540,8 +542,8 @@ void Conditional() :
 /*@egen*/
 	(
 	 <IF> <LRND> RightExpression() <RRND>
-	 <THEN> "{" ExpressionList() "}"
-	 [ <ELSE> "{" ExpressionList()  "}" ]/*@bgen(jjtree)*/
+	 <THEN> <LCRV> ExpressionList() <RCRV>
+	 [ <ELSE> <LCRV> ExpressionList() <RCRV> ]/*@bgen(jjtree)*/
          {
            jjtree.closeNodeScope(jjtn001, true);
            jjtc001 = false;
@@ -1616,12 +1618,9 @@ void ArgumentList(int reqArguments, String functionName) :
     }
 }
 
-String ArgumentSeparator() :
+void ArgumentSeparator() : {}
 {
-  Token t;
-}
-{
-	( t = <COMMA> |	t = <SEMI> ) { return t.image; }
+	 <COMMA> | <SEMI>
 }
 
 

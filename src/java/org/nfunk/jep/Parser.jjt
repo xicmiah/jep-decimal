@@ -367,6 +367,8 @@ TOKENS
 |	< RSQ:	"]"	 >	// rjm
 |	< LRND:	"("  >	// rjm
 |	< RRND:	")"	 >	// rjm
+|	< LCRV:	"{">
+|	< RCRV:	"}">
 |	< COLON: ":" >	// rjm
 }
 
@@ -439,8 +441,8 @@ void Conditional() :
 {
 	(
 	 <IF> <LRND> RightExpression() <RRND>
-	 <THEN> "{" ExpressionList() "}"
-	 [ <ELSE> "{" ExpressionList()  "}" ]
+	 <THEN> <LCRV> ExpressionList() <RCRV>
+	 [ <ELSE> <LCRV> ExpressionList() <RCRV> ]
 
 	 {
 	 jjtThis.setOperator(opSet.getCond());
@@ -780,12 +782,9 @@ void ArgumentList(int reqArguments, String functionName) :
     }
 }
 
-String ArgumentSeparator() :
+void ArgumentSeparator() : {}
 {
-  Token t;
-}
-{
-	( t = <COMMA> |	t = <SEMI> ) { return t.image; }
+	 <COMMA> | <SEMI>
 }
 
 
