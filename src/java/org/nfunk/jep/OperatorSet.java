@@ -3,10 +3,8 @@
  */
 package org.nfunk.jep;
 
-import org.nfunk.jep.function.If;
-import org.nfunk.jep.function.operator.Assign;
-import org.nfunk.jep.function.operator.Ele;
 import org.nfunk.jep.function.List;
+import org.nfunk.jep.function.RelaxedIf;
 import org.nfunk.jep.function.operator.*;
 import org.nfunk.jep.function.operator.doubleval.*;
 
@@ -65,7 +63,7 @@ public class OperatorSet {
     protected Operator OP_ELEMENT = new Operator("[]", new Ele());
 //	protected Operator OP_RANGE = new Operator(":",new Range());
 
-	protected Operator OP_COND = new Operator("If", "if", new If());
+	protected Operator OP_COND = new Operator("If", "if", new RelaxedIf());
 
     public OperatorSet() {
     }

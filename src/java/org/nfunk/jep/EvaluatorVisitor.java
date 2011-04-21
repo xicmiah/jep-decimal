@@ -32,6 +32,11 @@ import java.util.Stack;
  * Changed visit(ASTVarNode node) so messages not calculated every time.
  */
 public class EvaluatorVisitor implements ParserVisitor, EvaluatorI {
+
+	/**
+	 * Stack object representing that the function returned nothing
+	 */
+	public static final Object NOTHING = null;
     /**
      * Stack used for evaluating the expression
      */
@@ -211,10 +216,12 @@ public class EvaluatorVisitor implements ParserVisitor, EvaluatorI {
      */
     public Object visit(ASTStart node, Object data) throws ParseException {
 //        throw new ParseException("Start node encountered during evaluation");
-	    Object lastValue = null;
+	    Object lastValue = NOTHING;
 	    for (Node child : node.children) {
 		    child.jjtAccept(this, data);
-		    lastValue = stack.pop();
+		    Object extractedValue = stack.pop();
+		    // Keep last value if child evaluated to nothing
+		    lastValue = extractedValue != NOTHING ? extractedValue : lastValue;
 	    }
 	    return stack.push(lastValue);
     }
