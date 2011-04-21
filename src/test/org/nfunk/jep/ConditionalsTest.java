@@ -95,4 +95,13 @@ public class ConditionalsTest {
 	public void testNullHandling() throws Exception {
 		eval(jep, "(if (-1) then {5})*2");
 	}
+
+	/**
+	 * Test that keyword is case-insensitive
+	 * @throws Exception
+	 */
+	@Test
+	public void testCaseSensitivity() throws Exception {
+		eval(jep, "IF (-1) THEN {2} ELSE {3}");
+	}
 }

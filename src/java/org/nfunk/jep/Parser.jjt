@@ -271,7 +271,7 @@ TOKENS
 }
 
 /* Keywords */
-<*> TOKEN:
+<*> TOKEN[IGNORE_CASE]:
 {
 	< IF: "if" >
 |	< THEN: "then" >
