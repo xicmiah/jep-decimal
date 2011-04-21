@@ -72,8 +72,9 @@ public class ConditionalsTest {
 		Object result = eval(jep, "if (1) then { 2 }");
 		assertEquals(BigDecimal.valueOf(2), result);
 
+		// No else - should evaluate to nothing
 		result = eval(jep, "42; if (2*2 == 5) then {3}");
-		assertEquals(BigDecimal.valueOf(42), result);
+		assertEquals(EvaluatorVisitor.NOTHING, result);
 	}
 
 	/**
@@ -84,5 +85,14 @@ public class ConditionalsTest {
 	public void testExtendedConditional() throws Exception {
 		Object result = eval(jep, "a = if (2*2 == -1) then {5} else {7}; a*2");
 		assertEquals(BigDecimal.valueOf(14), result);
+	}
+
+	/**
+	 * Test that operations with null are handled
+	 * @throws Exception
+	 */
+	@Test(expected = ParseException.class)
+	public void testNullHandling() throws Exception {
+		eval(jep, "(if (-1) then {5})*2");
 	}
 }
