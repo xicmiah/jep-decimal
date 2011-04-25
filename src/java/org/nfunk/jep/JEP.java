@@ -581,6 +581,16 @@ public class JEP {
         return node;
     }
 
+	public Node parseReturnExpression(String expression) throws ParseException {
+		StringReader sr = new StringReader(expression);
+		errorList.removeAllElements();
+		Node node = parser.parseCalcExpression(sr, this);
+		if (hasError()) {
+			throw new ParseException(getErrorInfo());
+		}
+		return node;
+	}
+
     /**
      * Evaluate an expression. This method evaluates the argument
      * rather than the topNode of the JEP instance.

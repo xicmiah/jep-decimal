@@ -99,6 +99,19 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants/*@egen*/ {/*@
 		    return node.jjtGetChild(0);
 	}
 
+	/**
+	 * Parse expression with required return statement
+	 */
+	public Node parseCalcExpression(java.io.Reader stream, JEP jep_in) throws ParseException {
+		restart(stream,jep_in);
+		// Parse the expression, and return the 
+		enable_tracing();
+		Node node = CalcExpression();
+		if (node == null) throw new ParseException("No expression entered");
+
+		return node;
+	}
+
 	/** 
 	 * Restart the parse with the given stream.
 	 * @since 2.3.0 beta 1
@@ -276,6 +289,7 @@ TOKENS
 	< IF: "if" >
 |	< THEN: "then" >
 |	< ELSE: "else" >
+|	< RETURN: "return" >
 }
 
 /* IDENTIFIERS 
@@ -431,37 +445,75 @@ ASTStart Start()        :
 /*@egen*/
 }
 
+ASTStart CalcExpression()        : {/*@bgen(jjtree) Start */
+  ASTStart jjtn000 = new ASTStart(JJTSTART);
+  boolean jjtc000 = true;
+  jjtree.openNodeScope(jjtn000);
+/*@egen*/}
+{/*@bgen(jjtree) Start */
+        try {
+/*@egen*/
+	[ExpressionList()] <RETURN> RightExpression() [<SEMI>] <EOF>/*@bgen(jjtree)*/
+                                                                     {
+                                                                       jjtree.closeNodeScope(jjtn000, true);
+                                                                       jjtc000 = false;
+                                                                     }
+/*@egen*/ { return jjtn000; }/*@bgen(jjtree)*/
+        } catch (Throwable jjte000) {
+          if (jjtc000) {
+            jjtree.clearNodeScope(jjtn000);
+            jjtc000 = false;
+          } else {
+            jjtree.popNode();
+          }
+          if (jjte000 instanceof RuntimeException) {
+            throw (RuntimeException)jjte000;
+          }
+          if (jjte000 instanceof ParseException) {
+            throw (ParseException)jjte000;
+          }
+          throw (Error)jjte000;
+        } finally {
+          if (jjtc000) {
+            jjtree.closeNodeScope(jjtn000, true);
+          }
+        }
+/*@egen*/
+}
+
 // Expresions can be like
 // x=3
 // x=y=3 parsed as x=(y=3)
 
-void ExpressionList() : {}
+/**
+ * List of expressions with optional ending semicolon
+ */
+void ExpressionList()            : {/*@bgen(jjtree) #Start(> 1) */
+  ASTStart jjtn000 = new ASTStart(JJTSTART);
+  boolean jjtc000 = true;
+  jjtree.openNodeScope(jjtn000);
+/*@egen*/}
 {/*@bgen(jjtree) #Start(> 1) */
-        {
-          ASTStart jjtn001 = new ASTStart(JJTSTART);
-          boolean jjtc001 = true;
-          jjtree.openNodeScope(jjtn001);
-        }
         try {
 /*@egen*/
-	( Expression() (<SEMI> [Expression()])* )/*@bgen(jjtree)*/
-        } catch (Throwable jjte001) {
-          if (jjtc001) {
-            jjtree.clearNodeScope(jjtn001);
-            jjtc001 = false;
+	Expression() (<SEMI> [Expression()])*/*@bgen(jjtree)*/
+        } catch (Throwable jjte000) {
+          if (jjtc000) {
+            jjtree.clearNodeScope(jjtn000);
+            jjtc000 = false;
           } else {
             jjtree.popNode();
           }
-          if (jjte001 instanceof RuntimeException) {
-            throw (RuntimeException)jjte001;
+          if (jjte000 instanceof RuntimeException) {
+            throw (RuntimeException)jjte000;
           }
-          if (jjte001 instanceof ParseException) {
-            throw (ParseException)jjte001;
+          if (jjte000 instanceof ParseException) {
+            throw (ParseException)jjte000;
           }
-          throw (Error)jjte001;
+          throw (Error)jjte000;
         } finally {
-          if (jjtc001) {
-            jjtree.closeNodeScope(jjtn001, jjtree.nodeArity() > 1);
+          if (jjtc000) {
+            jjtree.closeNodeScope(jjtn000, jjtree.nodeArity() > 1);
           }
         }
 /*@egen*/

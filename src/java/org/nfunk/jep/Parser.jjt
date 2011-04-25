@@ -99,6 +99,19 @@ public class Parser {
 		    return node.jjtGetChild(0);
 	}
 
+	/**
+	 * Parse expression with required return statement
+	 */
+	public Node parseCalcExpression(java.io.Reader stream, JEP jep_in) throws ParseException {
+		restart(stream,jep_in);
+		// Parse the expression, and return the 
+		enable_tracing();
+		Node node = CalcExpression();
+		if (node == null) throw new ParseException("No expression entered");
+
+		return node;
+	}
+
 	/** 
 	 * Restart the parse with the given stream.
 	 * @since 2.3.0 beta 1
@@ -276,6 +289,7 @@ TOKENS
 	< IF: "if" >
 |	< THEN: "then" >
 |	< ELSE: "else" >
+|	< RETURN: "return" >
 }
 
 /* IDENTIFIERS 
@@ -395,13 +409,21 @@ ASTStart Start() #Start :
 	}
 }
 
+ASTStart CalcExpression() #Start : {}
+{
+	[ExpressionList()] <RETURN> RightExpression() [<SEMI>] <EOF> { return jjtThis; }
+}
+
 // Expresions can be like
 // x=3
 // x=y=3 parsed as x=(y=3)
 
-void ExpressionList() : {}
+/**
+ * List of expressions with optional ending semicolon
+ */
+void ExpressionList() #Start(>1) : {}
 {
-	( Expression() (<SEMI> [Expression()])* ) #Start(>1)
+	Expression() (<SEMI> [Expression()])*
 }
 
 void Expression() : {}

@@ -16,39 +16,40 @@ public interface ParserConstants {
   int IF = 16;
   int THEN = 17;
   int ELSE = 18;
-  int INDENTIFIER1 = 19;
-  int LETTER1 = 20;
-  int DIGIT1 = 21;
-  int INDENTIFIER2 = 22;
-  int LETTER2 = 23;
-  int DIGIT2 = 24;
-  int ASSIGN = 25;
-  int SEMI = 26;
-  int COMMA = 27;
-  int GT = 28;
-  int LT = 29;
-  int EQ = 30;
-  int LE = 31;
-  int GE = 32;
-  int NE = 33;
-  int AND = 34;
-  int OR = 35;
-  int PLUS = 36;
-  int MINUS = 37;
-  int MUL = 38;
-  int DOT = 39;
-  int DIV = 40;
-  int MOD = 41;
-  int NOT = 42;
-  int POWER = 43;
-  int CROSS = 44;
-  int LSQ = 45;
-  int RSQ = 46;
-  int LRND = 47;
-  int RRND = 48;
-  int LCRV = 49;
-  int RCRV = 50;
-  int COLON = 51;
+  int RETURN = 19;
+  int INDENTIFIER1 = 20;
+  int LETTER1 = 21;
+  int DIGIT1 = 22;
+  int INDENTIFIER2 = 23;
+  int LETTER2 = 24;
+  int DIGIT2 = 25;
+  int ASSIGN = 26;
+  int SEMI = 27;
+  int COMMA = 28;
+  int GT = 29;
+  int LT = 30;
+  int EQ = 31;
+  int LE = 32;
+  int GE = 33;
+  int NE = 34;
+  int AND = 35;
+  int OR = 36;
+  int PLUS = 37;
+  int MINUS = 38;
+  int MUL = 39;
+  int DOT = 40;
+  int DIV = 41;
+  int MOD = 42;
+  int NOT = 43;
+  int POWER = 44;
+  int CROSS = 45;
+  int LSQ = 46;
+  int RSQ = 47;
+  int LRND = 48;
+  int RRND = 49;
+  int LCRV = 50;
+  int RCRV = 51;
+  int COLON = 52;
 
   int ALT_SEPARATORS = 0;
   int NO_DOT_IN_IDENTIFIERS = 1;
@@ -74,6 +75,7 @@ public interface ParserConstants {
     "\"if\"",
     "\"then\"",
     "\"else\"",
+    "\"return\"",
     "<INDENTIFIER1>",
     "<LETTER1>",
     "<DIGIT1>",
