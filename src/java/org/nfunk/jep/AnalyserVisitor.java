@@ -9,7 +9,7 @@ import org.nfunk.jep.validation.ValidationException;
  * 1) return scope after their evaluation
  * 2) accept data parameter as Scope instance
  */
-public class AnalyserVisitor implements ParserVisitor{
+public class AnalyserVisitor implements ParserVisitor {
 	protected JEP jep;
 
 	public AnalyserVisitor(JEP jep) {
@@ -18,6 +18,7 @@ public class AnalyserVisitor implements ParserVisitor{
 
 	/**
 	 * Visit Start node. Extends scope with child scopes
+	 *
 	 * @param node visited node
 	 * @param data scope
 	 * @return scope with scopes from children
@@ -34,25 +35,41 @@ public class AnalyserVisitor implements ParserVisitor{
 
 	/**
 	 * Visit function node. Assign operator extends scope, others do not
+	 *
 	 * @param node visited node
 	 * @param data scope
 	 * @return extended scope
 	 * @throws ParseException
 	 */
 	public Object visit(ASTFunNode node, Object data) throws ParseException {
-		Scope extended = (Scope) data;
+		Scope scope = (Scope) data;
 		if (node.getOperator().equals(jep.getOperatorSet().getAssign())) {
-			extended = (Scope) node.jjtGetChild(1).jjtAccept(this, extended); // Right tree extends scope
-			extended = extended.with(((ASTVarNode) node.jjtGetChild(0)).getName()); // Extend with assigned variable
+			scope = extendScopeWithAssign(node, scope);
 		} else {
-			node.childrenAccept(this, extended);
+			node.childrenAccept(this, scope);
 		}
 
-		return extended;
+		return scope;
 	}
 
 	/**
-	 * Visit variable node. Checks scope
+	 * Extends scope for assign operator.
+	 * Extends current scope with right subtree and left variable node.
+	 *
+	 * @param node  assignment node
+	 * @param scope current scope
+	 * @return extended scope
+	 * @throws ParseException
+	 */
+	private Scope extendScopeWithAssign(ASTFunNode node, Scope scope) throws ParseException {
+		scope = (Scope) node.jjtGetChild(1).jjtAccept(this, scope); // Right tree extends scope
+		String variableName = ((ASTVarNode) node.jjtGetChild(0)).getName(); // Left child is VarNode, don't visit it
+		return scope.with(variableName); // Extend with assigned variable
+	}
+
+	/**
+	 * Visit variable node. Checks that scope contains this variable
+	 *
 	 * @param node visited node
 	 * @param data scope
 	 * @return same scope
@@ -68,11 +85,11 @@ public class AnalyserVisitor implements ParserVisitor{
 
 	}
 
-	public Object visit(SimpleNode node, Object scope) {
+	public Object visit(ASTConstant node, Object scope) throws ParseException {
 		return scope;
 	}
 
-	public Object visit(ASTConstant node, Object scope) throws ParseException {
+	public Object visit(SimpleNode node, Object scope) {
 		return scope;
 	}
 }
