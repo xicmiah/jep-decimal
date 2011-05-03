@@ -1,25 +1,39 @@
 package org.nfunk.jep.validation;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 
 /**
  * Immutable scope, stores list of variables
  */
 public class Scope {
-	private static final Scope EMPTY = new Scope();
+	private static final Scope EMPTY = new Scope(Collections.<String>emptySet(), true);
 
-	private Collection<String> variables = new HashSet<String>();
+	/**
+	 * Variables in this scope
+	 */
+	private final Collection<String> variables;
 
-	private Scope() {
+	/**
+	 * Open/closed status.
+	 * Closed scopes cannot be extended
+	 */
+	private final boolean open;
+
+	private Scope(Collection<String> variables, boolean open) {
+		this.variables = variables;
+		this.open = open;
 	}
 
 	private Scope(Scope other) {
 		this.variables = new HashSet<String>(other.variables);
+		this.open = other.open;
 	}
 
+
 	/**
-	 * Get empty scope
+	 * Get empty open scope
 	 * @return empty scope
 	 */
 	public static Scope empty() {
@@ -36,25 +50,41 @@ public class Scope {
 	}
 
 	/**
-	 * Returns scope, which contains supplied variable
-	 * @param variable variable to add to scope
-	 * @return extended scope
+	 * Return if variables can be added to this scope
+	 * @return true, if this scope can be extended via with() method, false otherwise
 	 */
-	public Scope with(String variable) {
-		if (variables.contains(variable)) {
-			return this;
-		} else {
-			Scope other = new Scope(this);
-			other.variables.add(variable);
-			return other;
-		}
+	public boolean isOpen() {
+		return open;
 	}
 
 	/**
-	 * Scopes are equal, if they contain same variables
-	 * @param o other scope
-	 * @return true, if this scope is equivalent to other
+	 * Returns scope, which contains supplied variable.
+	 * Operation fails if this scope is closed and doesn't contain the variable
+	 * @param variable variable to add to scope
+	 * @return extended scope
+	 * @throws ValidationException if scope is closed and doesn't contain variable
 	 */
+	public Scope with(String variable) throws ValidationException {
+		if (variables.contains(variable)) {
+			return this;
+		}
+		
+		if (!open) throw new ValidationException("Scope is closed");
+			
+		Scope other = new Scope(this);
+		other.variables.add(variable);
+		return other;
+	}
+
+	/**
+	 * Closes this scope
+	 * @return closed scope, which contains variables in this scope
+	 */
+	public Scope closed() {
+		if (!open) return this;
+		else return new Scope(variables, false);
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -62,17 +92,22 @@ public class Scope {
 
 		Scope scope = (Scope) o;
 
-		return variables.equals(scope.variables);
+		return open == scope.open && variables.equals(scope.variables);
 
 	}
 
 	@Override
 	public int hashCode() {
-		return variables.hashCode();
+		int result = variables.hashCode();
+		result = 31 * result + (open ? 1 : 0);
+		return result;
 	}
 
 	@Override
 	public String toString() {
-		return "Scope{" + variables + '}';
+		return "Scope{" +
+				variables +
+				", open=" + open +
+				'}';
 	}
 }
