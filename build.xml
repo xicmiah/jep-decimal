@@ -19,9 +19,9 @@
 =============================================================================
 -->
 
-<project name="JEP-2.4.1" default="compile" basedir=".">
+<project name="JEP-2.4.2" default="compile" basedir=".">
 
-    <property name="jep-ver" value="2.4.1"/>
+    <property name="jep-ver" value="2.4.2"/>
     <property name="ext-ver" value="1.1.1"/>
     <!-- library locations -->
     <property environment="env"/>
