@@ -12,7 +12,34 @@ package org.nfunk.jep;
 import org.nfunk.jep.config.ConfigurationBuilder;
 import org.nfunk.jep.config.DoubleConfig;
 import org.nfunk.jep.config.JepConfiguration;
-import org.nfunk.jep.function.*;
+import org.nfunk.jep.function.ArcCosine;
+import org.nfunk.jep.function.ArcCosineH;
+import org.nfunk.jep.function.ArcSine;
+import org.nfunk.jep.function.ArcSineH;
+import org.nfunk.jep.function.ArcTanH;
+import org.nfunk.jep.function.ArcTangent;
+import org.nfunk.jep.function.ArcTangent2;
+import org.nfunk.jep.function.Arg;
+import org.nfunk.jep.function.Binomial;
+import org.nfunk.jep.function.ComplexPFMC;
+import org.nfunk.jep.function.Conjugate;
+import org.nfunk.jep.function.Cosine;
+import org.nfunk.jep.function.CosineH;
+import org.nfunk.jep.function.Exp;
+import org.nfunk.jep.function.If;
+import org.nfunk.jep.function.Imaginary;
+import org.nfunk.jep.function.Logarithm;
+import org.nfunk.jep.function.NaturalLogarithm;
+import org.nfunk.jep.function.Polar;
+import org.nfunk.jep.function.PostfixMathCommandI;
+import org.nfunk.jep.function.Real;
+import org.nfunk.jep.function.Sine;
+import org.nfunk.jep.function.SineH;
+import org.nfunk.jep.function.SquareRoot;
+import org.nfunk.jep.function.Str;
+import org.nfunk.jep.function.Sum;
+import org.nfunk.jep.function.TanH;
+import org.nfunk.jep.function.Tangent;
 import org.nfunk.jep.function.doubleval.Abs;
 import org.nfunk.jep.function.doubleval.Ceil;
 import org.nfunk.jep.function.doubleval.Floor;
@@ -21,9 +48,12 @@ import org.nfunk.jep.function.operator.doubleval.Modulus;
 import org.nfunk.jep.function.operator.doubleval.Power;
 import org.nfunk.jep.type.Complex;
 import org.nfunk.jep.type.NumberFactory;
+import org.nfunk.jep.validation.Scope;
+import org.nfunk.jep.validation.ValidationException;
 
 import java.io.Reader;
 import java.io.StringReader;
+import java.util.Collection;
 import java.util.Vector;
 
 /**
@@ -99,6 +129,11 @@ public class JEP {
      * Evaluator
      */
     protected EvaluatorVisitor ev;
+
+	/**
+	 * Scopes validator
+	 */
+	protected ParserVisitor validator = new StrictAnalyserVisitor(this);
 
     /**
      * Number factory
@@ -589,6 +624,26 @@ public class JEP {
 			throw new ParseException(getErrorInfo());
 		}
 		return node;
+	}
+
+	/**
+	 * Validate variable scopes - prevents use of non-initialized variables
+	 * @param node tree root to validate
+	 * @throws ValidationException on usage of non-initialized variable
+	 */
+	public void validate(Node node) throws ParseException {
+		node.jjtAccept(validator, Scope.fromSymbolTable(initialSymbols));
+	}
+
+	/**
+	 * Validate variable scopes - prevents use of non-initialized variables.
+	 * Validates with supplied variable names
+	 * @param node tree root to validate
+	 * @param initialVariables initial variable names
+	 * @throws ParseException
+	 */
+	public void validate(Node node, Collection<String> initialVariables) throws ParseException {
+		node.jjtAccept(validator, Scope.fromCollection(initialVariables));
 	}
 
     /**
