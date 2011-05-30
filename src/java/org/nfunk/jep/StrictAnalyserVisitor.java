@@ -43,7 +43,7 @@ public class StrictAnalyserVisitor implements ParserVisitor {
 	 * @throws ParseException
 	 */
 	public Object visit(ASTFunNode node, Object data) throws ParseException {
-		if (node.getOperator().equals(jep.getOperatorSet().getCond())) {
+		if (jep.getOperatorSet().getCond().equals(node.getOperator())) {
 			Scope scope = (Scope) data;
 			node.childrenAccept(delegate, scope.closed()); // Evaluate children with closed scope
 			return data;

@@ -1,5 +1,7 @@
 package org.nfunk.jep.validation;
 
+import org.nfunk.jep.SymbolTable;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -22,13 +24,12 @@ public class Scope {
 	private final boolean open;
 
 	private Scope(Collection<String> variables, boolean open) {
-		this.variables = variables;
+		this.variables = new HashSet<String>(variables);
 		this.open = open;
 	}
 
 	private Scope(Scope other) {
-		this.variables = new HashSet<String>(other.variables);
-		this.open = other.open;
+		this(other.variables, other.open);
 	}
 
 
@@ -38,6 +39,24 @@ public class Scope {
 	 */
 	public static Scope empty() {
 		return EMPTY;
+	}
+
+	/**
+	 * Init scope from collection of variable names
+	 * @param variables collection of variable names to include in scope
+	 * @return open scope which contains supplied variables
+	 */
+	public static Scope fromCollection(Collection<String> variables) {
+		return new Scope(variables, true);
+	}
+
+	/**
+	 * Initializes scope from symbol table
+	 * @param symbolTable
+	 * @return open scope which contains variables from supplied table
+	 */
+	public static Scope fromSymbolTable(SymbolTable symbolTable) {
+		return fromCollection(symbolTable.getVarNames());
 	}
 
 	/**

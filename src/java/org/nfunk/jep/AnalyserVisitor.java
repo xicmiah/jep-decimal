@@ -43,7 +43,7 @@ public class AnalyserVisitor implements ParserVisitor {
 	 */
 	public Object visit(ASTFunNode node, Object data) throws ParseException {
 		Scope scope = (Scope) data;
-		if (node.getOperator().equals(jep.getOperatorSet().getAssign())) {
+		if (jep.getOperatorSet().getAssign().equals(node.getOperator())) {
 			scope = extendScopeWithAssign(node, scope);
 		} else {
 			node.childrenAccept(this, scope);
@@ -77,8 +77,9 @@ public class AnalyserVisitor implements ParserVisitor {
 	 */
 	public Object visit(ASTVarNode node, Object data) throws ValidationException {
 		Scope scope = (Scope) data;
-		if (!scope.contains(node.getName())) {
-			throw new ValidationException("Evaluation of variable not in scope");
+		String variable = node.getName();
+		if (!scope.contains(variable)) {
+			throw new ValidationException("Evaluation of undefined variable " + variable);
 		} else {
 			return scope;
 		}
