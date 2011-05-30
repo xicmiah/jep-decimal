@@ -312,7 +312,7 @@ public class EvaluatorVisitor implements ParserVisitor, EvaluatorI {
         // get the variable value
         Object temp = var.getValue();
 
-        if (trapNullValues && temp == null) {
+        if (!var.hasValidValue() || (trapNullValues && temp == null)) {
             String message = "Could not evaluate " + node.getName() + ": ";
             throw new ParseException(message + "variable not set");
         }
