@@ -2,8 +2,28 @@ package org.nfunk.jep.config;
 
 import org.nfunk.jep.BigDecimalOperatorSet;
 import org.nfunk.jep.FunctionTable;
-import org.nfunk.jep.OperatorSet;
-import org.nfunk.jep.function.*;
+import org.nfunk.jep.function.ArcCosine;
+import org.nfunk.jep.function.ArcCosineH;
+import org.nfunk.jep.function.ArcSine;
+import org.nfunk.jep.function.ArcSineH;
+import org.nfunk.jep.function.ArcTanH;
+import org.nfunk.jep.function.ArcTangent;
+import org.nfunk.jep.function.ArcTangent2;
+import org.nfunk.jep.function.Binomial;
+import org.nfunk.jep.function.Cosine;
+import org.nfunk.jep.function.CosineH;
+import org.nfunk.jep.function.Exp;
+import org.nfunk.jep.function.If;
+import org.nfunk.jep.function.IsDefined;
+import org.nfunk.jep.function.Logarithm;
+import org.nfunk.jep.function.NaturalLogarithm;
+import org.nfunk.jep.function.Sine;
+import org.nfunk.jep.function.SineH;
+import org.nfunk.jep.function.SquareRoot;
+import org.nfunk.jep.function.Str;
+import org.nfunk.jep.function.Sum;
+import org.nfunk.jep.function.TanH;
+import org.nfunk.jep.function.Tangent;
 import org.nfunk.jep.function.bigdecimal.BigDecimalAbs;
 import org.nfunk.jep.function.bigdecimal.BigDecimalCeil;
 import org.nfunk.jep.function.bigdecimal.BigDecimalFloor;
@@ -12,13 +32,8 @@ import org.nfunk.jep.function.operator.AbstractAdd;
 import org.nfunk.jep.function.operator.bigdecimal.BigDecimalAdd;
 import org.nfunk.jep.function.operator.bigdecimal.BigDecimalModulus;
 import org.nfunk.jep.function.operator.bigdecimal.BigDecimalPower;
-import org.nfunk.jep.type.BigDecimalNumberFactory;
-import org.nfunk.jep.type.NumberFactory;
 
-import java.math.BigDecimal;
 import java.math.MathContext;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author DPavlov
@@ -70,6 +85,8 @@ public class BigDecimalConfig extends AbstractBigDecimalConfig {
         funTab.put("round", initFunction(new BigDecimalRound()));
         funTab.put("floor", initFunction(new BigDecimalFloor()));
         funTab.put("ceil", initFunction(new BigDecimalCeil()));
+
+	    funTab.put("isDefined", new IsDefined());
     }
 
 }
