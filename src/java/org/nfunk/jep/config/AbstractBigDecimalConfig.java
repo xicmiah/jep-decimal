@@ -48,6 +48,7 @@ public abstract class AbstractBigDecimalConfig implements ExtendedConfig {
         constants = new HashMap<String, Object>();
         constants.put("e", Math.E);
         constants.put("pi", Math.PI);
+	    constants.put("NULL", null);
     }
 
     @SuppressWarnings({"unchecked"})
