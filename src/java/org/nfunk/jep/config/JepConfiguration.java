@@ -3,11 +3,7 @@ package org.nfunk.jep.config;
 import org.nfunk.jep.FunctionTable;
 import org.nfunk.jep.OperatorSet;
 import org.nfunk.jep.SymbolTable;
-import org.nfunk.jep.function.PostfixMathCommandI;
 import org.nfunk.jep.type.NumberFactory;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * Jep configuration. Jep instance can use all elements of this config as is
@@ -60,4 +56,6 @@ public interface JepConfiguration {
     public boolean isUseImplicitMultiplication();    
 
     public boolean isAllowAssignment();
+
+	public boolean isAllowNullValues();
 }

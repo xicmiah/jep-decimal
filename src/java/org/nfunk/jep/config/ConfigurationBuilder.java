@@ -1,6 +1,9 @@
 package org.nfunk.jep.config;
 
-import org.nfunk.jep.*;
+import org.nfunk.jep.FunctionTable;
+import org.nfunk.jep.OperatorSet;
+import org.nfunk.jep.SymbolTable;
+import org.nfunk.jep.VariableFactory;
 import org.nfunk.jep.function.PostfixMathCommandI;
 import org.nfunk.jep.type.NumberFactory;
 
@@ -32,9 +35,11 @@ public class ConfigurationBuilder {
 
     private boolean allowAssignment;
 
+	private boolean allowNullValues;
+
     public JepConfiguration createConfig(){
         JepConfigurationImpl config = new JepConfigurationImpl(traverse, allowUndeclaredVariables,
-                useImplicitMultiplication, allowAssignment);
+                useImplicitMultiplication, allowAssignment, allowNullValues);
         
         config.setNumberFactory(numberFactory);
 
@@ -117,4 +122,8 @@ public class ConfigurationBuilder {
         return this;
     }
 
+	public ConfigurationBuilder setAllowNullValues(boolean allowNullValues) {
+		this.allowNullValues = allowNullValues;
+		return this;
+	}
 }

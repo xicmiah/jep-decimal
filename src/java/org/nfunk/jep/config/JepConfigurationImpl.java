@@ -26,6 +26,8 @@ public class JepConfigurationImpl implements JepConfiguration{
 
     private boolean allowAssignment;
 
+	private boolean allowNullValues;
+
     public JepConfigurationImpl(){}
 
     public JepConfigurationImpl(JepConfiguration config){
@@ -37,14 +39,17 @@ public class JepConfigurationImpl implements JepConfiguration{
         this.traverse = config.isTraverse();
         this.useImplicitMultiplication = config.isUseImplicitMultiplication();
         this.allowAssignment = config.isAllowAssignment();
+	    this.allowNullValues = config.isAllowNullValues();
     }
 
     public JepConfigurationImpl(boolean traverse, boolean allowUndeclaredVariables,
-                                boolean useImplicictMultiplication, boolean allowAssignment){
+                                boolean useImplicictMultiplication, boolean allowAssignment,
+                                boolean allowNullValues){
         this.traverse = traverse;
         this.allowUndeclaredVariables = allowUndeclaredVariables;
         this.useImplicitMultiplication = useImplicictMultiplication;
         this.allowAssignment = allowAssignment;
+	    this.allowNullValues = allowNullValues;
     }
 
     public FunctionTable getFunctions() {
@@ -107,7 +112,15 @@ public class JepConfigurationImpl implements JepConfiguration{
         return allowAssignment;
     }
 
-    public void setAllowAssignment(boolean allowAssignment) {
+	public void setAllowAssignment(boolean allowAssignment) {
         this.allowAssignment = allowAssignment;
     }
+
+	public boolean isAllowNullValues() {
+		return allowNullValues;
+	}
+
+	public void setAllowNullValues(boolean allowNullValues) {
+		this.allowNullValues = allowNullValues;
+	}
 }

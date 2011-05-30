@@ -54,6 +54,8 @@ import org.nfunk.jep.validation.ValidationException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Vector;
 
 /**
@@ -173,6 +175,7 @@ public class JEP {
 
         errorList = new Vector();
         ev = new EvaluatorVisitor();
+	    ev.setTrapNullValues(!config.isAllowNullValues());
         parser = new Parser(new StringReader(""));
 
     }
@@ -537,6 +540,24 @@ public class JEP {
     }
 
 
+	/**
+	 * Whether null is a legitimate value.
+	 * Evaluation of undeclared variables is still forbidden
+	 */
+	public boolean isAllowNullValues() {
+		return !ev.isTrapNullValues();
+	}
+
+	/**
+	 * Sets whether null is a legitimate value.
+	 * Evaluation of undeclared variables is still forbidden
+	 * @param allowNullValues
+	 * @return
+	 */
+	public void setAllowNullValues(boolean allowNullValues) {
+		ev.setTrapNullValues(!allowNullValues);
+	}
+
     /**
      * Parses the expression. If there are errors in the expression,
      * they are added to the <code>errorList</code> member. Errors can be
@@ -632,7 +653,14 @@ public class JEP {
 	 * @throws ValidationException on usage of non-initialized variable
 	 */
 	public void validate(Node node) throws ParseException {
-		node.jjtAccept(validator, Scope.fromSymbolTable(initialSymbols));
+		Set<String> validVariables = new HashSet<String>();
+
+		// Keep only initialized variables
+		for (Variable variable : symTab.getVariables()) {
+			if (variable.hasValidValue()) validVariables.add(variable.getName());
+		}
+
+		node.jjtAccept(validator, Scope.fromCollection(validVariables));
 	}
 
 	/**
