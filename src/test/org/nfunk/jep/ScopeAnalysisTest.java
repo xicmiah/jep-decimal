@@ -57,7 +57,7 @@ public class ScopeAnalysisTest {
 	 */
 	@Test
 	public void testInnerAssigns() throws Exception {
-		Node node = jep.parse("a = b = 5; if (a > 0) then { a = -1 } else { b = 2 }; a*b");
+		Node node = jep.parse("a = b = 5; if (a > 0) then { a = -1; } else { b = 2; } a*b");
 		validate(node);
 		validateStrict(node);
 	}
@@ -68,7 +68,7 @@ public class ScopeAnalysisTest {
 	 */
 	@Test
 	public void testUnusedVariables() throws Exception {
-		Node node = jep.parse("if (1) then { a = 1 }; 2*2");
+		Node node = jep.parse("if (1) then { a = 1; }; 2*2");
 		validate(node);
 	}
 
@@ -79,7 +79,7 @@ public class ScopeAnalysisTest {
 	 */
 	@Test(expected = ValidationException.class)
 	public void testComplexAssignsFail() throws Exception {
-		Node node = jep.parse("a = b = 5; if (-1) then {c = 5}; a*2; b*3; 2c");
+		Node node = jep.parse("a = b = 5; if (-1) then {c = 5;}; a*2; b*3; 2c");
 		validate(node);
 	}
 
@@ -89,7 +89,7 @@ public class ScopeAnalysisTest {
 	 */
 	@Test(expected = ValidationException.class)
 	public void testStrictValidation() throws Exception {
-		Node node = jep.parse("if (1) then { a = 1 }; 2*2");
+		Node node = jep.parse("if (1) then { a = 1; }; 2*2");
 		validateStrict(node);
 	}
 
@@ -99,7 +99,7 @@ public class ScopeAnalysisTest {
 	 */
 	@Test(expected = ValidationException.class)
 	public void testStrictComplexAssignsFail() throws Exception {
-		Node node = jep.parse("a = b = 5; if (-1) then {c = 5}; a*2; b*3; 2c");
+		Node node = jep.parse("a = b = 5; if (-1) then {c = 5;}; a*2; b*3; 2c");
 		validateStrict(node);
 	}
 }

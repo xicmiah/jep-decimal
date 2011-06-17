@@ -21,7 +21,7 @@
 
 <project name="JEP-2.4.2" default="compile" basedir=".">
 
-    <property name="jep-ver" value="2.4.2"/>
+    <property name="jep-ver" value="2.4.3"/>
     <property name="ext-ver" value="1.1.1"/>
     <!-- library locations -->
     <property environment="env"/>
@@ -71,6 +71,7 @@
     <!--======================================================================-->
     <!-- JJTREE -->
     <target name="jjtree" depends="init">
+        <delete file="${src}/org/nfunk/jep/Parser.jj" failonerror="false"/>
         <jjtree
                 target="${src}/org/nfunk/jep/Parser.jjt"
                 outputdirectory="${src}/org/nfunk/jep/"
@@ -81,7 +82,7 @@
     <!--======================================================================-->
     <!-- JAVACC -->
     <target name="javacc" depends="jjtree">
-        <delete>
+        <delete failonerror="false">
             <fileset dir="${src}/org/nfunk/jep">
                 <filename name="TokenMgrError.java"/>
                 <filename name="ParseException.java"/>

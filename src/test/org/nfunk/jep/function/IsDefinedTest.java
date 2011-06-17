@@ -44,7 +44,7 @@ public class IsDefinedTest {
 	 */
 	@Test
 	public void testUndefinedVariables() throws Exception {
-		assertEquals(Boolean.FALSE, eval(jep, "isDefined(a)"));
+		assertEquals(0d, eval(jep, "isDefined(a)"));
 	}
 
 	/**
@@ -62,8 +62,8 @@ public class IsDefinedTest {
 	 */
 	@Test
 	public void testEvaluation() throws Exception {
-		assertEquals(Boolean.TRUE, eval(jep, "a = 42; isDefined(a)"));
-		assertEquals(Boolean.FALSE, eval(jep, "a = NULL; isDefined(a)"));
+		assertEquals(1d, eval(jep, "a = 42; isDefined(a)"));
+		assertEquals(0d, eval(jep, "a = NULL; isDefined(a)"));
 	}
 
 	/**
@@ -72,8 +72,8 @@ public class IsDefinedTest {
 	 */
 	@Test
 	public void testConstants() throws Exception {
-		assertEquals(Boolean.TRUE, eval(jep, "isDefined(pi)"));
-		assertEquals(Boolean.FALSE, eval(jep, "isDefined(NULL)"));
+		assertEquals(1d, eval(jep, "isDefined(pi)"));
+		assertEquals(0d, eval(jep, "isDefined(NULL)"));
 	}
 
 	/**
@@ -82,6 +82,6 @@ public class IsDefinedTest {
 	 */
 	@Test
 	public void testFallback() throws Exception {
-		assertEquals(Boolean.TRUE, eval(jep, "isDefined(42)"));
+		assertEquals(1d, eval(jep, "isDefined(42)"));
 	}
 }

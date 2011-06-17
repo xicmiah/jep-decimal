@@ -43,10 +43,10 @@ public class ConditionalsTest {
 	 */
 	@Test
 	public void testIfThenElse() throws Exception {
-		Object result = eval(jep, "if (2*2 == 4) then { 1 } else { 2 }");
+		Object result = eval(jep, "if (2*2 == 4) then { 1; } else { 2; }");
 		assertEquals(BigDecimal.valueOf(1), result);
 
-		result = eval(jep, "if (2*2 == 5) then { 1 } else { 2 }");
+		result = eval(jep, "if (2*2 == 5) then { 1; } else { 2; }");
 		assertEquals(BigDecimal.valueOf(2), result);
 	}
 
@@ -56,10 +56,10 @@ public class ConditionalsTest {
 	 */
 	@Test
 	public void testLongBodies() throws Exception {
-		Object result = eval(jep, "if (1) then { 2; 3; } else { 4; 5 }");
+		Object result = eval(jep, "if (1) then { 2; 3; } else { 4; 5; }");
 		assertEquals(BigDecimal.valueOf(3), result);
 
-		result = eval(jep, "if (1>2) then { 2; 3; } else { 4; 5 }");
+		result = eval(jep, "if (1>2) then { 2; 3; } else { 4; 5; }");
 		assertEquals(BigDecimal.valueOf(5), result);
 	}
 
@@ -69,11 +69,11 @@ public class ConditionalsTest {
 	 */
 	@Test
 	public void testNoElse() throws Exception {
-		Object result = eval(jep, "if (1) then { 2 }");
+		Object result = eval(jep, "if (1) then { 2; }");
 		assertEquals(BigDecimal.valueOf(2), result);
 
 		// No else - should evaluate to nothing
-		result = eval(jep, "42; if (2*2 == 5) then {3}");
+		result = eval(jep, "42; if (2*2 == 5) then {3;}");
 		assertEquals(EvaluatorVisitor.NOTHING, result);
 	}
 
@@ -83,7 +83,7 @@ public class ConditionalsTest {
 	 */
 	@Test
 	public void testExtendedConditional() throws Exception {
-		Object result = eval(jep, "a = if (2*2 == -1) then {5} else {7}; a*2");
+		Object result = eval(jep, "a = if (2*2 == -1) then {5;} else {7;}; a*2");
 		assertEquals(BigDecimal.valueOf(14), result);
 	}
 
@@ -93,8 +93,18 @@ public class ConditionalsTest {
 	 */
 	@Test(expected = ParseException.class)
 	public void testNullHandling() throws Exception {
-		eval(jep, "(if (-1) then {5})*2");
+		eval(jep, "(if (-1) then {5;})*2");
 	}
+
+    /**
+	 * Test that success if operation handled correctly
+	 * @throws Exception
+	 */
+    @Test
+    public void testIfAsValue() throws Exception {
+        Object result = eval(jep, "(if (1 == 1) then {5;})*2");
+        assertEquals(BigDecimal.valueOf(10), result);
+    }
 
 	/**
 	 * Test that keyword is case-insensitive
@@ -102,6 +112,6 @@ public class ConditionalsTest {
 	 */
 	@Test
 	public void testCaseSensitivity() throws Exception {
-		eval(jep, "IF (-1) THEN {2} ELSE {3}");
+		eval(jep, "IF (-1) THEN {2;} ELSE {3;}");
 	}
 }

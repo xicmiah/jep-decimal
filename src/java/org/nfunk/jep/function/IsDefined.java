@@ -27,14 +27,16 @@ public class IsDefined extends PostfixMathCommand implements CallbackEvaluationI
 	 * @return false if variable is not defined or has null value, true otherwise
 	 * @throws ParseException
 	 */
-	public Boolean evaluate(Node node, EvaluatorI pv) throws ParseException {
+	public Double evaluate(Node node, EvaluatorI pv) throws ParseException {
 		Node argument = node.jjtGetChild(0);
+
+        boolean result = FALLBACK_VALUE;
 
 		if (argument instanceof ASTVarNode) {
 			ASTVarNode varNode = (ASTVarNode) argument;
-			return varNode.getVar() != null && varNode.getVar().getValue() != null;
+			result = varNode.getVar() != null && varNode.getVar().getValue() != null;
 		}
 		
-		return FALLBACK_VALUE;
+		return result ? 1d : 0d;
 	}
 }

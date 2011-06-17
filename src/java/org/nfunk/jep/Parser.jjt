@@ -423,7 +423,17 @@ ASTStart CalcExpression() #Start : {}
  */
 void ExpressionList() #Start(>1) : {}
 {
-	Expression() (<SEMI> [Expression()])*
+	SequentialExpression() (SequentialExpression())*
+}
+
+void SequentialExpression() : {}
+{
+	LOOKAHEAD(LValue() <ASSIGN>)		// need to prevent javacc warning with left recusion
+	AssignExpression() ( <EOF> | <SEMI> )// rjm changes from OrExpresion
+	|
+	RightExpression() ( <EOF> | <SEMI> )
+	|
+	Conditional() [<SEMI>]
 }
 
 void Expression() : {}
