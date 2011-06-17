@@ -114,4 +114,13 @@ public class ConditionalsTest {
 	public void testCaseSensitivity() throws Exception {
 		eval(jep, "IF (-1) THEN {2;} ELSE {3;}");
 	}
+
+    @Test
+	public void testSemicolonNotMandatoryAfterCondition() throws Exception {
+		Object result = eval(jep, "if (-1) then {2;} else {3;} a=100500");
+        assertEquals(BigDecimal.valueOf(100500), result);
+
+        result = eval(jep, "if (-1) then {2;} else {3;} b=12;a=100500");
+        assertEquals(BigDecimal.valueOf(100500), result);
+	}
 }
