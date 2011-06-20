@@ -89,6 +89,8 @@ public class Comparative extends PostfixMathCommand {
     }
 
     public boolean lt(Object param1, Object param2) throws ParseException {
+        raiseExceptionIfNull(param1, param2, "<");
+
         if ((param1 instanceof Complex) || (param2 instanceof Complex))
             throw new ParseException("< not defined for complex numbers");
 
@@ -105,6 +107,8 @@ public class Comparative extends PostfixMathCommand {
     }
 
     public boolean gt(Object param1, Object param2) throws ParseException {
+        raiseExceptionIfNull(param1, param2, ">");
+
         if ((param1 instanceof Complex) || (param2 instanceof Complex))
             throw new ParseException("> not defined for complex numbers");
 
@@ -121,6 +125,8 @@ public class Comparative extends PostfixMathCommand {
     }
 
     public boolean le(Object param1, Object param2) throws ParseException {
+        raiseExceptionIfNull(param1, param2, "<=");
+
         if ((param1 instanceof Complex) || (param2 instanceof Complex))
             throw new ParseException("<= not defined for complex numbers");
 
@@ -137,6 +143,8 @@ public class Comparative extends PostfixMathCommand {
     }
 
     public boolean ge(Object param1, Object param2) throws ParseException {
+        raiseExceptionIfNull(param1, param2, ">=");
+
         if ((param1 instanceof Complex) || (param2 instanceof Complex))
             throw new ParseException(">= not defined for complex numbers");
 
@@ -153,6 +161,9 @@ public class Comparative extends PostfixMathCommand {
     }
 
     public boolean eq(Object param1, Object param2) throws ParseException {
+        if (param1 == null && param2 == null) return true;
+        if (param1 == null || param2 == null) return false;
+
         if ((param1 instanceof Complex) && (param2 instanceof Complex)) {
             return ((Complex) param1).equals((Complex) param2, tolerance);
         }
@@ -191,6 +202,9 @@ public class Comparative extends PostfixMathCommand {
     }
 
     public boolean ne(Object param1, Object param2) throws ParseException {
+        if (param1 == null && param2 == null) return false;
+        if (param1 == null || param2 == null) return true;
+
         if ((param1 instanceof Complex) && (param2 instanceof Complex)) {
             return !((Complex) param1).equals((Complex) param2, tolerance);
         }
@@ -224,6 +238,14 @@ public class Comparative extends PostfixMathCommand {
             return (x != y);
         }
         return !param1.equals(param2);
+    }
+
+    public void raiseExceptionIfNull(Object param1, Object param2, String operation) throws ParseException{
+        if (param1 == null || param2 == null){
+            throw new ParseException(String.format(
+                    "Operation '%s' does not support null arguments. Args=[%s,%s]",
+                    operation, param1, param2));
+        }
     }
 
     /**
