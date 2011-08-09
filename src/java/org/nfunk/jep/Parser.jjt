@@ -431,9 +431,10 @@ void SequentialExpression() : {}
 	LOOKAHEAD(LValue() <ASSIGN>)		// need to prevent javacc warning with left recusion
 	AssignExpression() ( <EOF> | <SEMI> )// rjm changes from OrExpresion
 	|
-	RightExpression() ( <EOF> | <SEMI> )
-	|
+	LOOKAHEAD(<IF> <LRND> RightExpression() <RRND> <THEN>)
 	Conditional() [<SEMI>]
+	|
+	RightExpression() ( <EOF> | <SEMI> )
 }
 
 void Expression() : {}
@@ -441,9 +442,10 @@ void Expression() : {}
 	LOOKAHEAD(LValue() <ASSIGN>)		// need to prevent javacc warning with left recusion
 	AssignExpression() // rjm changes from OrExpresion
 	|
-	RightExpression()
-	|
+	LOOKAHEAD(<IF> <LRND> RightExpression() <RRND> <THEN>)
 	Conditional()
+	|
+	RightExpression()
 }
 
 void AssignExpression() : {} // rjm addition
@@ -482,6 +484,8 @@ void Conditional() :
 	)
 	#FunNode
 }
+
+
 
 void OrExpression() :
 {
@@ -687,8 +691,7 @@ void UnaryExpressionNotPlusMinus() :
 	LOOKAHEAD(ArrayAccess())
 	ArrayAccess()
 	|
-	LOOKAHEAD({ (getToken(1).kind == INDENTIFIER1 || getToken(1).kind == INDENTIFIER2) &&
-				  jep.funTab.contains(getToken(1).image) })
+	LOOKAHEAD(FunctionName(), {jep.funTab.contains(getToken(1).image)})
 	Function()
 	|
 	Variable()
@@ -766,7 +769,7 @@ void Function() :
 	String identString = "";
 }
 {
-	( identString = Identifier()
+	( identString = FunctionName()
 		{
 			if (jep.funTab.contains(identString)) {
 				//Set number of required arguments
@@ -826,6 +829,14 @@ String Identifier() :
 }
 {
 	( t = <INDENTIFIER1> |	t = <INDENTIFIER2> ) { return t.image; }
+}
+
+String FunctionName() : 
+{
+	Token t;
+}
+{
+	( t = <INDENTIFIER1> |	t = <INDENTIFIER2> | t = <IF> ) { return t.image; }
 }
 
 

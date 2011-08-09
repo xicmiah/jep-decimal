@@ -123,4 +123,10 @@ public class ConditionalsTest {
         result = eval(jep, "if (-1) then {2;} else {3;} b=12;a=100500");
         assertEquals(BigDecimal.valueOf(100500), result);
 	}
+
+	@Test
+	public void testIfFunctionCompatibility() throws Exception {
+		Object result = eval(jep, "if(1.0, 42, 100500)");
+		assertEquals(BigDecimal.valueOf(42), result);
+	}
 }

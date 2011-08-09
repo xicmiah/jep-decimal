@@ -75,6 +75,7 @@ public class VectorJepTest extends JepTest {
         valueTest("y*z", "[[96.0,32.0,8.0],[48.0,16.0,4.0],[24.0,8.0,2.0]]");
         valueTest("z*y", "[[96.0,48.0,24.0],[32.0,16.0,8.0],[8.0,4.0,2.0]]");
         j.getSymbolTable().clearValues();
+	    valueTest("x=2", 2);
         j.evaluate(j.parse("y=[cos(x),sin(x)]"));
         j.evaluate(j.parse("z=[-sin(x),cos(x)]"));
         valueTest("y . y", "1.0");
