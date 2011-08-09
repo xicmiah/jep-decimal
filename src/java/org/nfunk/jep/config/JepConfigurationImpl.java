@@ -2,6 +2,7 @@ package org.nfunk.jep.config;
 
 import org.nfunk.jep.FunctionTable;
 import org.nfunk.jep.OperatorSet;
+import org.nfunk.jep.ParserConstants;
 import org.nfunk.jep.SymbolTable;
 import org.nfunk.jep.type.NumberFactory;
 
@@ -17,6 +18,8 @@ public class JepConfigurationImpl implements JepConfiguration{
     private OperatorSet operatorSet;
 
     private NumberFactory numberFactory;
+
+	private int initialTokenManagerState = ParserConstants.DEFAULT;
 
     private boolean allowUndeclaredVariables;
 
@@ -35,6 +38,7 @@ public class JepConfigurationImpl implements JepConfiguration{
         this.symbolTable = config.getInitialConstants();
         this.operatorSet = config.getOperators();
         this.numberFactory = config.getNumberFactory();
+	    this.initialTokenManagerState = config.getInitialTokenManagerState();
         this.allowUndeclaredVariables = config.isAllowUndeclaredVariables();
         this.traverse = config.isTraverse();
         this.useImplicitMultiplication = config.isUseImplicitMultiplication();
@@ -122,5 +126,13 @@ public class JepConfigurationImpl implements JepConfiguration{
 
 	public void setAllowNullValues(boolean allowNullValues) {
 		this.allowNullValues = allowNullValues;
+	}
+
+	public int getInitialTokenManagerState() {
+		return initialTokenManagerState;
+	}
+
+	public void setInitialTokenManagerState(int initialTokenManagerState) {
+		this.initialTokenManagerState = initialTokenManagerState;
 	}
 }

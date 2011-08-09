@@ -27,11 +27,9 @@ public class MultiExpressionTest {
 				.setAllowAssignment(true)
 				.setAllowUndeclaredVariables(true)
 				.setNumberFactory(numberFactory)
+				.setUseAlternativeSeparators(true)
 				.createConfig();
 		j = new JEP(configuration);
-
-		// Switch to alternative separators
-		j.getParser().setInitialTokenManagerState(ParserConstants.ALT_SEPARATORS);
 	}
 
 	/**

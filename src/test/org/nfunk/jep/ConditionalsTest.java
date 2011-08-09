@@ -29,7 +29,6 @@ public class ConditionalsTest {
 				.setAllowUndeclaredVariables(true)
 				.createConfig();
 		jep = new JEP(configuration);
-		jep.setTraverse(true);
 	}
 
 	private static Object eval(JEP jep, final String expression) throws ParseException {

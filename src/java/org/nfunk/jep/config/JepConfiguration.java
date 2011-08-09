@@ -58,4 +58,6 @@ public interface JepConfiguration {
     public boolean isAllowAssignment();
 
 	public boolean isAllowNullValues();
+
+	public int getInitialTokenManagerState();
 }

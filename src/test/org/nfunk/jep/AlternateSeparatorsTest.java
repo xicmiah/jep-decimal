@@ -5,7 +5,6 @@ import org.junit.Test;
 import org.nfunk.jep.config.BigDecimalConfig;
 import org.nfunk.jep.config.ConfigurationBuilder;
 import org.nfunk.jep.config.JepConfiguration;
-import org.nfunk.jep.function.operator.bigdecimal.BigDecimalAdd;
 import org.nfunk.jep.type.LocalizedBigDecimalNumberFactory;
 import org.nfunk.jep.type.NumberFactory;
 
@@ -30,11 +29,9 @@ public class AlternateSeparatorsTest {
 				.setVariableFactory(new VariableFactory())
 				.setUseImplicitMultiplication(true)
 				.setNumberFactory(numberFactory)
+				.setUseAlternativeSeparators(true)
 				.createConfig();
 		j = new JEP(configuration);
-
-		// Switch to alternative separators
-		j.getParser().setInitialTokenManagerState(ParserConstants.ALT_SEPARATORS);
 	}
 
 

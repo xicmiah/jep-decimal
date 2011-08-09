@@ -2,6 +2,7 @@ package org.nfunk.jep.config;
 
 import org.nfunk.jep.FunctionTable;
 import org.nfunk.jep.OperatorSet;
+import org.nfunk.jep.ParserConstants;
 import org.nfunk.jep.SymbolTable;
 import org.nfunk.jep.VariableFactory;
 import org.nfunk.jep.function.PostfixMathCommandI;
@@ -37,6 +38,8 @@ public class ConfigurationBuilder {
 
 	private boolean allowNullValues;
 
+	private boolean useAlternativeSeparators;
+
     public JepConfiguration createConfig(){
         JepConfigurationImpl config = new JepConfigurationImpl(traverse, allowUndeclaredVariables,
                 useImplicitMultiplication, allowAssignment, allowNullValues);
@@ -48,6 +51,9 @@ public class ConfigurationBuilder {
         config.setSymbolTable(symbolTable);
 
         config.setOperatorSet(operatorSet);
+
+	    int tokenManagerState = useAlternativeSeparators ? ParserConstants.ALT_SEPARATORS : ParserConstants.DEFAULT;
+	    config.setInitialTokenManagerState(tokenManagerState);
 
         return config;
     }
@@ -102,7 +108,7 @@ public class ConfigurationBuilder {
         return this;
     }
 
-    public ConfigurationBuilder setAllowUndeclaredVariables(boolean allowUndeclaredVariables) {
+	public ConfigurationBuilder setAllowUndeclaredVariables(boolean allowUndeclaredVariables) {
         this.allowUndeclaredVariables = allowUndeclaredVariables;
         return this;
     }
@@ -124,6 +130,11 @@ public class ConfigurationBuilder {
 
 	public ConfigurationBuilder setAllowNullValues(boolean allowNullValues) {
 		this.allowNullValues = allowNullValues;
+		return this;
+	}
+
+	public ConfigurationBuilder setUseAlternativeSeparators(boolean useAlternativeSeparators) {
+		this.useAlternativeSeparators = useAlternativeSeparators;
 		return this;
 	}
 }

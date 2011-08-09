@@ -177,7 +177,7 @@ public class JEP {
         ev = new EvaluatorVisitor();
 	    ev.setTrapNullValues(!config.isAllowNullValues());
         parser = new Parser(new StringReader(""));
-
+	    parser.setInitialTokenManagerState(config.getInitialTokenManagerState());
     }
 
     private void init(JepConfiguration config) {
